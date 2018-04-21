@@ -1,6 +1,8 @@
 vendor/
 node_modules/
 npm-debug.log
+/config/mail.php
+/public/images/
 
 # Laravel 4 specific
 bootstrap/compiled.php
@@ -15,8 +17,6 @@ storage/*.key
 .env
 Homestead.yaml
 Homestead.json
-config/mail.php
-public/images/
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
