@@ -1,5 +1,4 @@
 vendor/
-public/images/
 node_modules/
 npm-debug.log
 
@@ -16,6 +15,8 @@ storage/*.key
 .env
 Homestead.yaml
 Homestead.json
+config/mail.php
+public/images/*
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
