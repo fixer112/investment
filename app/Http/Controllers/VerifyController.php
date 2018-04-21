@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Mail\Honeypays;
 use Illuminate\Support\Facades\Mail;
+use App\User;
 
 class VerifyController extends Controller
 {
-   public function verify($email, $token){
+   public function verify(Request $request, $email, $token){
 
    	$user = User::where('email', '=', $email)->where('verify', '=', $token)->where('active', '=', 0)->first();
 
@@ -16,7 +17,7 @@ class VerifyController extends Controller
 
    		$user->update(['active' => 1, 'verify' => '' ]);
 
-   		$to = $request->email;
+   		$to = $user->email;
    		$subject = 'Registration successful';
 
        $message = 'You have successfully verified your email, you can now login at https://investor.honeypays.com.ng/login';
