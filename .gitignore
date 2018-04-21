@@ -16,7 +16,7 @@ storage/*.key
 Homestead.yaml
 Homestead.json
 config/mail.php
-public/images/*
+public/images/
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
