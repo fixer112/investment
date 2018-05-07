@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('role')->default('cus');
             $table->string('number')->nullable();
             $table->string('mentor')->default('');
-            $table->string('referral')->nullable();
+            $table->string('referal')->nullable();
             $table->string('mode_id')->nullable();
             $table->string('identity')->nullable();
             $table->string('acc_no')->nullable();
@@ -32,6 +32,9 @@ class CreateUsersTable extends Migration
             $table->string('addr')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
+            $table->string('id_change')->default('0');
+            //$table->string('user_id');
+            $table->string('reason')->default('Unverified Email Address');
 
             $table->rememberToken();
             $table->timestamps();

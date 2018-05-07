@@ -17,14 +17,15 @@ class VerifyController extends Controller
 
    		$user->update(['active' => 1, 'verify' => '' ]);
 
-   		$to = $user->email;
-   		$subject = 'Registration successful';
+   		$email = $user->email;
+      $number = $user->number;
+      $subject = 'Registration successful';
 
-       $message = 'You have successfully verified your email, you can now login at https://investor.honeypays.com.ng/login';
+      $message = 'You have successfully verified your email, you can now login at https://investor.honeypays.com.ng/login';
+      
+        $this->sms($number, urlencode($message));
 
-        //$this->sms($to, urlencode($message));
-
-        Mail::to($to)->send(new Honeypays($message, $subject));
+        Mail::to($email)->send(new Honeypays($message, $subject));
 
    		$request->session()->flash('success', 'Email verification successful, you can now login');
    		return redirect('/login');

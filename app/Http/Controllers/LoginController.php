@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -39,7 +40,12 @@ if ($validator->fails()) {
         'active' => '1'
     );
 
+    $user = User::where('email', $request->email)->first();
+
     // attempt to do the login
+    if ($user->active) {
+        
+    
     if (Auth::attempt($userdata)) {
 
         
@@ -49,11 +55,16 @@ if ($validator->fails()) {
 
         // validation not successful, send back to form
 
-        $request->session()->flash('failed', 'Invalid Password or Email is not Verified.');
+        $request->session()->flash('failed', 'Invalid Password');
 
         return redirect('/login');
 
     }
+ }else {
+     $request->session()->flash('failed', 'Account Inactive ('.$user->reason.')');
+
+        return redirect('/login');
+ }
 
 }
 

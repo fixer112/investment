@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Mail\Honeypays;
 use Illuminate\Support\Facades\Mail;
+use File;
 
 class HomeController extends Controller
 {
@@ -28,12 +29,17 @@ class HomeController extends Controller
         return view('home');
     }
 
-     public function mail()
+     public function mail(Request $request)
     {
-        $message = 'You have successfully verified your email, you can now login at https://investor.honeypays.com.ng/login';
+        $message = 'You have successfully verified your email, you can now login at '.url("/login");
         $subject = 'Registration successful';
+        $mail = 'abula';
         //return (new Honeypays($content))->render();
-        //Mail::to('sogbaderofiat@yahoo.com')->send(new Honeypays($message, $subject));
+        Mail::to('abula3003@gmail.com')->send(new Honeypays($message, $subject));
         return (new Honeypays($message))->render();
+       // return url("/verify/".$mail.'/');
+
+        /*File::delete(public_path('/proof/208851524965780.jpg'));
+        return 'successful';*/
     }
 }

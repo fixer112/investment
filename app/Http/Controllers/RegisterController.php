@@ -19,7 +19,7 @@ class RegisterController extends Controller
 {
 // validate the info, create rules for the inputs
 		$rules = array(
-		    		'name' => 'required|string|max:255',
+		    		'name' => 'required|string|max:50',
 		            'email' => 'required|string|email|max:255|unique:users',
 		            'password' => 'required|string|min:5|confirmed',
 		            'number' => 'required|numeric|unique:users',
@@ -30,7 +30,8 @@ class RegisterController extends Controller
 		            'addr' => 'required|string',
 		            'city' => 'required|string',
 		            'state' => 'required|string',
-		            'identity' => 'image|mimes:jpeg,jpg,png|max:1024',
+                    'mode_id' => 'required|string',
+		            'identity' => 'nullable|image|mimes:jpeg,jpg,png|max:1024',
 		            'accept' => 'required_without_all',
 		);
 
@@ -48,7 +49,7 @@ class RegisterController extends Controller
         }
 
        User::create([
-            'name' => $request->name,
+            'name' => ucwords($request->name),
             'referral' => $request->mentor,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -65,16 +66,17 @@ class RegisterController extends Controller
 
         ]);
 
-       $to = $request->email;
-       $subject = 'Verify Email';
+        $email = $request->email;
+      $number = $request->number;
+      $subject = 'Verify Email';
 
-       $link = 'https://investor.honeypays.com.ng/verify/'.$request->email.'/'.$verify;
+       $link = url("/verify/".$request->email.'/'.$verify);
 
        $message = 'Please complete your registration by verifing your email, follow link below to verify your email '.$link;
+      
+        $this->sms($number, urlencode($message));
 
-        //$this->sms($to, urlencode($message));
-
-        Mail::to($to)->send(new Honeypays($message, $subject));
+        Mail::to($email)->send(new Honeypays($message, $subject));
     			
         $request->session()->flash('success', 'Successful, please check your email inbox or email spam folder to verify email and complete registration.');
 

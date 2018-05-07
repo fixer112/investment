@@ -35,7 +35,7 @@ class Honeypays extends Mailable
      */
     public function build()
     {
-        return $this->from('investors@honeypays.com.ng')
+        return $this->from('projectempower@honeypays.com.ng', 'HONEYPAYS PROJECT EMPOWER')
                     ->subject($this->subject)
                     ->view('email.honeypays');
     }

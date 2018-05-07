@@ -21,6 +21,16 @@ Route::get('/', function () {
     
 });
 
+Route::get('/home', function () {
+	if (Auth::check()) {
+		return redirect('/'.Auth::user()->role);
+		
+	}else{
+		return redirect('/login');
+	}
+    
+});
+
 Route::get('/verify/{email}/{token}', 'VerifyController@verify');
 
 //Auth::routes();
@@ -40,5 +50,42 @@ $this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/mail', 'HomeController@mail');
+
+
+//Customer Routes
+Route::get('/cus', 'CustomerController@index');
+Route::get('/cus/edit', 'CustomerController@editget');
+Route::post('/cus/edit', 'CustomerController@editpost');
+Route::get('/cus/invest', 'CustomerController@investget');
+Route::post('/cus/invest', 'CustomerController@investpost');
+Route::get('/cus/history', 'CustomerController@transactions');
+Route::get('/cus/referals', 'CustomerController@referals')->middleware('mentor');
+
+//Admin Routes
+Route::get('/admin', 'AdminController@index');
+Route::get('/admin/invest/reject/{history}', 'AdminController@investreject');
+Route::get('/admin/invest/approve/{history}', 'AdminController@investapprove');
+Route::get('/admin/approvepaid/{history}', 'AdminController@approvepaid');
+Route::get('/admin/referals', 'AdminController@referals');
+Route::get('/admin/mentors', 'AdminController@mentors');
+Route::get('/admin/historys', 'AdminController@transactions');
+Route::get('/admin/customers', 'AdminController@customers');
+Route::get('/admin/admins', 'AdminController@admins');
+Route::get('/admin/edit', 'AdminController@editget');
+Route::post('/admin/edit', 'AdminController@editpost');
+Route::get('/admin/addadmin', 'AdminController@addadminget');
+Route::post('/admin/addadmin', 'AdminController@addadminpost');
+
+//Admin to Customer Routes
+Route::get('/admin/cus/{user}', 'ViewcusController@index');
+Route::get('/admin/cus/edit/{user}', 'ViewcusController@editget');
+Route::post('/admin/cus/edit/{user}', 'ViewcusController@editpost');
+Route::get('/admin/cus/history/{user}', 'ViewcusController@transactions');
+Route::get('/admin/cus/referals/{user}', 'ViewcusController@referals');
+Route::get('/admin/changeid/{user}', 'ViewcusController@changeid');
+Route::get('/admin/verifyid/{user}', 'ViewcusController@verifyid');
+Route::get('/admin/suspend/{user}', 'ViewcusController@suspend');
+Route::get('/admin/unsuspend/{user}', 'ViewcusController@unsuspend');
+Route::get('/admin/makementor/{user}', 'ViewcusController@makementor');

@@ -8,6 +8,7 @@ class History extends Model
 {
     protected $table = 'historys';
 	protected $guarded = [];
+	protected $dates = ['invest_date', 'return_date', 'approved_date', 'paid_date'];
 	
    public function user()
     {

@@ -47,7 +47,7 @@ a {
 	font-family: Poppins-Regular;
 	font-size: 14px;
 	line-height: 1.7;
-	color: #666666;
+	color: #adf;
 	margin: 0px;
 	transition: all 0.4s;
 	-webkit-transition: all 0.4s;
@@ -77,7 +77,7 @@ p {
 	font-family: Poppins-Regular;
 	font-size: 14px;
 	line-height: 1.7;
-	color: #666666;
+	color: #fff;
 	margin: 0px;
 }
 
@@ -143,14 +143,14 @@ iframe {
 .txt1 {
   font-family: Poppins-Regular;
   font-size: 13px;
-  color: #666666;
+  color: #fff;
   line-height: 1.5;
 }
 
 .txt2 {
   font-family: Poppins-Regular;
   font-size: 13px;
-  color: #333333;
+  color: #adf;
   line-height: 1.5;
 }
 
@@ -203,7 +203,7 @@ iframe {
   display: block;
   font-family: Poppins-Bold;
   font-size: 30px;
-  color: #333333;
+  color: #fff;
   line-height: 1.2;
   text-align: center;
 }
@@ -224,7 +224,7 @@ iframe {
 .input100 {
   font-family: Poppins-Regular;
   font-size: 15px;
-  color: #555555;
+  color: #fff;
   line-height: 1.2;
 
   display: block;
@@ -269,7 +269,7 @@ iframe {
 .focus-input100::after {
   font-family: Poppins-Regular;
   font-size: 15px;
-  color: #999999;
+  color: #21d4fd;
   line-height: 1.2;
 
   content: attr(data-placeholder);
@@ -490,7 +490,18 @@ iframe {
 }
 .invalid-feedback {
     display: initial;
+} 
+
+ .wrap-login100 {
+    background: #3333338a;
+    
 }
+.container-login100{
+    background: url("/honey.jpg") no-repeat 50% 50% fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+  background-color: #595954;
+  }
 
 
 
