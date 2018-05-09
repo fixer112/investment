@@ -5,7 +5,7 @@
 @section('content')
 @section('bread')
 {{count($historys)}} Historys
-@endsection    
+@endsection   
 
 <div class="card">
     <div class="card-body">

@@ -7,6 +7,8 @@ use App\History;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\Honeypays;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -33,6 +35,14 @@ class AdminController extends Controller
 		$mentor = $users->where('mentor', '!=', '')->get();
 
     	return view('admin.index', compact('users', 'historys', 'paids', 'actives', 'all', 'pendings', 'rejecteds', 'admin', 'cus', 'mentor', 'now'));
+    }
+
+    public function identity(){
+
+
+
+        return view('admin.identity');
+
     }
 
     public function editget(){
@@ -90,13 +100,14 @@ class AdminController extends Controller
 
     		]);
 
-    	Auth::user()->update([
+    	User::create([
     		'name' => ucwords($request->name),
     		'email' => $request->email,
     		'password' => Hash::make($request->password),
     		'mentor' => $request->number,
     		'number' => $request->number,
 		    'active' => '1',
+            'role' => 'admin',
 
     		]);
 
@@ -119,8 +130,8 @@ class AdminController extends Controller
 
 	    		]);
 
-	    $email = $history->user()->email;
-	    $number = $history->user()->number;
+	    $email = $history->user->email;
+	    $number = $history->user->number;
    		$subject = 'Investment Rejected';
 
        $message = 'We are sorry to inform you that Transaction '.$history->tran_id.' was rejected, please retry by uploading a valid proof of payment';
@@ -135,7 +146,7 @@ class AdminController extends Controller
 
 	    }else{
 
-	    	$request->session()->flash('failed', 'Transaction '.$history->tran_id.' is not pending');
+	    	$request->session()->flash('failed', 'Cant reject, Transaction '.$history->tran_id.' is not pending a pending transaction');
 
 	    	return redirect('/admin');
 	    }
@@ -177,8 +188,8 @@ class AdminController extends Controller
 
 			]);
 
-        $email = $history->user()->email;
-	    $number = $history->user()->number;
+        $email = $history->user->email;
+	    $number = $history->user->number;
    		$subject = 'Investment Approved';
 
        $message = 'Your investment with id: '.$history->tran_id.' has been approved';
@@ -194,7 +205,7 @@ class AdminController extends Controller
 
 	    }else{
 
-	    	$request->session()->flash('failed', 'Transaction '.$history->tran_id.' is not pending');
+	    	$request->session()->flash('failed', 'Cant approve, Transaction '.$history->tran_id.' is not pending a pending transaction');
 
 	    	return redirect('/admin');
 	    }
@@ -212,8 +223,8 @@ class AdminController extends Controller
 
 	    		]);
 
-		    $email = $history->user()->email;
-		    $number = $history->user()->number;
+		    $email = $history->user->email;
+		    $number = $history->user->number;
 	   		$subject = 'Investment Return Paid';
 
 	       $message = 'Your investment with id: '.$history->tran_id.' has successfully been paid';

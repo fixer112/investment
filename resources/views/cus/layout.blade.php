@@ -106,6 +106,7 @@
                         <li> <a href="/cus/referals" aria-expanded="false"><i class="fa fa-eye"></i><span class="hide-menu">Referals</span></a>
                         </li>
                         @endif
+                        <li> <a href="/cus/contact" aria-expanded="false"><i class="fa fa-envelop"></i><span class="hide-menu">Contact Admin</span></a></li>
                         <li class="nav-label">Search</li>
                         <li> <a href="/cus/history" aria-expanded="false"><i class="fa fa-search"></i><span class="hide-menu">All History</span></a>
                         </ul>
@@ -145,6 +146,21 @@
         <!-- End Page wrapper  -->
     </div>
     <!-- End Wrapper -->
+    <!-- The Modal Contact -->
+    <div class="modal" id="suspend">
+      <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">{{-- 
+                <div class="icon-box">
+                        <i class="material-icons fa fa-ban"></i>
+                    </div> --}}
+            <h4 class="modal-title">CONTACT</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          
     <!-- All Jquery -->
     <script src="{{ asset('js/lib/jquery/jquery-3.2.1.min.js') }}"></script>
     <!-- Bootstrap tether Core JavaScript -->

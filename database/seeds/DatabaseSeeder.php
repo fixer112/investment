@@ -16,10 +16,11 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'HoneyPay Admin 1',
             'email' => 'abula@gmail.com',
-            'password' => bcrypt('abula'),
+            'password' => bcrypt('admin'),
             'role' => 'admin',
             'active' => 1,
-            'mentor' => '12345',
+            'number' => '08012345678',
+            'mentor' => '08012345678',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
              ]);
@@ -40,10 +41,11 @@ class DatabaseSeeder extends Seeder
             'addr' => 'no 13 ifelodun',
             'city' => 'abeokuta',
             'state' => 'ogun',
+            'id_change' => '2',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
              ]);
-
+/*
          DB::table('historys')->insert([
             'invest_amount' => 10000,
             'tenure' => 30,
@@ -113,6 +115,6 @@ class DatabaseSeeder extends Seeder
             'tran_id' => '101692126',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-             ]);
+             ]);*/
     }
 }

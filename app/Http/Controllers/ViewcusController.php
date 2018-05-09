@@ -7,6 +7,8 @@ use App\History;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\Honeypays;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 
 class ViewcusController extends Controller
@@ -124,7 +126,7 @@ public function changeid(Request $request, User $user){
 
     $this->sms($number, urlencode($message));
 
-        //Mail::to($email)->send(new Honeypays($message, $subject));
+        Mail::to($email)->send(new Honeypays($message, $subject));
     $request->session()->flash('success', 'Customer successfully notified to change identity');
 
     return back(); 
@@ -151,7 +153,7 @@ public function changeid(Request $request, User $user){
 
     $this->sms($number, urlencode($message));
 
-        //Mail::to($email)->send(new Honeypays($message, $subject));
+        Mail::to($email)->send(new Honeypays($message, $subject));
     $request->session()->flash('success', 'Customer identity verified');
 
     return back(); 
@@ -185,7 +187,7 @@ public function changeid(Request $request, User $user){
 
     $this->sms($number, urlencode($message));
 
-        //Mail::to($email)->send(new Honeypays($message, $subject));
+        Mail::to($email)->send(new Honeypays($message, $subject));
     $request->session()->flash('success', 'Customer suspended successfully.');
 
     return back(); 
@@ -210,7 +212,7 @@ public function changeid(Request $request, User $user){
 
     $this->sms($number, urlencode($message));
 
-        //Mail::to($email)->send(new Honeypays($message, $subject));
+        Mail::to($email)->send(new Honeypays($message, $subject));
     $request->session()->flash('success', 'Customer unsuspended successfully.');
 
     return back(); 
@@ -235,7 +237,7 @@ public function changeid(Request $request, User $user){
 
     $this->sms($number, urlencode($message));
 
-        //Mail::to($email)->send(new Honeypays($message, $subject));
+        Mail::to($email)->send(new Honeypays($message, $subject));
     $request->session()->flash('success', 'Customer now a mentor.');
 
     return back(); 
@@ -255,7 +257,7 @@ public function delete(Request $request, User $user){
 
     $this->sms($number, urlencode($message));
 
-        //Mail::to($email)->send(new Honeypays($message, $subject));
+        Mail::to($email)->send(new Honeypays($message, $subject));
     $user->delete();
     $request->session()->flash('success', 'Customer record deleted successfully.');
 

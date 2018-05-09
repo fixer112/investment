@@ -61,7 +61,7 @@
                     </div>
                     <div class="wrap-input100 validate-input" data-validate = "name">
                         <input class="input100" type="text" name="name" value="{{ old('name') }}">
-                        <span class="focus-input100" data-placeholder="*name"></span>
+                        <span class="focus-input100" data-placeholder="*Full name"></span>
                         @if ($errors->has('name'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -72,7 +72,7 @@
 
                     <div class="wrap-input100 validate-input" data-validate = "email">
                         <input class="input100" type="email" name="email" value="{{ old('email') }}" required>
-                        <span class="focus-input100" data-placeholder="*email"></span>
+                        <span class="focus-input100" data-placeholder="*Email"></span>
                         @if ($errors->has('email'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -139,7 +139,9 @@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate = "bank_name">
-                        <input class="input100" type="text" name="bank_name" value="{{ old('bank_name') }}" required>
+                        <select class="input100" type="text" name="bank_name" value="{{ old('bank_name') }}" required>
+                        <option value="Access Bank" >Access Bank</option><option value="Citibank" >Citibank</option><option value="Diamond Bank" >Diamond Bank</option><option value="Ecobank Nigeria" >Ecobank Nigeria</option><option value="Fidelity Bank Nigeria" >Fidelity Bank Nigeria</option><option value="First Bank of Nigeria" >First Bank of Nigeria</option><option value="First City Monument Bank" >First City Monument Bank</option><option value="Guaranty Trust Bank" >Guaranty Trust Bank</option><option value="Heritage Bank plc" >Heritage Bank plc</option><option value="Keystone Bank Limited" >Keystone Bank Limited</option><option value="Providus Bank Plc" >Providus Bank Plc</option><option value="Skye Bank" >Skye Bank</option><option value="Stanbic IBTC Bank Nigeria Limited" >Stanbic IBTC Bank Nigeria Limited</option><option value="Standard Chartered Bank" >Standard Chartered Bank</option><option value="Sterling Bank" >Sterling Bank</option><option value="Suntrust Bank Nigeria Limited" >Suntrust Bank Nigeria Limited</option><option value="Union Bank of Nigeria" >Union Bank of Nigeria</option><option value="United Bank for Africa" >United Bank for Africa</option><option value="Unity Bank plc" >Unity Bank plc</option><option value="Wema Bank" >Wema Bank</option><option value="Zenith Bank" >Zenith Bank</option>
+                        </select>
                         <span class="focus-input100" data-placeholder="*Bank Name"></span>
                         @if ($errors->has('bank_name'))
                                     <span class="invalid-feedback">
@@ -190,7 +192,9 @@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate = "mode_id">
-                        <input class="input100" type="text" name="mode_id" value="{{ old('mode_id') }}" required>
+                        <select class="input100" type="text" name="mode_id" value="{{ old('mode_id') }}" required>
+                        <option value="INTERNATIONAL PASSPORT" >INTERNATIONAL PASSPORT</option><option value="DRIVERS LICENSE" >DRIVERS LICENSE</option><option value="NATIONAL ID" >NATIONAL ID</option><option value="VOTERS ID" >VOTERS ID</option>
+                        </select>
                         <span class="focus-input100" data-placeholder="*Mode of Identity"></span>
                         @if ($errors->has('mode_id'))
                                     <span class="invalid-feedback">

@@ -50,7 +50,7 @@ class RegisterController extends Controller
 
        User::create([
             'name' => ucwords($request->name),
-            'referral' => $request->mentor,
+            'referal' => $request->mentor,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'number' => $request->number,
@@ -80,7 +80,7 @@ class RegisterController extends Controller
     			
         $request->session()->flash('success', 'Successful, please check your email inbox or email spam folder to verify email and complete registration.');
 
-        return redirect('/register');
+        return back();
 }
 
 	public function sms($to, $message){

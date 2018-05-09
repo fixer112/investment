@@ -57,13 +57,13 @@ if ($validator->fails()) {
 
         $request->session()->flash('failed', 'Invalid Password');
 
-        return redirect('/login');
+        return back();
 
     }
  }else {
      $request->session()->flash('failed', 'Account Inactive ('.$user->reason.')');
 
-        return redirect('/login');
+        return back();
  }
 
 }

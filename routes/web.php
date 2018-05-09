@@ -51,7 +51,7 @@ $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 
 //Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/mail', 'HomeController@mail');
+//Route::get('/mail', 'HomeController@mail');
 
 
 //Customer Routes
@@ -61,7 +61,11 @@ Route::post('/cus/edit', 'CustomerController@editpost');
 Route::get('/cus/invest', 'CustomerController@investget');
 Route::post('/cus/invest', 'CustomerController@investpost');
 Route::get('/cus/history', 'CustomerController@transactions');
+Route::get('/cus/contact', 'CustomerController@getcontact');
+Route::post('/cus/contact', 'CustomerController@postcontact');
 Route::get('/cus/referals', 'CustomerController@referals')->middleware('mentor');
+Route::get('/cus/mentorcus/{user}', 'CustomerController@mentorcus')->middleware('mentor');
+Route::get('/cus/mentorcus/history/{user}', 'CustomerController@mentorcushistory')->middleware('mentor');
 
 //Admin Routes
 Route::get('/admin', 'AdminController@index');
@@ -69,6 +73,7 @@ Route::get('/admin/invest/reject/{history}', 'AdminController@investreject');
 Route::get('/admin/invest/approve/{history}', 'AdminController@investapprove');
 Route::get('/admin/approvepaid/{history}', 'AdminController@approvepaid');
 Route::get('/admin/referals', 'AdminController@referals');
+Route::get('/admin/identity', 'AdminController@identity');
 Route::get('/admin/mentors', 'AdminController@mentors');
 Route::get('/admin/historys', 'AdminController@transactions');
 Route::get('/admin/customers', 'AdminController@customers');

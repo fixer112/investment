@@ -613,7 +613,7 @@ h6 {
 }
 @media (max-width: 767px) {
   .hidden-sm-down {
-    display: none !important;
+    display: initial !important;
   }
 }
 @media (min-width: 768px) {
@@ -6934,4 +6934,10 @@ button {
     margin-bottom: 5px;
     float: left;
     margin-right: 5px;
+}
+.notify {
+    position: sticky;
+}
+.form-control.message {
+    height: auto;
 }

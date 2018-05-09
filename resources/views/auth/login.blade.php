@@ -80,6 +80,11 @@
                         </span>
                         <input class="input100" type="password" name="password" required>
                         <span class="focus-input100" data-placeholder="*password"></span>
+                        @if ($errors->has('password'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
                         
                     </div>
 

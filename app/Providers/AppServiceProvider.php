@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $identitys = User::where('id_change','=', '2')->get();
+        view()->share ('identitys', $identitys);
     }
 
     /**

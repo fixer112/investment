@@ -8,6 +8,8 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Mail\Contact;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller
 {
@@ -36,6 +38,12 @@ class CustomerController extends Controller
     public function editget(){
 
     	return view('cus.edit');
+
+    }
+
+    public function getcontact(){
+
+        return view('cus.contact');
 
     }
 
@@ -106,6 +114,31 @@ class CustomerController extends Controller
     }
 
 
+    public function postcontact(Request $request){
+
+        $this->validate($request, [
+
+                    'subject' => 'required|string|max:50',
+                    'message' => 'required|string|max:255',
+
+            ]);
+
+        
+        $from = Auth::user()->email;
+        $subject = $request->subject;
+
+       $message = $request->message;
+
+        Mail::to('support@honeypays.com.ng')->send(new Contact($from, $message, $subject));
+
+
+        $request->session()->flash('success', 'Message send successfully to '.$from.', you will get a reply in your email soon');
+
+        return back();
+
+    }
+
+
   public function investget(){
   	return view('cus.invest');
   }
@@ -166,6 +199,28 @@ class CustomerController extends Controller
     $referals = User::where('referal','=', Auth::user()->mentor)->get();
     return view('cus.referals')->with(['referals' => $referals]); 
 
+  }
+
+  public function mentorcus(User $user){
+    if ($user->referal == Auth::user()->mentor) {
+
+    $referals = $user->history;
+    return view('cus.mentorcus.index')->with(['referals' => $referals, 'user' => $user]); 
+
+    }else {
+        abort(404);
+    }
+  }
+
+  public function mentorcushistory(User $user){
+    if ($user->referal == Auth::user()->mentor) {
+
+    $historys = $user->history;
+    return view('cus.mentorcus.history')->with(['historys' => $historys, 'user' => $user]); 
+
+    }else {
+        abort(404);
+    }
   }
 
   public function randomnumber($len = 20){

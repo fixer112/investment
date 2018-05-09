@@ -253,7 +253,7 @@ $dues = $actives->where('return_date', '<', $now );
                                             @if (count($paids)>0)
                                             @foreach($paids as $paid)
                                             @php
-                                            $paid_user = $users->where('id','=', $active->user_id)->first();
+                                            $paid_user = $users->where('id','=', $paid->user_id)->first();
                                             @endphp
                                             <tr>
                                                 <td>{{$paid->paid_date->format('d/m/Y H:i')}}</td>
@@ -300,7 +300,7 @@ $dues = $actives->where('return_date', '<', $now );
                                             @if (count($pendings)>0)
                                             @foreach($pendings as $pending)
                                             @php
-                                            $pending_user = $users->where('id','=', $active->user_id)->first();
+                                            $pending_user = $users->where('id','=', $pending->user_id)->first();
                                             @endphp
                                             <tr>
                                                 <td>{{$pending->invest_date->format('d/m/Y H:i')}}</td>
@@ -349,7 +349,7 @@ $dues = $actives->where('return_date', '<', $now );
                                             @if (count($rejecteds)>0)
                                             @foreach($rejecteds as $rejected)
                                             @php
-                                            $rejected_user = $users->where('id','=', $active->user_id)->first();
+                                            $rejected_user = $users->where('id','=', $rejected->user_id)->first();
                                             @endphp
                                             <tr>
                                                 <td>{{$rejected->approved_date->format('d/m/Y H:i')}}</td>

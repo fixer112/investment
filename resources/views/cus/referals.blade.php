@@ -35,6 +35,7 @@ Referals
                                                 <th>Date Joined</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
+                                                <th>Actions</th>
                                                 
                                             </tr>
                                         </thead>
@@ -46,6 +47,9 @@ Referals
                                                 <td>{{$referal->created_at->format('d/m/Y H:i')}}</td>
                                                 <td>{{$referal->name}}</td>
                                                 <td>{{$referal->email}}</td>
+                                                <td>
+                                                    <a href="/cus/mentorcus/{{$referal->id}}"><button class="btn btn-primary">View Customer</button></a>
+                                                </td>
                                                 
                                             </tr>
                                             @endforeach

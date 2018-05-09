@@ -47,7 +47,7 @@
                                                 <td>{{$cus->created_at->format('d/m/Y H:i')}}</td>
                                                 <td>{{$cus->name}}</td>
                                                 <td>{{$cus->email}}</td>
-                                                <td>₦{{$cus->referal}}</td>
+                                                <td>{{$cus->referal}}</td>
                                                 <td>
                                                 <a href="/admin/cus/{{$cus->id}}"><button class="btn btn-primary">View Customer</button></a>
                                                 </td>
