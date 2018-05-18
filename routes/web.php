@@ -51,7 +51,7 @@ $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 
 //Route::get('/home', 'HomeController@index')->name('home');
-//Route::get('/mail', 'HomeController@mail');
+Route::get('/mail', 'HomeController@mail');
 
 
 //Customer Routes
@@ -91,6 +91,9 @@ Route::get('/admin/cus/history/{user}', 'ViewcusController@transactions');
 Route::get('/admin/cus/referals/{user}', 'ViewcusController@referals');
 Route::get('/admin/changeid/{user}', 'ViewcusController@changeid');
 Route::get('/admin/verifyid/{user}', 'ViewcusController@verifyid');
+Route::get('/admin/delete/{user}', 'ViewcusController@delete');
 Route::get('/admin/suspend/{user}', 'ViewcusController@suspend');
 Route::get('/admin/unsuspend/{user}', 'ViewcusController@unsuspend');
 Route::get('/admin/makementor/{user}', 'ViewcusController@makementor');
+Route::get('/admin/invest/{user}', 'ViewcusController@getinvest');
+Route::post('/admin/invest/{user}', 'ViewcusController@postinvest');

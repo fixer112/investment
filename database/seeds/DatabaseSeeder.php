@@ -15,12 +15,12 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         DB::table('users')->insert([
             'name' => 'HoneyPay Admin 1',
-            'email' => 'abula@gmail.com',
+            'email' => 'honey@gmail.com',
             'password' => bcrypt('admin'),
             'role' => 'admin',
             'active' => 1,
-            'number' => '08012345678',
-            'mentor' => '08012345678',
+            'number' => '08172303502',
+            'mentor' => '08172303502',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
              ]);

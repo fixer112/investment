@@ -100,7 +100,7 @@
                         </li>
                          <li> <a href="/admin/referals" aria-expanded="false"><i class="fa fa-eye"></i><span class="hide-menu">Referals</span></a>
                         </li>
-                        <li> <a href="/admin/identity" aria-expanded="false" class="active"><i class="fa fa-bell"></i>
+                        <li> <a href="/admin/identity" aria-expanded="false"><i class="fa fa-bell"></i>
                         @if(count($identitys)>0)
                          <span class="notify"><span class="heartbit"></span> <span class="point"></span></span>
                          @endif

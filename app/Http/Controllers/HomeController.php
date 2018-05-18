@@ -35,8 +35,13 @@ class HomeController extends Controller
         $subject = 'Registration successful';
         $mail = 'abula';
         //return (new Honeypays($content))->render();
-        Mail::to('abula3003@gmail.com')->send(new Honeypays($message, $subject));
-        return (new Honeypays($message))->render();
+        try {
+            Mail::to('abula3003@gmail.com')->send(new Honeypays($message, $subject));
+        return 'successful';
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        
        // return url("/verify/".$mail.'/');
 
         /*File::delete(public_path('/proof/208851524965780.jpg'));

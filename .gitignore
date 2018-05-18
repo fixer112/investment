@@ -1,4 +1,5 @@
 vendor/
+.phpintel/
 node_modules/
 npm-debug.log
 /config/mail.php
@@ -20,3 +21,6 @@ Homestead.json
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
+*.zip
+*.sql
+database/seeds/DatabaseSeeder.php

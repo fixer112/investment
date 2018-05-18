@@ -106,7 +106,7 @@
                         <li> <a href="/cus/referals" aria-expanded="false"><i class="fa fa-eye"></i><span class="hide-menu">Referals</span></a>
                         </li>
                         @endif
-                        <li> <a href="/cus/contact" aria-expanded="false"><i class="fa fa-envelop"></i><span class="hide-menu">Contact Admin</span></a></li>
+                        <li> <a href="/cus/contact" aria-expanded="false"><i class="fa fa-envelope"></i><span class="hide-menu">Contact Admin</span></a></li>
                         <li class="nav-label">Search</li>
                         <li> <a href="/cus/history" aria-expanded="false"><i class="fa fa-search"></i><span class="hide-menu">All History</span></a>
                         </ul>

@@ -35,6 +35,55 @@ class ViewcusController extends Controller
 
     }
 
+    public function getinvest(User $user){
+
+        return view('admin.cus.invest', compact('user'));
+
+    }
+
+    public function postinvest(Request $request, User $user){
+
+      $this->validate($request, [
+
+                'invest_amount' => 'required|numeric|min:5000|max:5000000',
+                'return_amount' => 'required|numeric',
+                'tenure' => 'required|numeric',
+                'invest_date' => 'required|date_format:d/m/y',
+                'return_date' => 'required|date_format:d/m/y',
+
+        ]);
+
+        $randomnumber = $user->id.$this->randomnumber(4).time();
+
+        $user->history()->create([
+
+          'invest_amount' => $request->invest_amount,
+          'return_amount' => $request->return_amount,
+          'tenure' => $request->tenure,
+          'invest_date' => Carbon::createFromFormat('d/m/y', $request->invest_date),
+          'return_date' => Carbon::createFromFormat('d/m/y', $request->return_date),
+          'status' => 'active',
+          'approved_date' => Carbon::createFromFormat('d/m/y', $request->invest_date),
+          'proof' => 'images/verify.jpg',
+          'tran_id' => $randomnumber,
+          ]);
+
+        $email = $user->email;
+      $number = $user->number;
+      $subject = 'Investment Approved';
+
+       $message = 'Your investment with id: '.$randomnumber.' has been approved';
+
+        $this->sms($number, urlencode($message));
+
+        //Mail::to($email)->send(new Honeypays($message, $subject));
+
+        $request->session()->flash('success', 'Investment Created successfully');
+
+        return back();
+
+    }
+
     public function editget(User $user){
 
     	return view('admin.cus.edit', compact('user'));
@@ -249,21 +298,37 @@ public function changeid(Request $request, User $user){
   }
 public function delete(Request $request, User $user){
 
+ 
+
   	$email = $user->email;
     $number = $user->number;
 		$subject = 'Account Deleted';
 
    $message = 'Hello '.$user->name.' your account is now deleted from our record';
 
+   History::where('user_id', '=', $user->id)->delete();
+    $user->delete();
+
     $this->sms($number, urlencode($message));
 
         Mail::to($email)->send(new Honeypays($message, $subject));
-    $user->delete();
+
     $request->session()->flash('success', 'Customer record deleted successfully.');
 
     return redirect('/admin'); 
 	
   }
+
+  public function randomnumber($len = 20){
+  $char = '0123456789';
+  $charlen = strlen($char);
+  $randomstring = '';
+  for ($i = 0; $i < $len ; $i++) {
+    $randomstring .= $char[rand(0, $charlen-1)];
+  }
+  return $randomstring;
+  }
+
   public function sms($to, $message){
     	$username = env('SMS_USERNAME');
     	$password = env('SMS_PASSWORD');

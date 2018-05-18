@@ -180,6 +180,8 @@
                                 
                             </ul>
                         </li>
+                        <li> <a href="/admin/invest/{{$user->id}}" aria-expanded="false"><i class="fa fa-money"></i><span class="hide-menu">Invest</span></a>
+                        </li>
                         @if(!empty($user->mentor))
                         <li> <a href="/admin/cus/referals/{{$user->id}}" aria-expanded="false"><i class="fa fa-eye"></i><span class="hide-menu">Referals</span></a>
                         </li>
