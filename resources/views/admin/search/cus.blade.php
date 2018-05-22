@@ -35,6 +35,8 @@
                                                 <th>Name</th>
                                                 <th>Email</th>
                                                 <th>Refered By</th>
+                                                <th>Status</th>
+                                                <th>Reason</th>
                                                 <th>Actioins</th>
                                                 
                                             </tr>
@@ -48,6 +50,12 @@
                                                 <td>{{$cus->name}}</td>
                                                 <td>{{$cus->email}}</td>
                                                 <td>{{$cus->referal}}</td>
+                                                @if($cus->active)
+                                                <td><span class="badge badge-success">Active</span></td>
+                                                @else
+                                                <td><span class="badge badge-danger">Suspended</span></td>
+                                                @endif
+                                                <td>{{$cus->active ? '' : $cus->reason}}</td>
                                                 <td>
                                                 <a href="/admin/cus/{{$cus->id}}"><button class="btn btn-primary">View Customer</button></a>
                                                 </td>
