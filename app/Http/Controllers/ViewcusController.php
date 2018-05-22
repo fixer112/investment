@@ -162,7 +162,7 @@ class ViewcusController extends Controller
 
 public function changeid(Request $request, User $user){
 
-	if ($user->id_change = '1') {
+	if ($user->id_change != '1') {
 
     $user->update(['id_change' => '1']);
 
@@ -188,7 +188,7 @@ public function changeid(Request $request, User $user){
   }
 
   public function verifyid(Request $request, User $user){
-  	if ($user->id_change = '0') {
+  	if ($user->id_change != '0') {
   		
   	
 
@@ -332,7 +332,7 @@ public function delete(Request $request, User $user){
   public function sms($to, $message){
     	$username = env('SMS_USERNAME');
     	$password = env('SMS_PASSWORD');
-    	$sender = 'HONEYPAYS';
+    	$sender = 'HONEYPAYS ';
     	$data = 'username='.$username.'&password='.$password.'&sender='.$sender.'&to='.$to.'&message='.$message;
 
     	$ch = curl_init('http://smsc.xwireless.net/API/WebSMS/Http/v1.0a/index.php?'.$data);
