@@ -148,7 +148,7 @@ class ViewcusController extends Controller
 
     $request->session()->flash('success', 'Profile edited successfully.');
 
-    return redirect('admin/cus/edit');
+    return back();
 
     }
 
