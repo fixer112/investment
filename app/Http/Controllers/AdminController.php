@@ -294,4 +294,9 @@ class AdminController extends Controller
     	curl_close($ch);
     	return $response;
     }
+    
+    public function naira($number){
+    return "N". number_format($number, 2);
+
+    }
 }
