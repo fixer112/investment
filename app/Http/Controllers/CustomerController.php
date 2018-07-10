@@ -157,18 +157,20 @@ class CustomerController extends Controller
 		if ($rate == "30") {
 
 			$accured_interest = (1/100)*$amount*$rate;
+            $irm = 20;
 			
 		}elseif ($rate == "90") {
 			$accured_interest = (2/100)*$amount*$rate;
-
+             $irm = 30;
 		}elseif ($rate == "180") {
 			$accured_interest = (3/100)*$amount*$rate;
-
+             $irm = 40;
 		}elseif ($rate == "360") {
 			$accured_interest = (4/100)*$amount*$rate;
+             $irm = 50;
 		}
         $gain = $amount + $accured_interest;
-		$interest = (20/100)*$gain;
+		$interest = ($irm/100)*$gain;
 		$total_earning = $gain - $interest;
 
 		$randomnumber = Auth::user()->id.$this->randomnumber(4).time();
