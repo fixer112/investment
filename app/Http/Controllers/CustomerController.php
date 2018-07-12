@@ -224,14 +224,4 @@ class CustomerController extends Controller
         abort(404);
     }
   }
-
-  public function randomnumber($len = 20){
-	$char = '0123456789';
-	$charlen = strlen($char);
-	$randomstring = '';
-	for ($i = 0; $i < $len ; $i++) {
-		$randomstring .= $char[rand(0, $charlen-1)];
-	}
-	return $randomstring;
-	}
 }
