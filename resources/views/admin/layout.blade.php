@@ -196,7 +196,9 @@
     <script src="{{ asset('js/custom.min.js') }}"></script>
 
     <script src="{{ asset('js/lib/datatables/datatables.min.js') }}"></script>
+    @yield('data')
     <script src="{{ asset('js/lib/datatables/datatables-init.js') }}"></script>
+        @yield('js')
 
 
 

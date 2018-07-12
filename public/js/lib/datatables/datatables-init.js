@@ -48,3 +48,15 @@ $(document).ready(function() {
         ]*/
 
     });
+
+    $('table.data').DataTable({
+        "order": [
+                    [0, 'desc']
+                ],
+        "displayLength": 50,
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+
+    });

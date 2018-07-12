@@ -15,17 +15,19 @@ class Honeypays extends Mailable
     public $content;
     public $logo;
     public $subject;
+    public $link;
 
     /**
      * Create a new content instance.
      *
      * @return void
      */
-    public function __construct($content, $subject = null)
+    public function __construct($content, $link, $subject = null)
     {
         $this->content = $content;
         $this->logo = '/honeylogo.jpg';
         $this->subject = $subject;
+        $this->link = $link;
     }
 
     /**

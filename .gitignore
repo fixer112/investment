@@ -23,4 +23,3 @@ Homestead.json
 .rocketeer/
 *.zip
 *.sql
-database/seeds/DatabaseSeeder.php
