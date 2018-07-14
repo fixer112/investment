@@ -14,8 +14,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $identitys = User::where('id_change','=', '2')->get();
-        view()->share ('identitys', $identitys);
+        if ($identitys = User::where('id_change','=', '2')->get();) {
+            
+            view()->share ('identitys', $identitys);
+        }
+        
+        
     }
 
     /**

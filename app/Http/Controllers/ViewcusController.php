@@ -156,7 +156,7 @@ class ViewcusController extends Controller
   public function referals(User $user){
 
     $referals = User::where('referal','=',$user->mentor)->get();
-    return view('admin.cus.referals')->with(['referals' => $referals]); 
+    return view('admin.cus.referals')->with(['referals' => $referals, 'user' => $user]); 
 
   }
 
@@ -318,28 +318,5 @@ public function delete(Request $request, User $user){
     return redirect('/admin'); 
 	
   }
-
-  public function randomnumber($len = 20){
-  $char = '0123456789';
-  $charlen = strlen($char);
-  $randomstring = '';
-  for ($i = 0; $i < $len ; $i++) {
-    $randomstring .= $char[rand(0, $charlen-1)];
-  }
-  return $randomstring;
-  }
-
-  public function sms($to, $message){
-    	$username = env('SMS_USERNAME');
-    	$password = env('SMS_PASSWORD');
-    	$sender = 'HONEYPAYS';
-    	$data = 'username='.$username.'&password='.$password.'&sender='.$sender.'&to='.$to.'&message='.$message;
-
-    	$ch = curl_init('http://smsc.xwireless.net/API/WebSMS/Http/v1.0a/index.php?'.$data);
-    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    	$response = curl_exec($ch);
-    	curl_close($ch);
-    	return $response;
-    }
 
 }
