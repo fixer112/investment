@@ -76,7 +76,7 @@ class RegisterController extends Controller
       
         $this->sms($number, urlencode($message));
 
-        Mail::to($email)->send(new Honeypays($message, $link, $subject));
+        Mail::to($email)->send(new Honeypays($message, $subject, $link));
     			
         $request->session()->flash('success', 'Successful, please check your email inbox or email spam folder to verify email and complete registration.');
 

@@ -22,7 +22,7 @@ class Honeypays extends Mailable
      *
      * @return void
      */
-    public function __construct($content, $link, $subject = null)
+    public function __construct($content, $subject = null, $link = null)
     {
         $this->content = $content;
         $this->logo = '/honeylogo.jpg';

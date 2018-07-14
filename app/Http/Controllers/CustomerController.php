@@ -132,7 +132,7 @@ class CustomerController extends Controller
         Mail::to('support@honeypays.com.ng')->send(new Contact($from, $message, $subject));
 
 
-        $request->session()->flash('success', 'Message send successfully to '.$from.', you will get a reply in your email soon');
+        $request->session()->flash('success', 'Message send successfully to admin from '.$from.', you will get a reply in your email soon');
 
         return back();
 
