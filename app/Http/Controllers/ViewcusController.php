@@ -148,7 +148,7 @@ class ViewcusController extends Controller
 
     $request->session()->flash('success', 'Profile edited successfully.');
 
-    return redirect('admin/cus/edit');
+    return back();
 
     }
 
@@ -162,7 +162,7 @@ class ViewcusController extends Controller
 
 public function changeid(Request $request, User $user){
 
-	if ($user->id_change = '1') {
+	if ($user->id_change != '1') {
 
     $user->update(['id_change' => '1']);
 
@@ -188,7 +188,7 @@ public function changeid(Request $request, User $user){
   }
 
   public function verifyid(Request $request, User $user){
-  	if ($user->id_change = '0') {
+  	if ($user->id_change != '0') {
   		
   	
 

@@ -40,7 +40,8 @@
 
             <div class="wrap-login100">
             
-                <form class="login100-form validate-form" method="POST" action="{{ route('password.request') }}">
+                <form class="login100-form validate-form" method="POST" action="/password/reset">
+                <input type="hidden" name="token" value="{{ $token }}">
                 @csrf
 
                     <span class="login100-form-title p-b-26">
@@ -51,8 +52,8 @@
                         Reset Password
                     </span>
 
+                    @if (session('success'))
                     <div>
-                        @if (session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
                         </div>
@@ -62,8 +63,16 @@
                         <div class="alert alert-danger">
                             {{ session('failed') }}
                         </div>
+                   
+                        </div> 
                     @endif
-                    </div>
+
+                    @if (session('status'))
+                    <div>
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
 
                     <div class="wrap-input100 validate-input" data-validate = "">
                         <input class="input100" type="email" name="email" value="{{ old('email') }}" required>
@@ -81,7 +90,11 @@
                         </span>
                         <input class="input100" type="password" name="password" required>
                         <span class="focus-input100" data-placeholder="*password"></span>
-                        
+                        @if ($errors->has('password'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Enter password">
@@ -90,7 +103,11 @@
                         </span>
                         <input class="input100" type="password" name="password_confirmation" required>
                         <span class="focus-input100" data-placeholder="*Comfirm password"></span>
-                        
+                        @if ($errors->has('password_confirmation'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                    </span>
+                                @endif
                     </div>
 
                    
@@ -99,13 +116,13 @@
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
                             <button class="login100-form-btn">
-                                Login
+                                RESET
                             </button>
                         </div>
                     
 
                     <div class="text-center p-t-115">
-                        <a class="txt2" href="/register">
+                        <a class="txt2" href="/login">
                             Login
                         </a>
 

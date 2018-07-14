@@ -49,11 +49,12 @@ New Investment
                                     <div class="form-group {{$errors->has('number') ? 'invalid-feedback' : ''}}">
                                         <label>Tenure</label>
                                         <select type="option" class="form-control" name="rate" required>
-                                                <option value="30">30Days/1%daily</option>
-                                                <option value="90">90Days/2%daily</option>
-                                                <option value="180">180Days/3%daily</option>
-                                                <option value="360">360Days/4%daily</option>
-                                                </select>
+                                        <option disabled selected>Choose tenure</option>        
+                                        <option value="30">30Days/1%daily</option>
+                                        <option value="90">90Days/2%daily</option>
+                                        <option value="180">180Days/3%daily</option>
+                                        <option value="360">360Days/4%daily</option>
+                                        </select>
                                         @if ($errors->has('rate'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('rate') }}</strong>
