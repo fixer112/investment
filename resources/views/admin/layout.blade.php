@@ -164,6 +164,7 @@
         </div>
         <!-- End Page wrapper  -->
     </div>
+
     <!-- End Wrapper -->
     <!-- All Jquery -->
     <script src="{{ asset('js/lib/jquery/jquery-3.2.1.min.js') }}"></script>
@@ -176,7 +177,14 @@
     <script src="{{ asset('js/sidebarmenu.js') }}"></script>
     <!--stickey kit -->
     <script src="{{ asset('js/lib/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
-
+    <script>
+        function getid(delete_id){
+            var id = delete_id;
+            var link = document.getElementById('link'); //.href='/admin/invest/delete/'+id;
+            link.setAttribute('href', '/admin/invest/delete/'+id);
+            //alert(id);
+        }
+    </script>
 
    {{--  <script src="{{ asset('js/lib/datamap/d3.min.js') }}"></script>
     <script src="{{ asset('js/lib/datamap/topojson.js') }}"></script>

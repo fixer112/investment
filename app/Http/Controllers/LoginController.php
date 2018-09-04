@@ -9,6 +9,8 @@ use App\User;
 
 class LoginController extends Controller
 {
+    use AuthenticatesUsers;
+
    public function __construct()
     {
         $this->middleware('guest')->except('logout');
@@ -47,6 +49,15 @@ if ($validator->fails()) {
         
     
     if (Auth::attempt($userdata)) {
+        if ($request->ajax() || $request->expectsJson()) {
+            if (Auth::user()->role!='cus') {
+               $data['errors'] = ['fail' => ['Only Customers allowed']];
+               Auth::logout();
+            return \Response::json($data, 403);
+            }
+        //Auth::user()->update(['api_token' => str_random(60)]);
+        return \Response::json(['user' => Auth::user()]);
+        }
 
         
        return redirect('/'.Auth::user()->role);
@@ -54,13 +65,20 @@ if ($validator->fails()) {
     } else {        
 
         // validation not successful, send back to form
-
+        if ($request->ajax() || $request->expectsJson()) {
+               $data['errors'] = ['fail' => ['Invalid Password']];
+            return \Response::json($data, 403);
+            }
         $request->session()->flash('failed', 'Invalid Password');
 
         return back();
 
     }
  }else {
+     if ($request->ajax() || $request->expectsJson()) {
+               $data['errors'] = ['fail' => ['Account Inactive ('.$user->reason.')']];
+            return \Response::json($data, 403);
+            }
      $request->session()->flash('failed', 'Account Inactive ('.$user->reason.')');
 
         return back();
@@ -68,9 +86,15 @@ if ($validator->fails()) {
 
 }
 
-	public function logout()
+	public function logout(Request $request)
 {
     Auth::logout(); // log the user out of our application
+    $request->session()->invalidate();
+
+    if ($request->ajax() || $request->expectsJson()) { 
+            return \Response::json([ 'message' => 'logged out']);
+        }
+
     return redirect('/login'); // redirect the user to the login screen
 }
 

@@ -13,35 +13,58 @@ use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller
 {
-    public function __construct()
+    public function __construct(Request $request)
     {
-        $this->middleware('auth');
+        if ($request->ajax() || $request->expectsJson()) {
+            $this->middleware('auth:api');
+        }else{
+            $this->middleware('auth');
+        }
+        //$this->middleware('auth');
         $this->middleware('cus');
     }
 
-    public function index(){
+    public function index(Request $request){
 
         $now = Carbon::now();
 
+        if ($request->ajax() || $request->expectsJson()) {
+            $user = Auth::user();
+            $paids = Auth::user()->history()->where('status', '=', 'paid')->orderby('id','desc')->get();
+            $actives = Auth::user()->history()->where('status', '=', 'active')->orderby('id','desc')->get();
+            $all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
+            $pendings = Auth::user()->history()->where('status', '=', 'pending')->orderby('id','desc')->get();
+            $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->orderby('id','desc')->get();
+            $tpr = $paids->sum('return_amount');
+            $ter = $actives->sum('return_amount');
+               $data = compact('user','now', 'paids', 'actives', 'all', 'pendings', 'rejecteds', 'tpr', 'ter');
+                return \Response::json($data, 200);
+            }
     	return view('cus.index', compact('now'));
 
     }
 
-    public function transactions(){
+    public function transactions(Request $request){
 
         $historys = History::where('user_id', '=', Auth::user()->id)->get();
+
+        if ($request->ajax() || $request->expectsJson()) {
+            
+               $data = compact('historys');
+                return \Response::json($data, 200);
+            }
 
         return view('cus.search.history', compact('historys'));
 
     }
 
-    public function editget(){
+    public function editget(Request $request){
 
     	return view('cus.edit');
 
     }
 
-    public function getcontact(){
+    public function getcontact(Request $request){
 
         return view('cus.contact');
 
@@ -109,6 +132,12 @@ class CustomerController extends Controller
 
     $request->session()->flash('success', 'Profile edited successfully.');
 
+    if ($request->ajax() || $request->expectsJson()) {
+            
+               $data['message'] = 'Profile edited successfully.';
+                return \Response::json($data, 200);
+            }
+
     return redirect('/cus/edit');
 
     }
@@ -133,7 +162,11 @@ class CustomerController extends Controller
 
 
         $request->session()->flash('success', 'Message send successfully to admin from '.$from.', you will get a reply in your email soon');
-
+        if ($request->ajax() || $request->expectsJson()) {
+            
+               $data['message'] = 'Message send successfully to admin from '.$from.', you will get a reply in your email soon';
+                return \Response::json($data, 200);
+            }
         return back();
 
     }
@@ -173,16 +206,16 @@ class CustomerController extends Controller
 		$interest = ($irm/100)*$gain;
 		$total_earning = $gain - $interest;
 
-		$randomnumber = Auth::user()->id.$this->randomnumber(4).time();
+		$randomstring = Auth::user()->id.$this->randomstring(4).time();
 
 		$destination = public_path('/proof');
         $proof = $request->file('proof');
-        $proofname = $randomnumber.".".$proof->getClientOriginalExtension();
+        $proofname = $randomstring.".".$proof->getClientOriginalExtension();
         $proof->move($destination, $proofname);
 
 		Auth::user()->history()->create([
 
-			'tran_id' => $randomnumber,
+			'tran_id' => $randomstring,
 			'invest_date' => Carbon::now(),
 			'invest_amount' => $amount,
 			'tenure' => $rate,
@@ -192,13 +225,22 @@ class CustomerController extends Controller
 			]);
 
 		$request->session()->flash('success', 'Awaiting approval For N'.$amount);
-
+        if ($request->ajax() || $request->expectsJson()) {
+            
+               $data['message'] = 'Awaiting approval For N'.$amount;
+                return \Response::json($data, 200);
+            }
     	return redirect('/cus/invest');
   }
 
-  public function referals(){
+  public function referals(Request $request){
 
-    $referals = User::where('referal','=', Auth::user()->mentor)->get();
+    $referals = User::where('referal','=', Auth::user()->mentor)->orderby('id','desc')->get();
+     if ($request->ajax() || $request->expectsJson()) {
+            
+               $data = compact('referals');
+                return \Response::json($data, 200);
+            }
     return view('cus.referals')->with(['referals' => $referals]); 
 
   }
@@ -208,9 +250,26 @@ class CustomerController extends Controller
 
     $referals = $user->history;
      $now = Carbon::now();
+      if ($request->ajax() || $request->expectsJson()) {
+            $paids = $referals->where('status', '=', 'paid');
+            $actives = $referals->where('status', '=', 'active');
+            $all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
+            $pendings = $referals->where('status', '=', 'pending');
+            $rejecteds = $referals->where('status', '=', 'reject');
+            $tpr=$paids->sum('return_amount');
+            $ter=$actives->sum('return_amount');
+               $data = compact('referals','user','now','paids','actives','all','pendings','rejecteds','tpr','ter');
+                return \Response::json($data, 200);
+            }
     return view('cus.mentorcus.index')->with(['referals' => $referals, 'user' => $user, 'now' => $now]); 
 
     }else {
+        if ($request->ajax() || $request->expectsJson()) {
+            
+               $data['errors'] = ['fail' => ['User not a referal']];
+               //Auth::logout();
+                return \Response::json($data, 403);
+            }
         abort(404);
     }
   }
@@ -219,9 +278,23 @@ class CustomerController extends Controller
     if ($user->referal == Auth::user()->mentor) {
 
     $historys = $user->history;
+
+    if ($request->ajax() || $request->expectsJson()) {
+            
+               $data = compact('historys', 'user');
+               //Auth::logout();
+                return \Response::json($data, 403);
+            }
+
     return view('cus.mentorcus.history')->with(['historys' => $historys, 'user' => $user]); 
 
     }else {
+        if ($request->ajax() || $request->expectsJson()) {
+            
+               $data['errors'] = ['fail' => ['User not a referal']];
+               //Auth::logout();
+                return \Response::json($data, 403);
+            }
         abort(404);
     }
   }

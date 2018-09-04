@@ -64,7 +64,7 @@ class ViewcusController extends Controller
           'return_date' => Carbon::createFromFormat('d/m/y', $request->return_date),
           'status' => 'active',
           'approved_date' => Carbon::createFromFormat('d/m/y', $request->invest_date),
-          'proof' => 'images/verify.jpg',
+          'proof' => '/images/verify.jpg',
           'tran_id' => $randomnumber,
           ]);
 

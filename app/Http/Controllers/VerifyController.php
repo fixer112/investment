@@ -21,7 +21,7 @@ class VerifyController extends Controller
       $number = $user->number;
       $subject = 'Registration successful';
 
-      $message = 'You have successfully verified your email, you can now login at https://investor.honeypays.com.ng/login';
+      $message = 'You have successfully verified your email, you can now login at https://empower.honeypays.com.ng/login';
       
         $this->sms($number, urlencode($message));
 

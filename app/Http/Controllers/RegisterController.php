@@ -32,7 +32,7 @@ class RegisterController extends Controller
 		            'state' => 'required|string',
                     'mode_id' => 'required|string',
 		            'identity' => 'nullable|image|mimes:jpeg,jpg,png|max:1024',
-		            'accept' => 'required_without_all',
+		            'accept' => 'required_without_all|accepted',
 		);
 
 	$validator = $this->validate($request, $rules);
@@ -79,6 +79,11 @@ class RegisterController extends Controller
         Mail::to($email)->send(new Honeypays($message, $subject, $link));
     			
         $request->session()->flash('success', 'Successful, please check your email inbox or email spam folder to verify email and complete registration.');
+
+         if ($request->ajax() || $request->expectsJson()) {
+               $data['message'] = 'Successful, please check your email inbox or email spam folder to verify email and complete registration.';
+            return \Response::json($data, 200);
+            }
 
         return back();
 }

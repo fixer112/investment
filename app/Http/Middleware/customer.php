@@ -18,6 +18,12 @@ class customer
     public function handle($request, Closure $next)
     {
         if (Auth::user()->role != 'cus') {
+            if ($request->ajax() || $request->expectsJson()) {
+            
+               $data['errors'] = ['fail' => ['Only Customers allowed']];
+               //Auth::logout();
+                return \Response::json($data, 403);
+            }
 
             return redirect('/'.Auth::user()->role);
             

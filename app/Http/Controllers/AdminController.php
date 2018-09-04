@@ -117,6 +117,13 @@ class AdminController extends Controller
 
     }
 
+    public function investdelete(Request $request, History $history){
+        $history->delete();
+        $request->session()->flash('success', 'Transaction successfully deleted');
+
+            return redirect('/admin');
+
+    }
 
     public function investreject(Request $request, History $history){
 
@@ -158,6 +165,7 @@ class AdminController extends Controller
 
 	    $year = date('Y');
         $date = Carbon::now();
+        //$date = Carbon::parse('09/03/18');
         $rate = $history->tenure;
         $amount = $history->invest_amount;
 
@@ -174,13 +182,13 @@ class AdminController extends Controller
 
 	        for ($i = 1; $i <= $rate+1; $i++) {
 
-	    	if (in_array(Carbon::now()->addWeekdays($i)->toDateString(), $holidays) || in_array(Carbon::now()->toDateString(), $holidays)) {
+	    	if (in_array(Carbon::now()->addWeekdays($i)->toDateString(), $holidays)/* || in_array(Carbon::now()->toDateString(), $holidays)*/) {
 
 	        $MyDateCarbon->addWeekdays(1);
 
 			    }
 			}
-
+           //return $MyDateCarbon;
         $history->update([
 			'approved_date' => Carbon::now(),
             'return_date' => $MyDateCarbon,

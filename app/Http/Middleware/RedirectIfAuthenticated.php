@@ -18,6 +18,10 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
+            if ($request->ajax() || $request->expectsJson()) { 
+            //return \Response::json([ 'message' => 'logged In']);
+            return $next($request);
+        }
             return redirect('/');
         }
 

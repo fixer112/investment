@@ -71,6 +71,7 @@ Route::get('/cus/mentorcus/history/{user}', 'CustomerController@mentorcushistory
 Route::get('/admin', 'AdminController@index');
 Route::get('/admin/invest/reject/{history}', 'AdminController@investreject');
 Route::get('/admin/invest/approve/{history}', 'AdminController@investapprove');
+Route::get('/admin/invest/delete/{history}', 'AdminController@investdelete');
 Route::get('/admin/approvepaid/{history}', 'AdminController@approvepaid');
 Route::get('/admin/referals', 'AdminController@referals');
 Route::get('/admin/identity', 'AdminController@identity');

@@ -29,7 +29,7 @@ class Controller extends BaseController
 
     }
 
-    public function randomnumber($len = 20){
+    public function randomstring($len = 20){
 	$char = '0123456789';
 	$charlen = strlen($char);
 	$randomstring = '';
