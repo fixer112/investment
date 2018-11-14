@@ -20,7 +20,7 @@ $dues = $actives->where('return_date', '<', $now );
         <span><i class="fa fa-money f-s-40 color-primary"></i></span>
     </div>
     <div class="media-body media-text-right">
-        <h2>{{$all}}</h2>
+        <h2>@money($all)</h2>
         <p class="m-b-0">Total Invested</p>
     </div>
 </div>
@@ -33,7 +33,7 @@ $dues = $actives->where('return_date', '<', $now );
         <span><i class="fa fa-money f-s-40 color-success"></i></span>
     </div>
     <div class="media-body media-text-right">
-        <h2>{{$paids->sum('return_amount')}}</h2>
+        <h2>@money($paids->sum('return_amount'))</h2>
         <p class="m-b-0">Total Paid Return</p>
     </div>
 </div>
@@ -46,7 +46,7 @@ $dues = $actives->where('return_date', '<', $now );
         <span><i class="fa fa-money f-s-40 color-warning"></i></span>
     </div>
     <div class="media-body media-text-right">
-        <h2>{{$actives->sum('return_amount')}}</h2>
+        <h2>@money($actives->sum('return_amount'))</h2>
         <p class="m-b-0">Total Expected Return</p>
     </div>
 </div>
@@ -160,10 +160,10 @@ $dues = $actives->where('return_date', '<', $now );
                     <td>{{$due->invest_date->format('d/m/Y H:i')}}</td>
                     <td>{{$due_user->email}}</td>
                     <td>{{$due->tran_id}}</td>
-                    <td>₦{{$due->invest_amount}}</td>
+                    <td>@money($due->invest_amount)</td>
                     <td>{{$due->tenure}}</td>
                     <td>{{$due->approved_date->format('d/m/Y H:i')}}</td>
-                    <td>₦{{$due->return_amount}}</td>
+                    <td>@money($due->return_amount)</td>
                     <td><a href="{{asset($due->proof)}}"><button class="btn btn-primary">View Proof</button></a>
 
                     <a href="/admin/cus/{{$due_user->id}}"><button class="btn btn-primary">View Customer</button></a>
@@ -211,10 +211,10 @@ $dues = $actives->where('return_date', '<', $now );
                     <td>{{$active->invest_date->format('d/m/Y H:i')}}</td>
                     <td>{{$active_user->email}}</td>
                     <td>{{$active->tran_id}}</td>
-                    <td>₦{{$active->invest_amount}}</td>
+                    <td>@money($active->invest_amount)</td>
                     <td>{{$active->tenure}}</td>
                     <td>{{$active->return_date->format('d/m/Y H:i')}}</td>
-                    <td>₦{{$active->return_amount}}</td>
+                    <td>@money($active->return_amount)</td>
                     <td><a href="{{asset($active->proof)}}"><button class="btn btn-primary">View Proof</button></a>
 
                     <a href="/admin/cus/{{$active_user->id}}"><button class="btn btn-primary">View Customer</button></a>
@@ -263,10 +263,10 @@ $dues = $actives->where('return_date', '<', $now );
                     <td>{{$paid->invest_date->format('d/m/Y H:i')}}</td>
                     <td>{{$paid_user->email}}</td>
                     <td>{{$paid->tran_id}}</td>
-                    <td>₦{{$paid->invest_amount}}</td>
+                    <td>@money($paid->invest_amount)</td>
                     <td>{{$paid->tenure}}</td>
                     <td>{{$paid->return_date->format('d/m/Y H:i')}}</td>
-                    <td>₦{{$paid->return_amount}}</td>
+                    <td>@money($paid->return_amount)</td>
                     <td><a href="{{asset($paid->proof)}}"><button class="btn btn-primary">View Proof</button></a>
 
                     <a href="/admin/cus/{{$paid_user->id}}"><button class="btn btn-primary">View Customer</button></a>
@@ -308,9 +308,9 @@ $dues = $actives->where('return_date', '<', $now );
                     <td>{{$pending->invest_date->format('d/m/Y H:i')}}</td>
                     <td>{{$pending_user->email}}</td>
                     <td>{{$pending->tran_id}}</td>
-                    <td>₦{{$pending->invest_amount}}</td>
+                    <td>@money($pending->invest_amount)</td>
                     <td>{{$pending->tenure}}</td>
-                    <td>₦{{$pending->return_amount}}</td>
+                    <td>@money($pending->return_amount)</td>
                     <td><a href="{{asset($pending->proof)}}"><button class="btn btn-primary">View Proof</button></a>
 
                     <a href="/admin/invest/approve/{{$pending->id}}"><button class="btn btn-success">Approve</button></a>
@@ -358,9 +358,9 @@ $dues = $actives->where('return_date', '<', $now );
                     <td>{{$rejected->invest_date->format('d/m/Y H:i')}}</td>
                     <td>{{$rejected_user->email}}</td>
                     <td>{{$rejected->tran_id}}</td>
-                    <td>₦{{$rejected->invest_amount}}</td>
+                    <td>@money($rejected->invest_amount)</td>
                     <td>{{$rejected->tenure}}</td>
-                    <td>₦{{$rejected->return_amount}}</td>
+                    <td>@money($rejected->return_amount)</td>
                     <td><a href="{{asset($rejected->proof)}}"><button class="btn btn-primary">View Proof</button></a>
 
                     <a href="/admin/cus/{{$rejected_user->id}}"><button class="btn btn-primary">View Customer</button></a>

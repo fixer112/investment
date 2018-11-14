@@ -139,7 +139,10 @@ Profile
                                     </div>
                                     <div class="form-group {{$errors->has('mode_id') ? 'invalid-feedback' : ''}}">
                                         <label>Mode Of Identity</label>
-                                        <input type="text" name="mode_id" class="form-control" value="{{$user->mode_id}}" placeholder="e.g National Idcard" required>
+                                        {{-- <input type="text" name="mode_id" class="form-control" value="{{$user->mode_id}}" placeholder="e.g National Idcard" required> --}}
+                                        <select name="mode_id" class="form-control" value="{{Auth::user()->mode_id}}" required>
+                                        <option value="INTERNATIONAL PASSPORT" >INTERNATIONAL PASSPORT</option><option value="DRIVERS LICENSE" >DRIVERS LICENSE</option><option value="NATIONAL ID" >NATIONAL ID</option><option value="VOTERS ID" >VOTERS ID</option><option value="BVN PRINTOUT" >BVN PRINTOUT</option>
+                                        </select>
                                         @if ($errors->has('mode_id'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('mode_id') }}</strong>

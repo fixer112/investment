@@ -1,10 +1,10 @@
 @extends('cus.layout')
 @section('title')
-{{Auth::user()->name}} | Contact Admin
+{{Auth::user()->name}} | Apply Refund
 @endsection
 @section('content')
 @section('bread')
-Contact
+Refund
 @endsection    
 
 
@@ -55,7 +55,7 @@ Contact
                             @endif
                                 </div>  
 
-                                 
+                                <input type="email" name="to" value="refund@honeypays.com.ng" hidden="true">  
                                     
                                     <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Submit</button>
                                     

@@ -37,6 +37,22 @@ class AdminController extends Controller
     	return view('admin.index', compact('users', 'historys', 'paids', 'actives', 'all', 'pendings', 'rejecteds', 'admin', 'cus', 'mentor', 'now'));
     }
 
+    public function notify(){
+        return view('admin.notify');
+    }
+
+    public function notifypost(Request $request){
+        $this->validate($request, [
+
+                    'title' => 'required|string|max:100',
+                    'body' => 'required|string|max:1000',
+
+            ]);
+        $this->app($request->title,$request->body,'global');
+        $request->session()->flash('success', 'Notification sent');
+        return back();
+    }
+
     public function identity(){
 
 
@@ -144,6 +160,7 @@ class AdminController extends Controller
        $message = 'We are sorry to inform you that Transaction '.$history->tran_id.' was rejected, please retry by uploading a valid proof of payment';
 
         $this->sms($number, urlencode($message));
+        $this->app($subject,$message,$email);
 
         Mail::to($email)->send(new Honeypays($message, $subject));
 
@@ -202,12 +219,14 @@ class AdminController extends Controller
 
        $message = 'Your investment with id: '.$history->tran_id.' has been approved';
 
-        $this->sms($number, urlencode($message));
+        //$this->sms($number, urlencode($message));
+        $this->app($subject,$message,$email);
+
 
         Mail::to($email)->send(new Honeypays($message, $subject));
 
 
-	    	$request->session()->flash('success', 'Transaction '.$history->tran_id.' successfully Approved');
+	    	$request->session()->flash('success', 'Transaction '.$history->tran_id.' successfully Approved' );
 
 	    	return redirect('/admin');
 
@@ -238,6 +257,7 @@ class AdminController extends Controller
 	       $message = 'Your investment with id: '.$history->tran_id.' has successfully been paid';
 
 	        $this->sms($number, urlencode($message));
+            $this->app($subject,$message,$email);
 
 	        Mail::to($email)->send(new Honeypays($message, $subject));
 

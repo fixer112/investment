@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use App\User;
 
@@ -19,6 +20,9 @@ class AppServiceProvider extends ServiceProvider
             view()->share ('identitys', $identitys);
         }
         
+        Blade::directive('money', function($amount){
+            return "<?php echo '₦'. number_format($amount,2);?>";
+        });
         
     }
 

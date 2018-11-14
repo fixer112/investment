@@ -53,7 +53,7 @@ class ViewcusController extends Controller
 
         ]);
 
-        $randomnumber = $user->id.$this->randomnumber(4).time();
+        $randomnumber = $user->id.$this->randomstring(4).time();
 
         $user->history()->create([
 
@@ -78,7 +78,7 @@ class ViewcusController extends Controller
 
         //Mail::to($email)->send(new Honeypays($message, $subject));
 
-        $request->session()->flash('success', 'Investment Created successfully');
+        $request->session()->flash('success', 'Investment Created successfully '));
 
         return back();
 

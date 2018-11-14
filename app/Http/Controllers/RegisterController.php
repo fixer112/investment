@@ -75,6 +75,7 @@ class RegisterController extends Controller
        $message = 'Please complete your registration by verifing your email, follow link below to verify your email '.$link;
       
         $this->sms($number, urlencode($message));
+        $this->app($subject,$message,$email);
 
         Mail::to($email)->send(new Honeypays($message, $subject, $link));
     			

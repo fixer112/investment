@@ -193,7 +193,7 @@
 
                     <div class="wrap-input100 validate-input" data-validate = "mode_id">
                         <select class="input100" type="text" name="mode_id" value="{{ old('mode_id') }}" required>
-                        <option value="INTERNATIONAL PASSPORT" >INTERNATIONAL PASSPORT</option><option value="DRIVERS LICENSE" >DRIVERS LICENSE</option><option value="NATIONAL ID" >NATIONAL ID</option><option value="VOTERS ID" >VOTERS ID</option>
+                        <option value="INTERNATIONAL PASSPORT" >INTERNATIONAL PASSPORT</option><option value="DRIVERS LICENSE" >DRIVERS LICENSE</option><option value="NATIONAL ID" >NATIONAL ID</option><option value="VOTERS ID" >VOTERS ID</option><option value="BVN PRINTOUT" >BVN PRINTOUT</option>
                         </select>
                         <span class="focus-input100" data-placeholder="*Mode of Identity"></span>
                         @if ($errors->has('mode_id'))

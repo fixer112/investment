@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Carbon\Carbon;
 
 class Controller extends BaseController
 {
@@ -16,12 +18,16 @@ class Controller extends BaseController
     	$password = env('SMS_PASSWORD');
     	$sender = 'HONEYPAYS';
     	$data = 'username='.$username.'&password='.$password.'&sender='.$sender.'&to='.$to.'&message='.$message;
-
+        try {
     	$ch = curl_init('http://smsc.xwireless.net/API/WebSMS/Http/v1.0a/index.php?'.$data);
     	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     	$response = curl_exec($ch);
     	curl_close($ch);
     	return $response;
+            
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
     
     public function naira($number){
@@ -38,4 +44,52 @@ class Controller extends BaseController
 	}
 	return $randomstring;
 	}
+
+    public function app($title, $message, $topic='global') {
+    $mail = $topic;
+    $email = str_replace("@", "%", $topic);
+    $topic = $topic =='global'? 'global' : "empower_".$email;
+    $title = $topic == 'global'? $title : $title.' (Empower)';
+
+    $url = 'https://fcm.googleapis.com/fcm/send';
+
+    $fields = array (
+            'to' => "/topics/".$topic,
+
+            'notification' => array (
+                    "body" => $message,
+                    "title"=> $title,
+                    "showWhenInForeground" => true
+            ),
+             'data' => array (
+                    "to" => ucfirst($mail),
+                    "body" => $message,
+                    "title"=> $title,
+                    //"date" => Carbon::now(),
+            )
+    );
+    $fields = json_encode ( $fields );
+
+    $headers = array (
+            'Authorization: key=' . "AAAA0OU80gE:APA91bFl0ffyzcJgWKdjPHDDWw8M6X8TG-TjetvZp6Ues1313X4FEMtXJPF_JkWtb9GIAzrQ_qOFrNpgScQMHgFP6tMi6UR6oF6BsLMg2kv395bwYbehrKBTC_zkqA8PE-L5YVhzNOXM",
+            'Content-Type: application/json'
+    );
+
+    try {
+        
+    $ch = curl_init ();
+    curl_setopt ( $ch, CURLOPT_URL, $url );
+    curl_setopt ( $ch, CURLOPT_POST, true );
+    curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
+    curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+    curl_setopt ( $ch, CURLOPT_POSTFIELDS, $fields );
+
+    $result = curl_exec ( $ch );
+    //echo $result;
+    curl_close ( $ch );
+    return $result;
+    } catch (Exception $e) {
+        $request->session()->flash('failed', $e->getMessage());
+    }
+}
 }

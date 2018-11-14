@@ -127,6 +127,9 @@
 
                             </ul>
                         </li>
+                        <li class="nav-label">Application</li>
+                        <li> <a href="/notify" aria-expanded="false"><i class="fa fa-bell"></i><span class="hide-menu">Send Notification</span></a>
+                        </li>
                         <li class="nav-label">{{Auth::user()->mentor}}</li>
                         </ul>
                 </nav>

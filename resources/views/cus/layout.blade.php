@@ -107,6 +107,7 @@
                         </li>
                         @endif
                         <li> <a href="/cus/contact" aria-expanded="false"><i class="fa fa-envelope"></i><span class="hide-menu">Contact Admin</span></a></li>
+                        <li> <a href="/cus/refund" aria-expanded="false"><i class="fa fa-undo"></i><span class="hide-menu">Apply Refund</span></a></li>
                         <li class="nav-label">Search</li>
                         <li> <a href="/cus/history" aria-expanded="false"><i class="fa fa-search"></i><span class="hide-menu">All History</span></a>
                         </ul>

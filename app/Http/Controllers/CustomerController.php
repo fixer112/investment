@@ -70,6 +70,12 @@ class CustomerController extends Controller
 
     }
 
+    public function getrefund(Request $request){
+
+        return view('cus.refund');
+
+    }
+
     public function editpost(Request $request){
 
 
@@ -149,16 +155,19 @@ class CustomerController extends Controller
 
                     'subject' => 'required|string|max:50',
                     'message' => 'required|string|max:255',
+                    'to' => 'email',
 
             ]);
 
-        
-        $from = Auth::user()->email;
+
+        $email = $request->email ? $request->email : Auth::user()->email;
+        $from = $email;//Auth::user()->email;
         $subject = $request->subject;
+        $to = $request->to ? $request->to : 'support@honeypays.com.ng';
 
        $message = $request->message;
 
-        Mail::to('support@honeypays.com.ng')->send(new Contact($from, $message, $subject));
+        Mail::to($to)->send(new Contact($from, $message, $subject));
 
 
         $request->session()->flash('success', 'Message send successfully to admin from '.$from.', you will get a reply in your email soon');

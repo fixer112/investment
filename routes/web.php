@@ -19,7 +19,9 @@ Route::get('/', function () {
 		return redirect('/login');
 	}
     
-});
+}); 
+
+
 
 Route::get('/home', function () {
 	if (Auth::check()) {
@@ -30,7 +32,8 @@ Route::get('/home', function () {
 	}
     
 });
-
+Route::get('notify', 'AdminController@notify');
+Route::post('notify', 'AdminController@notifypost');
 Route::get('/verify/{email}/{token}', 'VerifyController@verify');
 
 //Auth::routes();
@@ -62,6 +65,7 @@ Route::get('/cus/invest', 'CustomerController@investget');
 Route::post('/cus/invest', 'CustomerController@investpost');
 Route::get('/cus/history', 'CustomerController@transactions');
 Route::get('/cus/contact', 'CustomerController@getcontact');
+Route::get('/cus/refund', 'CustomerController@getrefund');
 Route::post('/cus/contact', 'CustomerController@postcontact');
 Route::get('/cus/referals', 'CustomerController@referals')->middleware('mentor');
 Route::get('/cus/mentorcus/{user}', 'CustomerController@mentorcus')->middleware('mentor');

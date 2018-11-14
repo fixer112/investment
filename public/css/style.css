@@ -6941,3 +6941,6 @@ button {
 .form-control.message {
     height: auto;
 }
+textarea {
+    height: 110px !important;
+}
