@@ -78,7 +78,7 @@ class ViewcusController extends Controller
 
         //Mail::to($email)->send(new Honeypays($message, $subject));
 
-        $request->session()->flash('success', 'Investment Created successfully '));
+        $request->session()->flash('success', 'Investment Created successfully ');
 
         return back();
 
