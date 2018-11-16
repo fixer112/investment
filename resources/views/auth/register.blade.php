@@ -214,7 +214,7 @@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate = "accept">
-                        <input class="input100" type="checkbox" name="accept" value="accept">
+                        <input class="input100" type="checkbox" name="accept" value="1">
                         <span class="focus-input100" data-placeholder="*Agreement"></span>
                         <p>I have read and understood the agreement and hereby consent to it. I also understand that 20% will be deducted from my total earning as IRM (Investment and Risk Management) fee.</p>
 
