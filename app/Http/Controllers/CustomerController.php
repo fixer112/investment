@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Mail\Contact;
 use Illuminate\Support\Facades\Mail;
+use Log;
 
 class CustomerController extends Controller
 {

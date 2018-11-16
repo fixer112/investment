@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Mail\Honeypays;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use Log;
 
 class ViewcusController extends Controller
 {
@@ -74,7 +75,7 @@ class ViewcusController extends Controller
 
        $message = 'Your investment with id: '.$randomnumber.' has been approved';
 
-        $this->sms($number, urlencode($message));
+         Log::info($this->sms($number, urlencode($message)));
 
         //Mail::to($email)->send(new Honeypays($message, $subject));
 
@@ -173,7 +174,7 @@ public function changeid(Request $request, User $user){
 
    $message = 'Hello '.$user->name.' You have an invalid Identity, please change it @ '.$link;
 
-    $this->sms($number, urlencode($message));
+     Log::info($this->sms($number, urlencode($message)));
 
         Mail::to($email)->send(new Honeypays($message, $subject));
     $request->session()->flash('success', 'Customer successfully notified to change identity');
@@ -200,7 +201,7 @@ public function changeid(Request $request, User $user){
 
    $message = 'Hello '.$user->name.' Your identity has successfully been verified';
 
-    $this->sms($number, urlencode($message));
+     Log::info($this->sms($number, urlencode($message)));
 
         Mail::to($email)->send(new Honeypays($message, $subject));
     $request->session()->flash('success', 'Customer identity verified');
@@ -234,7 +235,7 @@ public function changeid(Request $request, User $user){
 
    $message = 'Hello '.$user->name.' we are sorry to inform you that you are currently suspended. Reason: '.$request->reason;
 
-    $this->sms($number, urlencode($message));
+     Log::info($this->sms($number, urlencode($message)));
 
         Mail::to($email)->send(new Honeypays($message, $subject));
     $request->session()->flash('success', 'Customer suspended successfully.');
@@ -259,7 +260,7 @@ public function changeid(Request $request, User $user){
 
    $message = 'Hello '.$user->name.' you are now active';
 
-    $this->sms($number, urlencode($message));
+     Log::info($this->sms($number, urlencode($message)));
 
         Mail::to($email)->send(new Honeypays($message, $subject));
     $request->session()->flash('success', 'Customer unsuspended successfully.');
@@ -284,7 +285,7 @@ public function changeid(Request $request, User $user){
 
    $message = 'Hello '.$user->name.' you are now made a mentor with mentor number:'.$user->mentor;
 
-    $this->sms($number, urlencode($message));
+     Log::info($this->sms($number, urlencode($message)));
 
         Mail::to($email)->send(new Honeypays($message, $subject));
     $request->session()->flash('success', 'Customer now a mentor.');
@@ -309,7 +310,7 @@ public function delete(Request $request, User $user){
    History::where('user_id', '=', $user->id)->delete();
     $user->delete();
 
-    $this->sms($number, urlencode($message));
+     Log::info($this->sms($number, urlencode($message)));
 
         Mail::to($email)->send(new Honeypays($message, $subject));
 

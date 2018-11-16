@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Mail\Honeypays;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use Log;
 
 class AdminController extends Controller
 {
@@ -38,6 +39,7 @@ class AdminController extends Controller
     }
 
     public function notify(){
+
         return view('admin.notify');
     }
 
@@ -48,7 +50,7 @@ class AdminController extends Controller
                     'body' => 'required|string|max:1000',
 
             ]);
-        $this->app($request->title,$request->body,'global');
+        Log::info('App Global Notification: '.$this->app($request->title,$request->body,'global'));
         $request->session()->flash('success', 'Notification sent');
         return back();
     }
@@ -159,8 +161,9 @@ class AdminController extends Controller
 
        $message = 'We are sorry to inform you that Transaction '.$history->tran_id.' was rejected, please retry by uploading a valid proof of payment';
 
-        $this->sms($number, urlencode($message));
-        $this->app($subject,$message,$email);
+         Log::info($this->sms($number, urlencode($message)));
+
+        Log::info($this->app($subject,$message,$email));
 
         Mail::to($email)->send(new Honeypays($message, $subject));
 
@@ -219,8 +222,8 @@ class AdminController extends Controller
 
        $message = 'Your investment with id: '.$history->tran_id.' has been approved';
 
-        //$this->sms($number, urlencode($message));
-        $this->app($subject,$message,$email);
+          Log::info($this->sms($number, urlencode($message)));
+         Log::info($this->app($subject,$message,$email));
 
 
         Mail::to($email)->send(new Honeypays($message, $subject));
@@ -256,8 +259,8 @@ class AdminController extends Controller
 
 	       $message = 'Your investment with id: '.$history->tran_id.' has successfully been paid';
 
-	        $this->sms($number, urlencode($message));
-            $this->app($subject,$message,$email);
+	         Log::info($this->sms($number, urlencode($message)));
+             Log::info($this->app($subject,$message,$email));
 
 	        Mail::to($email)->send(new Honeypays($message, $subject));
 

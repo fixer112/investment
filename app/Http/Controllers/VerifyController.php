@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Mail\Honeypays;
 use Illuminate\Support\Facades\Mail;
 use App\User;
+use Log;
 
 class VerifyController extends Controller
 {
@@ -23,8 +24,8 @@ class VerifyController extends Controller
 
       $message = 'You have successfully verified your email, you can now login at https://empower.honeypays.com.ng/login';
       
-        $this->sms($number, urlencode($message));
-        $this->app($subject,$message,$email);
+        Log::info($this->sms($number, urlencode($message)));
+        Log::info($this->app($subject,$message,$email));
 
         Mail::to($email)->send(new Honeypays($message, $subject));
 

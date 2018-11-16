@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\Honeypays;
 use Illuminate\Support\Facades\Mail;
+use Log;
 
 class RegisterController extends Controller
 {
@@ -74,8 +75,8 @@ class RegisterController extends Controller
 
        $message = 'Please complete your registration by verifing your email, follow link below to verify your email '.$link;
       
-        $this->sms($number, urlencode($message));
-        $this->app($subject,$message,$email);
+         Log::info($this->sms($number, urlencode($message)));
+         Log::info($this->app($subject,$message,$email));
 
         Mail::to($email)->send(new Honeypays($message, $subject, $link));
     			
