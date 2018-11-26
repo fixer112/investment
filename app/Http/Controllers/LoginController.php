@@ -55,7 +55,7 @@ if ($validator->fails()) {
                Auth::logout();
             return \Response::json($data, 403);
             }
-        //Auth::user()->update(['api_token' => str_random(60)]);
+        Auth::user()->update(['api_token' => str_random(60)]);
         return \Response::json(['user' => Auth::user()]);
         }
 
