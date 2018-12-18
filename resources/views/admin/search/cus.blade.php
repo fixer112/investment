@@ -34,6 +34,7 @@
                                                 <th>Date Joined</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
+                                                <th>Mobile Number</th>
                                                 <th>Refered By</th>
                                                 <th>Status</th>
                                                 <th>Reason</th>
@@ -49,6 +50,7 @@
                                                 <td>{{$cus->created_at->format('d/m/Y H:i')}}</td>
                                                 <td>{{$cus->name}}</td>
                                                 <td>{{$cus->email}}</td>
+                                                <td>{{$cus->number}}</td>
                                                 <td>{{$cus->referal}}</td>
                                                 @if($cus->active)
                                                 <td><span class="badge badge-success">Active</span></td>
