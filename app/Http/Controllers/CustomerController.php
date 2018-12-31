@@ -197,21 +197,24 @@ class CustomerController extends Controller
   		$rate = $request->input('rate');
         $amount = $request->input('amount');
 
-
+        $now = Carbon::now();
+        $month = Carbon::now()->addMonths($request->input('rate'));
+        $days = $month->diff($now)->days;
+        $Mrate = $days;
          
         if ($rate == "5") {
 
-			$accured_interest = (1.40/100)*$amount*$rate;
+			$accured_interest = (1.40/100)*$amount*$Mrate;
             $irm = 20;
 			
 		}elseif ($rate == "9") {
-			$accured_interest = (1.96/100)*$amount*$rate;
+			$accured_interest = (1.96/100)*$amount*$Mrate;
              $irm = 30;
 		}elseif ($rate == "18") {
-			$accured_interest = (3.84/100)*$amount*$rate;
+			$accured_interest = (3.84/100)*$amount*$Mrate;
              $irm = 40;
 		}elseif ($rate == "36") {
-			$accured_interest = (7.7/100)*$amount*$rate;
+			$accured_interest = (7.7/100)*$amount*$Mrate;
              $irm = 50;
 		}
         
@@ -231,7 +234,7 @@ class CustomerController extends Controller
 			$accured_interest = (4/100)*$amount*$rate;
              $irm = 50;
 		}*/
-        
+
         $gain = $amount + $accured_interest;
 		$interest = ($irm/100)*$gain;
 		$total_earning = $gain - $interest;
