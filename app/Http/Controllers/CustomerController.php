@@ -197,7 +197,26 @@ class CustomerController extends Controller
   		$rate = $request->input('rate');
         $amount = $request->input('amount');
 
-		if ($rate == "30") {
+
+         
+        if ($rate == "5") {
+
+			$accured_interest = (1.40/100)*$amount*$rate;
+            $irm = 20;
+			
+		}elseif ($rate == "9") {
+			$accured_interest = (1.96/100)*$amount*$rate;
+             $irm = 30;
+		}elseif ($rate == "18") {
+			$accured_interest = (3.84/100)*$amount*$rate;
+             $irm = 40;
+		}elseif ($rate == "36") {
+			$accured_interest = (7.7/100)*$amount*$rate;
+             $irm = 50;
+		}
+        
+
+		/*if ($rate == "30") {
 
 			$accured_interest = (1/100)*$amount*$rate;
             $irm = 20;
@@ -211,7 +230,8 @@ class CustomerController extends Controller
 		}elseif ($rate == "360") {
 			$accured_interest = (4/100)*$amount*$rate;
              $irm = 50;
-		}
+		}*/
+        
         $gain = $amount + $accured_interest;
 		$interest = ($irm/100)*$gain;
 		$total_earning = $gain - $interest;

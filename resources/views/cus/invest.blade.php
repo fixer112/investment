@@ -50,10 +50,14 @@ New Investment
                                         <label>Tenure</label>
                                         <select type="option" class="form-control" name="rate" required>
                                         <option disabled selected>Choose tenure</option>        
-                                        <option value="30">30Days/1%daily</option>
+                                        {{-- <option value="30">30Days/1%daily</option>
                                         <option value="90">90Days/2%daily</option>
                                         <option value="180">180Days/3%daily</option>
-                                        <option value="360">360Days/4%daily</option>
+                                        <option value="360">360Days/4%daily</option> --}}
+                                        <option value="5">5 Months/1.40%daily</option>
+                                        <option value="9">9 Months/1.96%daily</option>
+                                        <option value="18">18 Months/3.84%daily</option>
+                                        <option value="36">36 Months/7.7%daily</option>
                                         </select>
                                         @if ($errors->has('rate'))
                                     <span class="invalid-feedback">

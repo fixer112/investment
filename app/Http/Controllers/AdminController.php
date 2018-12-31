@@ -186,12 +186,18 @@ class AdminController extends Controller
 	    $year = date('Y');
         $date = Carbon::now();
         //$date = Carbon::parse('09/03/18');
-        $rate = $history->tenure;
+
+        $now = Carbon::now();
+        $month = Carbon::now()->addMonths($history->tenure);
+        $days = $month->diff($now)->days;
+        $rate = $days;
+
+        //$rate = $history->tenure;
         $amount = $history->invest_amount;
 
         $holidays = [$year."-01-01", $year."-01-15", $year."-02-12", $year."-02-14", $year."-02-16", $year."-02-19", $year."-03-11", $year."-03-17", $year."-03-20", $year."-03-31", $year."-04-01", $year."-04-25", $year."-05-13", $year."-05-16", $year."-05-20", $year."-05-28", $year."-06-14", $year."-06-17", $year."-06-21", $year."-07-04", $year."-09-03", $year."-09-10", $year."-09-23", $year."-10-08", $year."-10-31", $year."-11-04", $year."-11-11", $year."-11-22", $year."-12-02", $year."-12-21", $year."-12-25", $year."-12-26", $year."-12-31"];
 
-	        if (!$date->isMonday()) {
+	        while (!$date->isMonday()) {
 	        	
 	        	$date->addWeekdays(1);
 	        }

@@ -22,7 +22,7 @@ $(document).ready(function() {
                         if (last !== group) {
                             $(rows).eq(i).before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
                             last = group;
-                        }
+                       }
                     });
                 }
             });
