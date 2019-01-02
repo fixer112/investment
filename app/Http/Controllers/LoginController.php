@@ -55,6 +55,12 @@ if ($validator->fails()) {
                      Auth::logout();
                      return \Response::json($data, 403);
                  }
+
+                 if (!$request->version || $request->version < "1.1.3") {
+                     $data['errors'] = ['fail' => ['Service Unavailable or Update App']];
+                     Auth::logout();
+                     return \Response::json($data, 403);
+                 }
                  Auth::user()->update(['api_token' => str_random(60)]);
                  return \Response::json(['user' => Auth::user()]);
              }

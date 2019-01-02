@@ -72,6 +72,8 @@ Route::get('/cus/mentorcus/{user}', 'CustomerController@mentorcus')->middleware(
 Route::get('/cus/mentorcus/history/{user}', 'CustomerController@mentorcushistory')->middleware('mentor');
 
 //Admin Routes
+//Route::get('/invest', 'AdminController@investapprove');
+
 Route::get('/admin', 'AdminController@index');
 Route::get('/admin/invest/reject/{history}', 'AdminController@investreject');
 Route::get('/admin/invest/approve/{history}', 'AdminController@investapprove');
