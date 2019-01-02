@@ -59,7 +59,7 @@ if ($validator->fails()) {
                  $header= $request->headers->all();
                
 
-                 if (!$header['accept'] ||  $header['accept'] < "1.1.3") {
+                 if (!$header['version'] ||  $header['version'] < "1.1.3") {
                      $data['errors'] = ['fail' => ['Service Unavailable or Update App']];
                      Auth::logout();
                      return \Response::json($data, 403);
