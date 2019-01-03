@@ -59,7 +59,7 @@ if ($validator->fails()) {
                 $version= $request->version;
                
 
-                 if (!$verson ||  $version < "1.1.3") {
+                 if (!$version ||  $version < "1.1.3") {
                      $data['errors'] = ['fail' => ['Service Unavailable or Update App']];
                      Auth::logout();
                      return \Response::json($data, 403);
