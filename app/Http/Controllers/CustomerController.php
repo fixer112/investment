@@ -204,18 +204,22 @@ class CustomerController extends Controller
          
         if ($rate == "5") {
 
-			$accured_interest = (1.40/100)*$amount*$Mrate;
-            $irm = 20;
+			/*$accured_interest = (1.40/100)*$amount*$Mrate;
+            $irm = 20;*/
+            $total_earning = $amount * 1.40;
 			
 		}elseif ($rate == "9") {
-			$accured_interest = (1.96/100)*$amount*$Mrate;
-             $irm = 30;
+			/*$accured_interest = (1.96/100)*$amount*$Mrate;
+             $irm = 30;*/
+             $total_earning = $amount * 1.96;
 		}elseif ($rate == "18") {
-			$accured_interest = (3.84/100)*$amount*$Mrate;
-             $irm = 40;
+			/*$accured_interest = (3.84/100)*$amount*$Mrate;
+             $irm = 40;*/
+             $total_earning = $amount * 3.84;
 		}elseif ($rate == "36") {
-			$accured_interest = (7.7/100)*$amount*$Mrate;
-             $irm = 50;
+			/*$accured_interest = (7.7/100)*$amount*$Mrate;
+             $irm = 50;*/
+             $total_earning = $amount * 7.7;
 		}
         
 
@@ -235,9 +239,9 @@ class CustomerController extends Controller
              $irm = 50;
 		}*/
 
-        $gain = $amount + $accured_interest;
+        /*$gain = $amount + $accured_interest;
 		$interest = ($irm/100)*$gain;
-		$total_earning = $gain - $interest;
+		$total_earning = $gain - $interest;*/
 
 		$randomstring = Auth::user()->id.$this->randomstring(4).time();
 
