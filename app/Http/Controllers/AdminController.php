@@ -200,18 +200,18 @@ class AdminController extends Controller
 
 	        while (!$date->isMonday()) {
 	        	
-	        	$date->addWeekdays(1);
+	        	$date->addDays(1);
 	        }
 
 	        $MyDateCarbon = $date;
 
-	        $MyDateCarbon->addWeekdays($rate);
+	        $MyDateCarbon->addDays($rate);
 
 	        for ($i = 1; $i <= $rate+1; $i++) {
 
-	    	if (in_array(Carbon::now()->addWeekdays($i)->toDateString(), $holidays)/* || in_array(Carbon::now()->toDateString(), $holidays)*/) {
+	    	if (in_array(Carbon::now()->addDays($i)->toDateString(), $holidays)/* || in_array(Carbon::now()->toDateString(), $holidays)*/) {
 
-	        $MyDateCarbon->addWeekdays(1);
+	        $MyDateCarbon->addDays(1);
 
 			    }
 			}
