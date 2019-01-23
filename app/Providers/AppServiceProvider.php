@@ -5,7 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use App\User;
-
+use DB;
+use App;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -15,10 +16,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($identitys = User::where('id_change','=', '2')->get()) {
+
+        
+            $identitys = User::where('id_change','=', '2')->get(); 
             
             view()->share ('identitys', $identitys);
-        }
+        
         
         Blade::directive('money', function($amount){
             return "<?php echo '₦'. number_format($amount,2);?>";

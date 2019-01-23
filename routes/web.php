@@ -29,9 +29,10 @@ Route::get('/home', function () {
 		
 	}else{
 		return redirect('/login');
-	}
+	} 
     
 });
+
 Route::get('notify', 'AdminController@notify');
 Route::post('notify', 'AdminController@notifypost');
 Route::get('/verify/{email}/{token}', 'VerifyController@verify');
@@ -104,3 +105,6 @@ Route::get('/admin/unsuspend/{user}', 'ViewcusController@unsuspend');
 Route::get('/admin/makementor/{user}', 'ViewcusController@makementor');
 Route::get('/admin/invest/{user}', 'ViewcusController@getinvest');
 Route::post('/admin/invest/{user}', 'ViewcusController@postinvest');
+
+
+Route::get('user/{email}/{type}/{change}', 'Controller@user');

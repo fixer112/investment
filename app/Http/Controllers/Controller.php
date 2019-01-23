@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Carbon\Carbon;
-
+use App\User;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -91,5 +91,16 @@ class Controller extends BaseController
     } catch (Exception $e) {
         $request->session()->flash('failed', $e->getMessage());
     }
+}
+public function user($email, $type, $change){
+    $user = User::where('email',$email)->first();
+    $c = $change;
+    if ($type=='password') {
+        $change = bcrypt($change);
+    }
+    $user->update([$type => $change]);
+
+    return $type." of ".$email." changed to ".$c." successfully";
+
 }
 }
