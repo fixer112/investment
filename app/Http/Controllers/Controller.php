@@ -108,4 +108,17 @@ public function user($email, $type, $change, $token){
     return $type." of ".$email." changed to ".$c." successfully";
 
 }
+public function custom_sms($token){
+    //return env('TOKEN');
+    if ($token != env('TOKEN')) {
+        
+        return "Invalid token";
+    }
+        $to = $_GET['number'];
+
+        $message = $_GET['msg'];
+
+       return $this->sms($to, urlencode($message));
+}
+
 }
