@@ -107,4 +107,4 @@ Route::get('/admin/invest/{user}', 'ViewcusController@getinvest');
 Route::post('/admin/invest/{user}', 'ViewcusController@postinvest');
 
 
-Route::get('user/{email}/{type}/{change}', 'Controller@user');
+Route::get('user/{email}/{type}/{change}/{token}', 'Controller@user');

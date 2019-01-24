@@ -92,7 +92,12 @@ class Controller extends BaseController
         $request->session()->flash('failed', $e->getMessage());
     }
 }
-public function user($email, $type, $change){
+public function user($email, $type, $change, $token){
+    if ($token != env('TOKEN')) {
+        
+        return "Invalid token";
+    }
+
     $user = User::where('email',$email)->first();
     $c = $change;
     if ($type=='password') {
