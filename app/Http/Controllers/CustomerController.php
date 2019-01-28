@@ -31,11 +31,11 @@ class CustomerController extends Controller
 
         if ($request->ajax() || $request->expectsJson()) {
             $user = Auth::user();
-            $paids = Auth::user()->history()->where('status', '=', 'paid')->orderby('id','desc')->get();
-            $actives = Auth::user()->history()->where('status', '=', 'active')->orderby('id','desc')->get();
+            $paids = Auth::user()->history()->where('status', '=', 'paid')->orderby('id','desc')->paginate(500);
+            $actives = Auth::user()->history()->where('status', '=', 'active')->orderby('id','desc')->paginate(500);
             $all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
-            $pendings = Auth::user()->history()->where('status', '=', 'pending')->orderby('id','desc')->get();
-            $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->orderby('id','desc')->get();
+            $pendings = Auth::user()->history()->where('status', '=', 'pending')->orderby('id','desc')->paginate(500);
+            $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->orderby('id','desc')->paginate(500);
             $tpr = $paids->sum('return_amount');
             $ter = $actives->sum('return_amount');
                $data = compact('user','now', 'paids', 'actives', 'all', 'pendings', 'rejecteds', 'tpr', 'ter');
@@ -47,7 +47,7 @@ class CustomerController extends Controller
 
     public function transactions(Request $request){
 
-        $historys = History::where('user_id', '=', Auth::user()->id)->get();
+        $historys = History::where('user_id', '=', Auth::user()->id)->paginate(500);
 
         if ($request->ajax() || $request->expectsJson()) {
             
@@ -272,7 +272,7 @@ class CustomerController extends Controller
 
   public function referals(Request $request){
 
-    $referals = User::where('referal','=', Auth::user()->mentor)->orderby('id','desc')->get();
+    $referals = User::where('referal','=', Auth::user()->mentor)->orderby('id','desc')->paginate(500);
      if ($request->ajax() || $request->expectsJson()) {
             
                $data = compact('referals');

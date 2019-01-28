@@ -66,6 +66,7 @@
                                             @endif
                                         </tbody>
                                     </table>
+                                    {{$cuss->links()}}
                                             </div>
                 </div>
             </div>

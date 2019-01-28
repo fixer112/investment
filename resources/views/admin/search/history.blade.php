@@ -80,6 +80,7 @@
                                             @endif
                                         </tbody>
                                     </table>
+                                    {{$historys->links()}}
                                             </div>
                 </div>
             </div>

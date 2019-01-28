@@ -23,11 +23,11 @@ class AdminController extends Controller
     public function index(){
     	$historys = new History;
     	$users = new User;
-    	$paids = $historys->where('status', '=', 'paid')->get();
-		$actives = $historys->where('status', '=', 'active')->get();
+    	$paids = $historys->where('status', '=', 'paid')->paginate(500);
+		$actives = $historys->where('status', '=', 'active')->paginate(500);
 		$all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
-		$pendings = $historys->where('status', '=', 'pending')->get();
-		$rejecteds = $historys->where('status', '=', 'reject')->get();
+		$pendings = $historys->where('status', '=', 'pending')->paginate(500);
+		$rejecteds = $historys->where('status', '=', 'reject')->paginate(500);
 		$now = Carbon::now();
 		//$dues = 
 
@@ -285,21 +285,21 @@ class AdminController extends Controller
 
 	public function mentors(){
 
-    $mentors = User::where('mentor','!=', '')->get();
+    $mentors = User::where('mentor','!=', '')->paginate(500);
     return view('admin.mentors')->with(['mentors' => $mentors]); 
 
   }
 
   public function admins(){
 
-    $admins = User::where('role','=', 'admin')->get();
+    $admins = User::where('role','=', 'admin')->paginate(500);
     return view('admin.admins')->with(['admins' => $admins]); 
 
   }
 
 	 public function referals(){
 
-    $referals = User::where('referal','=', Auth::user()->mentor)->get();
+    $referals = User::where('referal','=', Auth::user()->mentor)->paginate(500);
     return view('admin.referals')->with(['referals' => $referals]); 
 
   }
@@ -314,7 +314,7 @@ class AdminController extends Controller
 
      public function customers(){
 
-        $cuss = User::where('role','=', 'cus')->get();
+        $cuss = User::where('role','=', 'cus')->paginate(500);
 
         return view('admin.search.cus', compact('cuss'));
 

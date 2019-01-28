@@ -156,7 +156,7 @@ class ViewcusController extends Controller
 
   public function referals(User $user){
 
-    $referals = User::where('referal','=',$user->mentor)->get();
+    $referals = User::where('referal','=',$user->mentor)->paginate(500);
     return view('admin.cus.referals')->with(['referals' => $referals, 'user' => $user]); 
 
   }

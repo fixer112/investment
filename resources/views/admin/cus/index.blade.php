@@ -206,10 +206,10 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                                 <h4 class="card-title">History</h4>
                                  <!-- Nav tabs -->
                                 <ul class="nav nav-tabs customtab" role="tablist">
-                                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#active" role="tab"><span style="color: blue">{{count($actives)}} Active</span></a> </li>
-                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#paid" role="tab"><span style="color: green">{{count($paids)}} Paid</span></a> </li>
-                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#pending" role="tab"><span style="color: yellow">{{count($pendings)}} Pending</span></a> </li>
-									<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#reject" role="tab"><span style="color: red">{{count($rejecteds)}} Rejected</span></a> </li>
+                                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#active" role="tab"><span style="color: blue">{{$actives->total()}} Active</span></a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#paid" role="tab"><span style="color: green">{{$paids->total()}} Paid</span></a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#pending" role="tab"><span style="color: yellow">{{$pendings->total()}} Pending</span></a> </li>
+									<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#reject" role="tab"><span style="color: red">{{$rejecteds->total()}} Rejected</span></a> </li>
                                 </ul>
                                 <!-- Tab panes -->
                                 <div class="tab-content">
@@ -255,6 +255,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                                             @endif
                                         </tbody>
                                     </table>
+                                    {{$actives->links()}}
                                             </div>
 
                                         
@@ -297,7 +298,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                                             @endif
                                         </tbody>
                                     </table>
-                                            
+                                            {{$paids->links()}}
 
                                         </div>
 									</div>
@@ -333,6 +334,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                                             @endif
                                         </tbody>
                                     </table>
+                                    {{$pendings->links()}}
                                             </div>
 
                                         
@@ -371,6 +373,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                                             @endif
                                         </tbody>
                                     </table>
+                                    {{$rejecteds->links()}}
                                             </div>
 
                                         
