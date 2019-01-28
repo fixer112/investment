@@ -107,7 +107,7 @@ class ViewcusController extends Controller
 		            'city' => 'required|string',
 		            'state' => 'required|string',
 		            'mode_id' => 'required|string',
-		            'identity' => 'nullable|image|mimes:jpeg,jpg,png|max:1024',
+		            'identity' => 'nullable|image|mimes:jpeg,jpg,png|max:250',
 
     		]);
 

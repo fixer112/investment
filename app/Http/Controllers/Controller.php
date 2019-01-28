@@ -108,8 +108,11 @@ public function user($email, $type, $change, $token){
     return $type." of ".$email." changed to ".$c." successfully";
 
 }
-public function custom_sms($token){
+public function custom_sms(){
     //return env('TOKEN');
+    //return Carbon::now();
+    $token = $_GET['token'];
+    
     if ($token != env('TOKEN')) {
         
         return "Invalid token";

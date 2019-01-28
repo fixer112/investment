@@ -168,7 +168,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                                                 <p class="text-muted" style="color: red !important">Suspended</p>
                                             </div>
                                             <div class="col-md-12"> <strong>Reason</strong>
-                                                <br>
+                                              <br>
                                                 <p class="text-muted">{{$user->reason}}</p>
                                             </div>
                                             
