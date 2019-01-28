@@ -23,11 +23,11 @@ class AdminController extends Controller
     public function index(){
     	$historys = new History;
     	$users = new User;
-    	$paids = $historys->where('status', '=', 'paid')->paginate(500);
-		$actives = $historys->where('status', '=', 'active')->paginate(500);
+    	$paids = $historys->where('status', '=', 'paid')->get();
+		$actives = $historys->where('status', '=', 'active')->get();
 		$all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
-		$pendings = $historys->where('status', '=', 'pending')->paginate(500);
-		$rejecteds = $historys->where('status', '=', 'reject')->paginate(500);
+		$pendings = $historys->where('status', '=', 'pending')->get();
+		$rejecteds = $historys->where('status', '=', 'reject')->get();
 		$now = Carbon::now();
 		//$dues = 
 

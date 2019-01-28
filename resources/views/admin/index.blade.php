@@ -121,10 +121,10 @@ $dues = $actives->where('return_date', '<', $now );
      <!-- Nav tabs -->
     <ul class="nav nav-tabs customtab" role="tablist">
         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#due" role="tab"><span style="color: #26dad2">{{$dues->count()}} Due </span></a> </li>
-        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#active" role="tab"><span style="color: blue">{{$actives->total()}} Active</span></a> </li>
-        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#paid" role="tab"><span style="color: green">{{$paids->total()}} Paid</span></a> </li>
-        <li class="nav-item"> <a class="nav-link  active" data-toggle="tab" href="#pending" role="tab"><span style="color: yellow">{{$pendings->total()}} Pending</span></a> </li>
-		<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#reject" role="tab"><span style="color: red">{{$rejecteds->total()}} Rejected</span></a> </li>
+        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#active" role="tab"><span style="color: blue">{{$actives->count()}} Active</span></a> </li>
+        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#paid" role="tab"><span style="color: green">{{$paids->count()}} Paid</span></a> </li>
+        <li class="nav-item"> <a class="nav-link  active" data-toggle="tab" href="#pending" role="tab"><span style="color: yellow">{{$pendings->count()}} Pending</span></a> </li>
+		<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#reject" role="tab"><span style="color: red">{{$rejecteds->count()}} Rejected</span></a> </li>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
@@ -227,7 +227,7 @@ $dues = $actives->where('return_date', '<', $now );
                 @endif
             </tbody>
         </table>
-        {{$actives->links()}}
+        
                 </div>
 
             
@@ -278,7 +278,7 @@ $dues = $actives->where('return_date', '<', $now );
                 @endif
             </tbody>
         </table>
-        {{$paids->links()}}
+        
                 
 
             </div>
@@ -327,7 +327,7 @@ $dues = $actives->where('return_date', '<', $now );
                 @endif
             </tbody>
         </table>
-        {{$pendings->links()}}
+        
                 </div>
 
             
@@ -374,7 +374,7 @@ $dues = $actives->where('return_date', '<', $now );
                 @endif
             </tbody>
         </table>
-        {{$rejecteds->links()}}
+       
                 </div>
 
             
