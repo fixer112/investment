@@ -9,7 +9,7 @@ $(document).ready(function() {
                 "order": [
                     [2, 'asc']
                 ],
-                "displayLength": 100,
+                "displayLength": 500,
                 "drawCallback": function(settings) {
                     var api = this.api();
                     var rows = api.rows({
@@ -41,7 +41,7 @@ $(document).ready(function() {
         "order": [
                     [0, 'desc']
                 ],
-        "displayLength": 100,
+        "displayLength": 500,
         /*dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
@@ -53,7 +53,7 @@ $(document).ready(function() {
         "order": [
                     [0, 'desc']
                 ],
-        "displayLength": 100,
+        "displayLength": 500,
         dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
