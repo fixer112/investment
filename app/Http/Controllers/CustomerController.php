@@ -31,11 +31,11 @@ class CustomerController extends Controller
 
         if ($request->ajax() || $request->expectsJson()) {
             $user = Auth::user();
-            $paids = Auth::user()->history()->where('status', '=', 'paid')->orderby('id','desc')->paginate(500);
-            $actives = Auth::user()->history()->where('status', '=', 'active')->orderby('id','desc')->paginate(500);
+            $paids = Auth::user()->history()->where('status', '=', 'paid')->orderby('id','desc')->get();
+            $actives = Auth::user()->history()->where('status', '=', 'active')->orderby('id','desc')->get();
             $all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
-            $pendings = Auth::user()->history()->where('status', '=', 'pending')->orderby('id','desc')->paginate(500);
-            $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->orderby('id','desc')->paginate(500);
+            $pendings = Auth::user()->history()->where('status', '=', 'pending')->orderby('id','desc')->get();
+            $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->orderby('id','desc')->get();
             $tpr = $paids->sum('return_amount');
             $ter = $actives->sum('return_amount');
                $data = compact('user','now', 'paids', 'actives', 'all', 'pendings', 'rejecteds', 'tpr', 'ter');

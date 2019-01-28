@@ -7,11 +7,11 @@ Dashboard | {{$user->name}}
 Dashbord
 @endsection
 @php
-$paids = $referals->where('status', '=', 'paid');
-$actives = $referals->where('status', '=', 'active');
-$all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
-$pendings = $referals->where('status', '=', 'pending');
-$rejecteds = $referals->where('status', '=', 'reject');
+$paids = $referals->where('status', '=', 'paid')->paginate(500);
+$actives = $referals->where('status', '=', 'active')->paginate(500);
+$all = $paids->sum('invest_amount') + $actives->sum('invest_amount')->paginate(500);
+$pendings = $referals->where('status', '=', 'pending')->paginate(500);
+$rejecteds = $referals->where('status', '=', 'reject')->paginate(500);
 @endphp
 
 {{-- <div class="row">

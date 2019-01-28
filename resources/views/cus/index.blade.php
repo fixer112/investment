@@ -7,11 +7,11 @@ Dashboard | {{Auth::user()->name}}
 Dashbord
 @endsection
 @php
-$paids = Auth::user()->history()->where('status', '=', 'paid')->get();
-$actives = Auth::user()->history()->where('status', '=', 'active')->get();
+$paids = Auth::user()->history()->where('status', '=', 'paid')->paginate(500);
+$actives = Auth::user()->history()->where('status', '=', 'active')->paginate(500);
 $all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
-$pendings = Auth::user()->history()->where('status', '=', 'pending')->get();
-$rejecteds = Auth::user()->history()->where('status', '=', 'reject')->get();
+$pendings = Auth::user()->history()->where('status', '=', 'pending')->paginate(500);
+$rejecteds = Auth::user()->history()->where('status', '=', 'reject')->paginate(500);
 @endphp
 
 <div class="row">

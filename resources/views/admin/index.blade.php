@@ -7,7 +7,7 @@ Dashboard | {{Auth::user()->name}}
 Dashbord
 @endsection
 @php
-$dues = $actives->where('return_date', '<', $now );
+$dues = $actives->where('return_date', '<', $now )->paginate(500);
 
 @endphp
 

@@ -7,11 +7,11 @@ Dashboard | {{$user->name}}
 Dashbord
 @endsection
 @php
-$paids = $user->history()->where('status', '=', 'paid')->get();
-$actives = $user->history()->where('status', '=', 'active')->get();
+$paids = $user->history()->where('status', '=', 'paid')->paginate(500);
+$actives = $user->history()->where('status', '=', 'active')->paginate(500);
 $all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
-$pendings = $user->history()->where('status', '=', 'pending')->get();
-$rejecteds = $user->history()->where('status', '=', 'reject')->get();
+$pendings = $user->history()->where('status', '=', 'pending')->paginate(500);
+$rejecteds = $user->history()->where('status', '=', 'reject')->paginate(500);
 @endphp
 
 <div class="row">
