@@ -7,7 +7,7 @@ Dashboard | {{Auth::user()->name}}
 Dashbord
 @endsection
 @php
-$dues = $actives->where('return_date', '<', $now )->paginate(500);
+$dues = $actives->where('return_date', '<', $now );
 
 @endphp
 
@@ -120,7 +120,7 @@ $dues = $actives->where('return_date', '<', $now )->paginate(500);
     <h4 class="card-title">History</h4>
      <!-- Nav tabs -->
     <ul class="nav nav-tabs customtab" role="tablist">
-        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#due" role="tab"><span style="color: #26dad2">{{$dues->total()}} Due </span></a> </li>
+        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#due" role="tab"><span style="color: #26dad2">{{$dues->count()}} Due </span></a> </li>
         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#active" role="tab"><span style="color: blue">{{$actives->total()}} Active</span></a> </li>
         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#paid" role="tab"><span style="color: green">{{$paids->total()}} Paid</span></a> </li>
         <li class="nav-item"> <a class="nav-link  active" data-toggle="tab" href="#pending" role="tab"><span style="color: yellow">{{$pendings->total()}} Pending</span></a> </li>
@@ -176,7 +176,6 @@ $dues = $actives->where('return_date', '<', $now )->paginate(500);
                 @endif
             </tbody>
         </table>
-        {{$dues->links()}}
                 </div>
 
             
