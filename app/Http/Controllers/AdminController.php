@@ -285,14 +285,14 @@ class AdminController extends Controller
 
 	public function mentors(){
 
-    $mentors = User::where('mentor','!=', '')->paginate(500);
+    $mentors = User::where('mentor','!=', '')->paginate(1000);
     return view('admin.mentors')->with(['mentors' => $mentors]); 
 
   }
 
   public function admins(){
 
-    $admins = User::where('role','=', 'admin')->paginate(500);
+    $admins = User::where('role','=', 'admin')->paginate(1000);
     return view('admin.admins')->with(['admins' => $admins]); 
 
   }
@@ -306,7 +306,7 @@ class AdminController extends Controller
 
   public function transactions(){
 
-        $historys = History::all();
+        $historys = History::paginate(1000);
 
         return view('admin.search.history', compact('historys'));
 
@@ -314,7 +314,7 @@ class AdminController extends Controller
 
      public function customers(){
 
-        $cuss = User::where('role','=', 'cus')->paginate(500);
+        $cuss = User::where('role','=', 'cus')->get();
 
         return view('admin.search.cus', compact('cuss'));
 

@@ -47,7 +47,7 @@ class CustomerController extends Controller
 
     public function transactions(Request $request){
 
-        $historys = History::where('user_id', '=', Auth::user()->id)->paginate(500);
+        $historys = History::where('user_id', '=', Auth::user()->id)->orderby('id','desc')->paginate(500);
 
         if ($request->ajax() || $request->expectsJson()) {
             

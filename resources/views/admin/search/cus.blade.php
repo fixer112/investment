@@ -58,7 +58,7 @@
                                                 <td><span class="badge badge-danger">Suspended</span></td>
                                                 @endif
                                                 <td>{{$cus->active ? '' : $cus->reason}}</td>
-                                                <td>
+                                              <td>
                                                 <a href="/admin/cus/{{$cus->id}}"><button class="btn btn-primary">View Customer</button></a>
                                                 </td>
                                             </tr>
@@ -66,7 +66,7 @@
                                             @endif
                                         </tbody>
                                     </table>
-                                    {{$cuss->links()}}
+                                    {{-- {{$cuss->links()}} --}}
                                             </div>
                 </div>
             </div>
