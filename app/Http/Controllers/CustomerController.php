@@ -282,7 +282,7 @@ class CustomerController extends Controller
 
   }
 
-  public function mentorcus(User $user){
+  public function mentorcus(User $user, Request $request){
     if ($user->referal == Auth::user()->mentor) {
 
     $referals = $user->history;
