@@ -288,11 +288,11 @@ class CustomerController extends Controller
     $referals = $user->history;
      $now = Carbon::now();
       if ($request->ajax() || $request->expectsJson()) {
-            $paids = $referals->where('status', '=', 'paid');
-            $actives = $referals->where('status', '=', 'active');
+            $paids = $referals->where('status', 'paid');
+            $actives = $referals->where('status', 'active');
             $all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
-            $pendings = $referals->where('status', '=', 'pending');
-            $rejecteds = $referals->where('status', '=', 'reject');
+            $pendings = $referals->where('status', 'pending');
+            $rejecteds = $referals->where('status', 'reject');
             $tpr=$paids->sum('return_amount');
             $ter=$actives->sum('return_amount');
                $data = compact('referals','user','now','paids','actives','all','pendings','rejecteds','tpr','ter');
