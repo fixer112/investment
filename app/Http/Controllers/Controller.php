@@ -160,7 +160,7 @@ public function reciept(Request $request, History $history){
     $data['invest_date'] = $history->invest_date->toFormattedDateString();
     $data['return_date'] = $history->return_date->toFormattedDateString();
     $data['return_amount'] = $this->naira($history->return_amount);
-    $data['interest'] = $history->return_amount - $history->invest_amount;
+    $data['interest'] = $this->naira($history->return_amount - $history->invest_amount);
     $data['rate'] = $this->rate($history->tenure);
 
     //return $data;
