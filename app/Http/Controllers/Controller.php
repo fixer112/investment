@@ -165,7 +165,7 @@ public function reciept(Request $request, History $history){
     //return $data;
     $pdf = PDF::loadView('pdf.invoice', $data);
     if ($request->type == 'email') {
-     Mail::to($data['email'])->send(new DownloadReciept($data['name'], $data['id'], $pdf->output()));
+     Mail::to($data['email'])->send(new DownloadReciept($user->name, $history->tran_id, $pdf->output()));
      $request->session()->flash('success', 'Reciept sent to email');
      return 'done';
 
