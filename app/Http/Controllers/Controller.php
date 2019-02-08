@@ -9,6 +9,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Carbon\Carbon;
 use App\User;
+use APP\History;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -31,7 +32,7 @@ class Controller extends BaseController
     }
     
     public function naira($number){
-    return "N". number_format($number, 2);
+    return "NGN ". number_format($number, 2);
 
     }
 
@@ -122,6 +123,12 @@ public function custom_sms(){
         $message = $_GET['msg'];
 
        return $this->sms($to, urlencode($message));
+}
+
+public function reciept(Request $request, History $history){
+    
+    $pdf = PDF::loadView('pdf.invoice', $data);
+    return $pdf->download('invoice.pdf');
 }
 
 }
