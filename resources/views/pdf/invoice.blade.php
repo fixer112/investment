@@ -46,7 +46,7 @@
 			</div>
 
 			<div class="col-12">
-				<p>Dear {{ucfirst($name)}},</p>
+				<p>Dear {{ucfirst(strtolower($name))}},</p>
 
 				<p>We are pleased to inform you that your funds have been placed with us and has been booked under the following terms:</p>
 			</div>
