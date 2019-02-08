@@ -37,8 +37,8 @@
 			</div>
 
 			<div class="col-6">
-				<p>{{isset($name) ? strtoupper($name) : 'Test NAME'}}</p>
-				<p>{{ isset($addr) ? strtoupper($addr) : 'TEST ADDRESS'}}</p>
+				<p>{{$name}}</p>
+				<p>{{$addr}}</p>
 			</div>
 
 			
@@ -46,7 +46,7 @@
 			</div>
 
 			<div class="col-12">
-				<p>Dear {{$name}},</p>
+				<p>Dear {{ucfirst($name)}},</p>
 
 				<p>We are pleased to inform you that your funds have been placed with us and has been booked under the following terms:</p>
 			</div>
