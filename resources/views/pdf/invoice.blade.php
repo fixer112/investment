@@ -60,7 +60,7 @@
 							</td>
 
 							<td id="right">
-								FIXED DEPOSIT - {{$tunure}} {{$type}}
+								FIXED DEPOSIT - {{$tenure}} {{$type}}
 							</td>
 						</tr>
 
@@ -87,7 +87,7 @@
 								TENOR
 							</td>
 							<td id="right">
-								{{$tunure}} {{$type}}
+								{{$tenure}} {{$type}}
 							</td>
 						</tr>
 
