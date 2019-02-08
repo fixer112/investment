@@ -7,28 +7,26 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Honeypays extends Mailable
+class Reciept extends Mailable
 {
     use Queueable, SerializesModels;
 
     
     public $content;
-    public $logo;
-    public $subject;
-    public $link;
+    public $name;
+    public $id;
 
     /**
      * Create a new content instance.
      *
      * @return void
      */
-    public function __construct($content, $subject = null, $link = null)
+    public function __construct($content, $name = null, $id = null)
     {
         $this->content = $content;
-        $this->logo = '/honeylogo.jpg';
-        $this->subject = $subject;
-        $this->link = $link;
-        echo $this->link;
+        $this->name = $name;
+        $this->id = $id;
+        //echo $this->id;
     }
 
     /**
@@ -39,7 +37,8 @@ class Honeypays extends Mailable
     public function build()
     {
         return $this->from('projectempower@honeypays.com.ng', 'HONEYPAYS PROJECT EMPOWER')
-                    ->subject($this->subject)
-                    ->view('email.honeypays');
+                    ->subject('Reciept '.$this->id)
+                    ->attachData($this->content,'Invoice-'.$this->id.'.pdf')
+                    ->view('email.invoice');
     }
 }

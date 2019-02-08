@@ -10,7 +10,7 @@
     margin: 10px;
 	}
 	table{
-		width: 100%;
+		width: 800px;
 	}
 	img{
 		float: right;
@@ -33,7 +33,7 @@
 			<div class=>
 
 			<div class="col-6 rounded float-right">
-				<img src="{{asset('honeylogo.jpg')}}">
+				{{-- <img src="{{asset('honeylogo.jpg')}}"> --}}
 			</div>
 
 			<div class="col-6">

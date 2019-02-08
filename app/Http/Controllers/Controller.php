@@ -12,7 +12,8 @@ use App\User;
 use App\History;
 use Illuminate\Support\Facades\Auth;
 use PDF;
-use App\Mail\DownloadReciept;
+use App\Mail\Reciept;
+use App\Mail\Honeypays;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Response;
 
@@ -167,13 +168,16 @@ public function reciept(Request $request, History $history){
     $id = $history->tran_id;
     $pdf = PDF::loadView('pdf.invoice', $data);
     if ($request->type == 'email') {
-     Mail::to($data['email'])->send(new DownloadReciept($name, $id, $pdf->output()));
-     $request->session()->flash('success', 'Reciept sent to email');
-     return 'done';
+     Mail::to($user->email)->send(new Reciept( $pdf->output(), $name, $id));
+
+     //Mail::to($user->email)->send(new Honeypays( $pdf->output(), $name, $id));
+
+     $request->session()->flash('success', 'Reciept sent to '.$user->email);
+     return back();
 
     }else {
     //$pdf = PDF::loadView('pdf.invoice', $data)->stream($data['id'].'.pdf');
-    return $pdf->stream($data['id'].'.pdf');
+    return $pdf->stream('Invoice-'.$data['id'].'.pdf');
     }
     //return Response()->downloa
     //return $pdf->stream('invoice.pdf');

@@ -143,6 +143,7 @@ $dues = $actives->where('return_date', '<', $now );
                     <th>Tenure</th>
                     <th>Approved Date</th>
                     <th>Expected Return</th>
+                    <th>Reciept</th>
                     <th>Actioins</th>
                     
                 </tr>
@@ -164,6 +165,13 @@ $dues = $actives->where('return_date', '<', $now );
                     <td>{{$due->tenure}}</td>
                     <td>{{$due->approved_date->format('d/m/Y H:i')}}</td>
                     <td>@money($due->return_amount)</td>
+                    <td>
+                        @component('component.receipt')
+                            @slot('id')
+                                {{$due->id}}
+                            @endslot
+                        @endcomponent
+                    </td>
                     <td><a href="{{asset($due->proof)}}"><button class="btn btn-primary">View Proof</button></a>
 
                     <a href="/admin/cus/{{$due_user->id}}"><button class="btn btn-primary">View Customer</button></a>
@@ -195,6 +203,7 @@ $dues = $actives->where('return_date', '<', $now );
                     <th>Tenure</th>
                     <th>Maturity Date</th>
                     <th>Expected Return</th>
+                    <th>Reciept</th>
                     <th>Actioins</th>
                     
                 </tr>
@@ -215,6 +224,13 @@ $dues = $actives->where('return_date', '<', $now );
                     <td>{{$active->tenure}}</td>
                     <td>{{$active->return_date->format('d/m/Y H:i')}}</td>
                     <td>@money($active->return_amount)</td>
+                    <td>
+                        @component('component.receipt')
+                            @slot('id')
+                                {{$active->id}}
+                            @endslot
+                        @endcomponent
+                    </td>
                     <td><a href="{{asset($active->proof)}}"><button class="btn btn-primary">View Proof</button></a>
 
                     <a href="/admin/cus/{{$active_user->id}}"><button class="btn btn-primary">View Customer</button></a>
@@ -247,6 +263,7 @@ $dues = $actives->where('return_date', '<', $now );
                     <th>Tenure</th>
                     <th>Maturity Date</th>
                     <th>Amount Returned</th>
+                    <th>Reciept</th>
                     <th>Actioins</th>
                     
                 </tr>
@@ -268,6 +285,13 @@ $dues = $actives->where('return_date', '<', $now );
                     <td>{{$paid->tenure}}</td>
                     <td>{{$paid->return_date->format('d/m/Y H:i')}}</td>
                     <td>@money($paid->return_amount)</td>
+                    <td>
+                        @component('component.receipt')
+                            @slot('id')
+                                {{$paid->id}}
+                            @endslot
+                        @endcomponent
+                    </td>
                     <td><a href="{{asset($paid->proof)}}"><button class="btn btn-primary">View Proof</button></a>
 
                     <a href="/admin/cus/{{$paid_user->id}}"><button class="btn btn-primary">View Customer</button></a>

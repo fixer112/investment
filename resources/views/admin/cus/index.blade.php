@@ -227,6 +227,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                                                 <th>Maturity Date</th>
                                                 <th>Expected Return</th>
                                                 <th>Due for Payment</th>
+                                                <th>Reciept</th>
                                                 <th>Actioins</th>
                                                 
                                             </tr>
@@ -246,6 +247,13 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                                                 <td>@money($active->return_amount)</td>
                                                 <td>
                                                 <span class="badge {{$active->return_date < $now ? 'badge-success' : 'badge-danger'}}">{{$active->return_date < $now ? 'Yes' : 'No'}}</span>
+                                                </td>
+                                                <td>
+                                                    @component('component.receipt')
+                                                        @slot('id')
+                                                            {{$active->id}}
+                                                        @endslot
+                                                    @endcomponent
                                                 </td>
                                                 <td><a href="{{asset($active->proof)}}"><button class="btn btn-primary">View Proof</button></a></td>
                                                 
@@ -274,6 +282,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                                                 <th>Tenure</th>
                                                 <th>Maturity Date</th>
                                                 <th>Amount Returned</th>
+                                                <th>Reciept</th>
                                                 <th>Actioins</th>
                                                 
                                             </tr>
@@ -289,8 +298,18 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                                                 <td>{{$paid->tran_id}}</td>
                                                 <td>@money($paid->invest_amount)</td>
                                                 <td>{{$paid->tenure}}</td>
+                                                
                                                 <td>{{$paid->return_date->format('d/m/Y H:i')}}</td>
                                                 <td>@money($paid->return_amount)</td>
+
+                                                <td>
+                                                    @component('component.receipt')
+                                                        @slot('id')
+                                                            {{$paid->id}}
+                                                        @endslot
+                                                    @endcomponent
+                                                </td>
+                                                
                                                 <td><a href="{{asset($paid->proof)}}"><button class="btn btn-primary">View Proof</button></a></td>
                                                 
                                             </tr>
