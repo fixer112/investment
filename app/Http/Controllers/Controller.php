@@ -173,6 +173,9 @@ public function reciept(Request $request, History $history){
      //Mail::to($user->email)->send(new Honeypays( $pdf->output(), $name, $id));
 
      $request->session()->flash('success', 'Reciept sent to '.$user->email);
+     if ($request->route == 'stay') {
+         return 'Reciept sent to '.$user->email;
+     }
      return back();
 
     }else {
