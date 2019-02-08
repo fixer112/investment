@@ -33,6 +33,11 @@ Route::get('/home', function () {
     
 });
 
+Route::get('/pdf', function () {
+	
+   return view('pdf.invoice');
+});
+Route::get('reciept/{history}', 'Controller@reciept');
 Route::get('notify', 'AdminController@notify');
 Route::post('notify', 'AdminController@notifypost');
 Route::get('/verify/{email}/{token}', 'VerifyController@verify');

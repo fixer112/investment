@@ -9,10 +9,19 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Carbon\Carbon;
 use App\User;
-use APP\History;
+use App\History;
+use Illuminate\Support\Facades\Auth;
+use PDF;
+use Illuminate\Http\Response;
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+     public function __construct(Request $request)
+    {
+            $this->middleware('auth')->only('reciept');
+    }
 
     public function sms($to, $message){
     	$username = env('SMS_USERNAME');
@@ -126,9 +135,45 @@ public function custom_sms(){
 }
 
 public function reciept(Request $request, History $history){
-    
-    $pdf = PDF::loadView('pdf.invoice', $data);
-    return $pdf->download('invoice.pdf');
+    $user = $history->user;
+    if (Auth::user()->role != 'admin' && Auth::user()->id != $history->user_id) {
+        $request->session()->flash('failed', 'Sorry you are not autorized to perform this action');
+        return back();
+    }
+
+    $data = [];
+    $data['name'] = $user->name;
+    $data['addr'] = $user->addr;
+    $data['tenure'] = $history->tenure;
+    $data['id'] = $history->tran_id;
+    $data['amount'] = $history->invest_amount;
+    $data['invest_date'] = $history->invest_date->toFormattedDateString();
+    $data['return_date'] = $history->return_date->toFormattedDateString();
+    $data['return_amount'] = $history->return_amount;
+    $data['interest'] = $history->return_amount - $history->invest_amount;
+    $data['rate'] = $this->rate($history->tenure);
+
+    //return $data;
+
+    $pdf = PDF::loadView('pdf.invoice', $data)->stream();
+    //return Response()->downloa
+    return $pdf;
+    //return $pdf->stream('invoice.pdf');
+}
+
+public function rate($tenure){
+     if ($tenure == "5") {
+            $rate = 1.40;
+        }elseif ($tenure == "9") {
+             $rate =  1.96;
+        }elseif ($tenure == "18") {
+             $rate = 3.84;
+        }elseif ($tenure == "36") {
+             $rate =  7.7;
+        }else{
+            $rate = "";
+        }
+        return $rate;
 }
 
 }
