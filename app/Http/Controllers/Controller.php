@@ -41,7 +41,7 @@ class Controller extends BaseController
     }
     
     public function naira($number){
-    return "NGN ". number_format($number, 2);
+    return "N ". number_format($number, 2);
 
     }
 
@@ -145,11 +145,12 @@ public function reciept(Request $request, History $history){
     $data['name'] = $user->name;
     $data['addr'] = $user->addr;
     $data['tenure'] = $history->tenure;
+    $data['type'] = $history->tenure > 36 ? 'Days' : 'Month';
     $data['id'] = $history->tran_id;
-    $data['amount'] = $history->invest_amount;
+    $data['invest_amount'] = $this->naira($history->invest_amount);
     $data['invest_date'] = $history->invest_date->toFormattedDateString();
     $data['return_date'] = $history->return_date->toFormattedDateString();
-    $data['return_amount'] = $history->return_amount;
+    $data['return_amount'] = $this->naira($history->return_amount);
     $data['interest'] = $history->return_amount - $history->invest_amount;
     $data['rate'] = $this->rate($history->tenure);
 

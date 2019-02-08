@@ -4,13 +4,16 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Invoice</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+	{{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"> --}}
 	<style type="text/css">
-	/*.container {
-    margin: 60px;
-	}*/
+	.container {
+    margin: 10px;
+	}
 	table{
-		width: 800px;
+		width: 100%;
+	}
+	img{
+		float: right;
 	}
 	/*#right{
 		text-align: right;
@@ -27,26 +30,28 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div>
+			<div class=>
 
-			<div class="info col-6 mt-5">
-				<p>{{isset($name) ? strtoupper($name) : ''}}</p>
-				<p>{{ isset($addr) ? strtoupper($addr) : ''}}</p>
-			</div>
-
-			<div class="img col-6 mt-5 rounded float-right">
+			<div class="col-6 rounded float-right">
 				<img src="{{asset('honeylogo.jpg')}}">
 			</div>
 
+			<div class="col-6">
+				<p>{{isset($name) ? strtoupper($name) : 'Test NAME'}}</p>
+				<p>{{ isset($addr) ? strtoupper($addr) : 'TEST ADDRESS'}}</p>
 			</div>
 
-			<div class="msg col-12 mt-5">
-				<p>Dear Wale Ajayi,</p>
+			
+
+			</div>
+
+			<div class="col-12">
+				<p>Dear {{$name}},</p>
 
 				<p>We are pleased to inform you that your funds have been placed with us and has been booked under the following terms:</p>
 			</div>
 
-			<div class="terms col-12 mt-2">
+			<div class="col-12">
 				<table class="table">
 					<tbody>
 						<tr>
@@ -55,7 +60,7 @@
 							</td>
 
 							<td id="right">
-								FIXED DEPOSIT - number of days
+								FIXED DEPOSIT - {{$tunure}} {{$type}}
 							</td>
 						</tr>
 
@@ -64,7 +69,7 @@
 								PLACEMENT NUMBER
 							</td>
 							<td id="right">
-								1233455666676
+								{{$id}}
 							</td>
 						</tr>
 
@@ -73,7 +78,7 @@
 								AMOUNT
 							</td>
 							<td id="right">
-								N4,500,000.00 (NGN)
+								{{$invest_amount}} (NGN)
 							</td>
 						</tr>
 
@@ -82,7 +87,7 @@
 								TENOR
 							</td>
 							<td id="right">
-								120 DAYS
+								{{$tunure}} {{$type}}
 							</td>
 						</tr>
 
@@ -91,7 +96,7 @@
 								RATE
 							</td>
 							<td id="right">
-								7.00%
+								{{$rate}}%
 							</td>
 						</tr>
 
@@ -100,7 +105,7 @@
 								COMMENCEMENT DATE
 							</td>
 							<td id="right">
-								29-JUN-!6
+								{{$invest_date}}
 							</td>
 						</tr>
 
@@ -109,7 +114,7 @@
 								MATURITY DATE
 							</td>
 							<td id="right">
-								29-JUN-16
+								{{$return_date}}
 							</td>
 						</tr>
 
@@ -118,7 +123,7 @@
 								INTEREST
 							</td>
 							<td id="right">
-								N9000(NGN)
+								{{$interest}}
 							</td>
 						</tr>
 
@@ -127,14 +132,14 @@
 								VALUE AT MATURITY
 							</td>
 							<td id="right">
-								Amount + Interest (NGN)
+								{{$return_amount}} (NGN)
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 
-			<div class="footer col-12 mt-5">
+			<div class="col-12">
 				<p>Please note that interest accrued from deposited funds can only apply at the expiration of the tenure plan.Principal and interest is paid back within seven(7) working days of maturity.<br>
 
 				While thanking you for your patronage,we would be delighted to do more business with you in the future.</p>
