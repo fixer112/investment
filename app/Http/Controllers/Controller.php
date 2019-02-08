@@ -12,6 +12,8 @@ use App\User;
 use App\History;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use App\Mail\DownloadReciept;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Response;
 
 class Controller extends BaseController
@@ -136,6 +138,11 @@ public function custom_sms(){
 
 public function reciept(Request $request, History $history){
     $user = $history->user;
+    $approve = ['active','paid'];
+    if (!in_array($history->status, $approve)) {
+        $request->session()->flash('failed', 'No reciept for transaction yet');
+        return back();
+    }
     if (Auth::user()->role != 'admin' && Auth::user()->id != $history->user_id) {
         $request->session()->flash('failed', 'Sorry you are not autorized to perform this action');
         return back();
@@ -143,6 +150,7 @@ public function reciept(Request $request, History $history){
 
     $data = [];
     $data['name'] = $user->name;
+    $data['email'] = $user->email;
     $data['addr'] = $user->addr;
     $data['tenure'] = $history->tenure;
     $data['type'] = $history->tenure > 36 ? 'Days' : 'Month';
@@ -155,10 +163,17 @@ public function reciept(Request $request, History $history){
     $data['rate'] = $this->rate($history->tenure);
 
     //return $data;
+    $pdf = PDF::loadView('pdf.invoice', $data);
+    if ($request->type == 'email') {
+     Mail::to($data['email'])->send(new DownloadReciept($data['name'], $data['id'], $pdf->output()));
+     $request->session()->flash('success', 'Reciept sent to email');
+     return 'done';
 
-    $pdf = PDF::loadView('pdf.invoice', $data)->stream();
+    }else {
+    //$pdf = PDF::loadView('pdf.invoice', $data)->stream($data['id'].'.pdf');
+    return $pdf->stream($data['id'].'.pdf');
+    }
     //return Response()->downloa
-    return $pdf;
     //return $pdf->stream('invoice.pdf');
 }
 
