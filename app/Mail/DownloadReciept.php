@@ -20,7 +20,7 @@ class DownloadReciept extends Mailable
      *
      * @return void
      */
-    public function __construct($name,$id,$file)
+    public function __construct($name, $id, $file)
     {
         $this->file = $file;
         $this->$name = $name;

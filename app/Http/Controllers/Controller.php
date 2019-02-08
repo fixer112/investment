@@ -163,9 +163,11 @@ public function reciept(Request $request, History $history){
     $data['rate'] = $this->rate($history->tenure);
 
     //return $data;
+    $name =$user->name;
+    $id = $history->tran_id;
     $pdf = PDF::loadView('pdf.invoice', $data);
     if ($request->type == 'email') {
-     Mail::to($data['email'])->send(new DownloadReciept($user->name, $history->tran_id, $pdf->output()));
+     Mail::to($data['email'])->send(new DownloadReciept($name, $id, $pdf->output()));
      $request->session()->flash('success', 'Reciept sent to email');
      return 'done';
 
