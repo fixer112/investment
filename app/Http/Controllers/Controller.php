@@ -197,7 +197,7 @@ public function rate($tenure){
         }elseif ($tenure == "36") {
              $rate =  7.7;
         }else{
-            $rate = "";
+            $rate = "unknown";
         }
         return $rate;
 }

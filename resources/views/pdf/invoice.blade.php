@@ -96,7 +96,7 @@
 								RATE
 							</td>
 							<td id="right">
-								{{$rate}}%
+								{{$rate}}{{$tenure > 36 ? "": "%"}}
 							</td>
 						</tr>
 
