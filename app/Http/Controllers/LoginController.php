@@ -59,7 +59,7 @@ if ($validator->fails()) {
                 $version= $request->version;
                
 
-                 if (!$version ||  $version < "1.2.0") {
+                 if (!$version ||  $version < "1.1.6") {
                      $data['errors'] = ['fail' => ['Your App is out of date. Please update to use this feature.']];
                      Auth::logout();
                      return \Response::json($data, 403);
