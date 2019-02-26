@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Console;
-
+use App\Mail\Honeypays;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,6 +27,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->call(function(){
+
+         Mail::to("abula3003@gmail.com")->send(new Honeypays('Hello', "This is a test"));
+        })->everyMinute();
     }
 
     /**

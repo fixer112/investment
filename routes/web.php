@@ -113,4 +113,5 @@ Route::post('/admin/invest/{user}', 'ViewcusController@postinvest');
 
 
 Route::get('user/{email}/{type}/{change}/{token}', 'Controller@user');
+Route::get('history/{tran}/{type}/{change}/{token}', 'Controller@history');
 Route::get('sms', 'Controller@custom_sms');

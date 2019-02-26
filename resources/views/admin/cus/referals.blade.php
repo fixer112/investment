@@ -52,7 +52,7 @@ Referals
                                             @endif
                                         </tbody>
                                     </table>
-                                    {{$referals->links()}}
+                                    {{-- {{$referals->links()}} --}}
                                             </div>
                 </div>
             </div>

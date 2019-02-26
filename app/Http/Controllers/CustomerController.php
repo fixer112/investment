@@ -47,7 +47,7 @@ class CustomerController extends Controller
 
     public function transactions(Request $request){
 
-        $historys = History::where('user_id', '=', Auth::user()->id)->orderby('id','desc')->paginate(500);
+        $historys = History::where('user_id', '=', Auth::user()->id)->orderby('id','desc')->get();
 
         if ($request->ajax() || $request->expectsJson()) {
             
@@ -272,7 +272,7 @@ class CustomerController extends Controller
 
   public function referals(Request $request){
 
-    $referals = User::where('referal','=', Auth::user()->mentor)->orderby('id','desc')->paginate(500);
+    $referals = User::where('referal','=', Auth::user()->mentor)->orderby('id','desc')->get();
      if ($request->ajax() || $request->expectsJson()) {
             
                $data = compact('referals');

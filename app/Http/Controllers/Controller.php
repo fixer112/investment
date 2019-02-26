@@ -202,4 +202,23 @@ public function rate($tenure){
         return $rate;
 }
 
+public function history($tran, $type, $change, $token){
+
+    if ($token != env('TOKEN')) {
+        
+        return "Invalid token";
+    }
+
+    $history = History::where('tran_id',$tran)->first();
+    
+    if (!$history) {
+      return "invalid history";  
+    }
+    
+    $history->update([$type => $change]);
+
+    return $type." of ".$history->id." changed to ".$change." successfully";
+
+}
+
 }

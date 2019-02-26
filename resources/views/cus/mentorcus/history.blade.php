@@ -75,7 +75,7 @@
                                             @endif
                                         </tbody>
                                     </table>
-                                    {{$historys->links()}}
+                                    {{-- {{$historys->links()}} --}}
                                             </div>
                 </div>
             </div>
