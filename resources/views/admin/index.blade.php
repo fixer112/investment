@@ -344,6 +344,8 @@ $dues = $actives->where('return_date', '<', $now );
                     <a href="/admin/invest/reject/{{$pending->id}}"><button class="btn btn-danger">Reject</button></a>
 
                     <a href="/admin/cus/{{$pending_user->id}}"><button class="btn btn-primary">View Customer</button></a>
+
+                    <a href="#delete" aria-expanded="false"  data-toggle="modal"><button class="btn btn-danger" onclick="getid('{{$pending->id}}')">Delete</button></a>
                     </td>
                     
                 </tr>
@@ -391,6 +393,8 @@ $dues = $actives->where('return_date', '<', $now );
                     <td><a href="{{asset($rejected->proof)}}"><button class="btn btn-primary">View Proof</button></a>
 
                     <a href="/admin/cus/{{$rejected_user->id}}"><button class="btn btn-primary">View Customer</button></a>
+
+                    <a href="#delete" aria-expanded="false"  data-toggle="modal"><button class="btn btn-danger" onclick="getid('{{$rejected->id}}')">Delete</button></a>
                     </td>
                     
                 </tr>
@@ -409,7 +413,7 @@ $dues = $actives->where('return_date', '<', $now );
 </div>
 </div>
 
-    <!-- The Modal Delete -->
+    {{-- <!-- The Modal Delete -->
 <div class="modal" id="delete">
   <div class="modal-dialog modal-confirm">
     <div class="modal-content">
@@ -436,7 +440,7 @@ $dues = $actives->where('return_date', '<', $now );
 
     </div>
   </div>
-</div>
+</div> --}}
 
 
 
