@@ -139,7 +139,7 @@ class AdminController extends Controller
         $history->delete();
         $request->session()->flash('success', 'Transaction successfully deleted');
 
-            return redirect('/admin');
+            return back();
 
     }
 
@@ -320,5 +320,11 @@ class AdminController extends Controller
 
     }
     
-
+    /*public function delete(Request $request, History $history){
+        if(!$history){
+            $request->session()->flash('failed', 'Transaction '.$history->tran_id.' does not exist');
+            return back();
+        }
+        $history->delete();
+    }*/
 }
