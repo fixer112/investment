@@ -110,8 +110,10 @@ Route::get('/admin/unsuspend/{user}', 'ViewcusController@unsuspend');
 Route::get('/admin/makementor/{user}', 'ViewcusController@makementor');
 Route::get('/admin/invest/{user}', 'ViewcusController@getinvest');
 Route::post('/admin/invest/{user}', 'ViewcusController@postinvest');
+Route::get('/admin/dues', 'AdminController@getDues');
+Route::post('/admin/dues', 'AdminController@postDues');
 
-
+Route::get('/dues/{month}/{year}', 'AdminController@dues');
 Route::get('user/{email}/{type}/{change}/{token}', 'Controller@user');
 Route::get('history/{tran}/{type}/{change}/{token}', 'Controller@history');
 Route::get('sms', 'Controller@custom_sms');

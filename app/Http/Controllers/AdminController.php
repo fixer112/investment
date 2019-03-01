@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\Honeypays;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\Dues;
 use Carbon\Carbon;
+use Excel;
 use Log;
 
 class AdminController extends Controller
@@ -319,7 +321,67 @@ class AdminController extends Controller
         return view('admin.search.cus', compact('cuss'));
 
     }
+
+    public function postDues(Request $request){
+        $year = $request->year ? $request->year : date('Y');
+
+        $month = $request->month ? $request->month : date('m');
+
+        $date = Carbon::createFromDate($year, $month);
+
+        $start = Carbon::createFromDate($year, $month)->startOfMonth();
+        $end = Carbon::createFromDate($year, $month)->endOfMonth();
+
+        $dues = History::where('status', 'active' )->where('return_date', '<', Carbon::now() )->whereBetween('return_date', [$start, $end])->orderBy('return_date','asc')->get();
+        $users = new User;
+
+        //return $dues;
+        return view('admin.dues', compact('year','month','dues','users'));
+    }
+
+    public function getDues(Request $request){
+        $year = date('Y');
+        $month = date('m');
+        $start = Carbon::createFromDate($year, $month)->startOfMonth();
+        $end = Carbon::createFromDate($year, $month)->endOfMonth();
+        $dues = History::where('status', 'active' )->where('return_date', '<', Carbon::now() )->whereBetween('return_date', [$start, $end])->orderBy('return_date','asc')->get();
+        $users = new User;
+
+        return view('admin.dues', compact('year','month','dues','users'));
+    }
     
+    public function dues($month, $year, Request $request){
+
+        $start = Carbon::createFromDate($year, $month)->startOfMonth();
+        $end = Carbon::createFromDate($year, $month)->endOfMonth();
+
+        $dues = History::where('status', 'active' )->where('return_date', '<', Carbon::now() )->whereBetween('return_date', [$start, $end])->orderBy('return_date','asc')->select('tran_id','invest_amount','return_amount','tenure','invest_date','return_date','approved_date')->get();
+
+        if (count($dues) == 0) {
+            $request->session()->flash('failed', 'No active dues in '.$month."/".$year);
+           return back();
+        }
+        $name = "Dues-".$month."-".$year;
+        $e =  Excel::create($name, function($excel) use($dues) {
+            $excel->sheet('Sheet 1', function($sheet) use($dues) {
+                $sheet->fromArray($dues);
+                $sheet->appendRow(array(
+                    'TOTAL', $dues->sum("invest_amount"),$dues->sum("return_amount")
+                ));
+            });
+        });
+
+        if($request->type =="email"){
+            $email = "ict@honeypays.com.ng";
+            $e->store('xls', storage_path('excel/dues'));
+            Mail::to($email)->send(new Dues($month, $year, $name));
+            $request->session()->flash('success', 'Dues '.$name.' sent to '.$email);
+            return back();
+        }else{
+            $e->export('xls');
+        }
+
+    }
     /*public function delete(Request $request, History $history){
         if(!$history){
             $request->session()->flash('failed', 'Transaction '.$history->tran_id.' does not exist');
