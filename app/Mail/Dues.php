@@ -44,6 +44,6 @@ class Dues extends Mailable
                             'as' => $this->name.".xls", 
                             'mime' => 'application/vnd.ms-excel'
                         ])
-                    ->view('email.dues');
+                    ->view('email.Dues');
     }
 }
