@@ -332,7 +332,7 @@ class AdminController extends Controller
         $start = Carbon::createFromDate($year, $month)->startOfMonth();
         $end = Carbon::createFromDate($year, $month)->endOfMonth();
 
-        $dues = History::where('status', 'active' )->where('return_date', '<', Carbon::now() )->whereBetween('return_date', [$start, $end])->orderBy('return_date','asc')->get();
+        $dues = History::where('status', 'active' )->whereBetween('return_date', [$start, $end])->orderBy('return_date','asc')->get();
         $users = new User;
 
         //return $dues;
@@ -344,7 +344,7 @@ class AdminController extends Controller
         $month = date('m');
         $start = Carbon::createFromDate($year, $month)->startOfMonth();
         $end = Carbon::createFromDate($year, $month)->endOfMonth();
-        $dues = History::where('status', 'active' )->where('return_date', '<', Carbon::now() )->whereBetween('return_date', [$start, $end])->orderBy('return_date','asc')->get();
+        $dues = History::where('status', 'active' )->whereBetween('return_date', [$start, $end])->orderBy('return_date','asc')->get();
         $users = new User;
 
         return view('admin.dues', compact('year','month','dues','users'));
@@ -355,7 +355,7 @@ class AdminController extends Controller
         $start = Carbon::createFromDate($year, $month)->startOfMonth();
         $end = Carbon::createFromDate($year, $month)->endOfMonth();
 
-        $dues = History::where('status', 'active' )->where('return_date', '<', Carbon::now() )->whereBetween('return_date', [$start, $end])->orderBy('return_date','asc')->select('tran_id','invest_amount','return_amount','tenure','invest_date','return_date','approved_date')->get();
+        $dues = History::where('status', 'active' )->whereBetween('return_date', [$start, $end])->orderBy('return_date','asc')->select('tran_id','invest_amount','return_amount','tenure','invest_date','return_date','approved_date')->get();
 
         if (count($dues) == 0) {
             $request->session()->flash('failed', 'No active dues in '.$month."/".$year);
