@@ -112,6 +112,7 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="/admin/customers">All Customers</a></li>
                                 <li><a href="/admin/historys">All Histories</a></li>
+                                <li><a href="/admin/dues">All Dues</a></li>
 
                             </ul>
                         </li>

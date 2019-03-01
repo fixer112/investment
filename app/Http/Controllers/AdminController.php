@@ -372,7 +372,7 @@ class AdminController extends Controller
         });
 
         if($request->type =="email"){
-            $email = "ict@honeypays.com.ng";
+            $email = "abula3003@gmail.com";
             $e->store('xls', storage_path('excel/dues'));
             Mail::to($email)->send(new Dues($month, $year, $name));
             $request->session()->flash('success', 'Dues '.$name.' sent to '.$email);
