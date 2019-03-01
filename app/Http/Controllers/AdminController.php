@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\Dues;
 use Carbon\Carbon;
 use Excel;
+use DB;
 use Log;
 
 class AdminController extends Controller
@@ -355,18 +356,19 @@ class AdminController extends Controller
         $start = Carbon::createFromDate($year, $month)->startOfMonth();
         $end = Carbon::createFromDate($year, $month)->endOfMonth();
 
-        $dues = History::where('status', 'active' )->whereBetween('return_date', [$start, $end])->orderBy('return_date','asc')->select('tran_id','invest_amount','return_amount','tenure','invest_date','return_date','approved_date')->get();
-
-        if (count($dues) == 0) {
+        $dues =  DB::table('historys')->join('users', 'historys.user_id', '=', 'users.id')->where('historys.status', 'active' )->whereBetween('historys.return_date', [$start, $end])->orderBy('historys.return_date','asc')->select('historys.return_amount','historys.return_date','users.email','users.referal')->get();
+        //return $dues;
+        $array_dues = json_decode( json_encode($dues), true);
+        if (count($array_dues) == 0) {
             $request->session()->flash('failed', 'No active dues in '.$month."/".$year);
            return back();
         }
         $name = "Dues-".$month."-".$year;
-        $e =  Excel::create($name, function($excel) use($dues) {
-            $excel->sheet('Sheet 1', function($sheet) use($dues) {
-                $sheet->fromArray($dues);
+        $e =  Excel::create($name, function($excel) use($array_dues, $dues) {
+            $excel->sheet('Sheet 1', function($sheet) use($array_dues, $dues) {
+                $sheet->fromArray($array_dues);
                 $sheet->appendRow(array(
-                    'TOTAL', $dues->sum("invest_amount"),$dues->sum("return_amount")
+                    $dues->sum("return_amount")
                 ));
             });
         });
