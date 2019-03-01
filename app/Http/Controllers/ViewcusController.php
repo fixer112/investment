@@ -54,7 +54,7 @@ class ViewcusController extends Controller
 
         ]);
 
-        $randomnumber = $user->id.$this->randomstring(4).time();
+        $randomnumber = $this->randomstring(2).date("Hismy");
 
         $user->history()->create([
 

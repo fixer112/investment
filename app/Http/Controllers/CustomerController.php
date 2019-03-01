@@ -243,7 +243,7 @@ class CustomerController extends Controller
 		$interest = ($irm/100)*$gain;
 		$total_earning = $gain - $interest;*/
 
-		$randomstring = Auth::user()->id.$this->randomstring(4).time();
+		$randomstring = $this->randomstring(2).date("Hismy");
 
 		$destination = public_path('/proof');
         $proof = $request->file('proof');
