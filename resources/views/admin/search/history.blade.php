@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 @section('bread')
-{{$historys->total()}} Historys
+{{$historys->count()}} Historys
 @endsection    
 
 <div class="card">
