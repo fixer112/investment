@@ -39,6 +39,7 @@
 			<div class="col-6">
 				<p>{{$name}}</p>
 				<p>{{$addr}}</p>
+				<p>{{$email}}</p>
 			</div>
 
 			
