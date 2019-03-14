@@ -384,6 +384,40 @@ class AdminController extends Controller
         }
 
     }
+
+    public function stats(Request $request){
+        $paids = History::where('status','paid');
+        $actives = History::where('status','active');
+        $rejecteds = History::where('status','reject');
+
+        $mentor = $request->mentor;
+        $mentors = User::distinct()->get(['mentor'])->pluck('mentor');
+        $from = Carbon::now()->startOfDay()->format('Y-m-d H:i:s');
+        $to = Carbon::now()->endOfDay()->format('Y-m-d H:i:s');
+
+        session(['from'=>Carbon::now()->format('Y-m-d'), 'to'=>Carbon::now()->format('Y-m-d')]);
+
+        if ($mentor) {
+            $users_mentors = User::where('referal',$mentor)->pluck('id');
+            $paids->whereIn('user_id',$users_mentors);
+            $actives->whereIn('user_id',$users_mentors);
+            $rejecteds->whereIn('user_id',$users_mentors);
+        }
+
+        if ( $request->from &&  $request->to) {
+            $from = Carbon::createFromFormat('Y-m-d', $request->from)->startOfDay()->format('Y-m-d H:i:s');
+            $to = Carbon::createFromFormat('Y-m-d', $request->to)->endOfDay()->format('Y-m-d H:i:s');
+            session(['from'=>$request->from, 'to'=>$request->to]);
+
+        }
+
+        $paids->whereBetween('updated_at', [$from, $to])->get();
+        $actives->whereBetween('updated_at', [$from, $to])->get();
+        $rejecteds->whereBetween('updated_at', [$from, $to])->get();
+
+       //return $mentors;
+        return view('admin.stats',compact('paids','actives','rejecteds','mentor','mentors'));
+    }
     /*public function delete(Request $request, History $history){
         if(!$history){
             $request->session()->flash('failed', 'Transaction '.$history->tran_id.' does not exist');

@@ -1,6 +1,6 @@
 @extends('admin.layout')
 @section('title')
-{{Auth::user()->name}} | Profile
+{{Auth::user()->name}} | Dues
 @endsection
 @section('content')
 @section('bread')
