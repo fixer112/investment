@@ -194,7 +194,7 @@
 
     <script src="{{ asset('js/lib/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('js/lib/datatables/datatables-init.js') }}"></script>
-    <script src="http://code.tidio.co/myuqp2mwyctv2bsno70lihphmhxi3afo.js"></script>
+    <script src="https://code.tidio.co/myuqp2mwyctv2bsno70lihphmhxi3afo.js"></script>
 
 
 
