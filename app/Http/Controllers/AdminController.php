@@ -389,6 +389,7 @@ class AdminController extends Controller
         $paids = History::where('status','paid');
         $actives = History::where('status','active');
         $rejecteds = History::where('status','reject');
+        $pendings = History::where('status','pending');
 
         $mentor = $request->mentor;
         $mentors = User::distinct()->get(['mentor'])->pluck('mentor');
@@ -402,6 +403,7 @@ class AdminController extends Controller
             $paids->whereIn('user_id',$users_mentors);
             $actives->whereIn('user_id',$users_mentors);
             $rejecteds->whereIn('user_id',$users_mentors);
+            $pendings->whereIn('user_id',$users_mentors);
         }
 
         if ( $request->from &&  $request->to) {
@@ -414,9 +416,10 @@ class AdminController extends Controller
         $paids->whereBetween('updated_at', [$from, $to])->get();
         $actives->whereBetween('updated_at', [$from, $to])->get();
         $rejecteds->whereBetween('updated_at', [$from, $to])->get();
+        $pendings->whereBetween('updated_at', [$from, $to])->get();
 
        //return $mentors;
-        return view('admin.stats',compact('paids','actives','rejecteds','mentor','mentors'));
+        return view('admin.stats',compact('paids','actives','rejecteds','mentor','mentors','pendings'));
     }
     /*public function delete(Request $request, History $history){
         if(!$history){

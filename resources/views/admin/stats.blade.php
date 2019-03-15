@@ -146,7 +146,39 @@ Statistics
 
                         </div>
 
+                        <div class="stat-head"><h2>Pendings</h2></div>
+                        <div class="row">
 
+                        <div class="card stat col-4 bg-primary p-30">
+                        <div class="card-content">
+                        <div class="card-body">
+                        <p>Number Of Transactions</p>
+                        <p>{{$pendings->count()}}</p>
+                        </div>
+                        </div>
+                        </div>
+
+                        <div class="card stat col-4 bg-success p-30">
+                        <div class="card-content">
+                        <div class="card-body">
+                        <p>Total Amount Invested</p>
+                        <p>@money($pendings->sum('invest_amount'))</p>
+                        </div>
+                        </div>
+                        </div>
+
+                        <div class="card stat col-4 bg-warning p-30">
+                        <div class="card-content">
+                        <div class="card-body">
+                        <p>Total Return Amount</p>
+                        <p>@money($pendings->sum('return_amount'))</p>
+                        </div>
+                        </div>
+                        </div>
+
+                        </div>
+
+                        
                         <div class="stat-head"><h2>Rejecteds</h2></div>
                         <div class="row">
 
