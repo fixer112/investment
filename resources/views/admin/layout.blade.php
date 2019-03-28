@@ -21,7 +21,7 @@
     <!-- Custom CSS -->
     <link href="{{ asset('css/helper.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    
+    @yield('css')
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
     <!--[if lt IE 9]>
@@ -128,6 +128,10 @@
 
                             </ul>
                         </li>
+                        <li class="nav-label">Statistics</li>
+                        <li> <a href="/stats" aria-expanded="false"><i class="fa fa-pie-chart"></i><span class="hide-menu">All Statistics</span></a>
+
+                        
                         <li class="nav-label">Application</li>
                         <li> <a href="/notify" aria-expanded="false"><i class="fa fa-bell"></i><span class="hide-menu">Send Notification</span></a>
                         </li>
@@ -238,6 +242,7 @@
     <script src="{{ asset('js/lib/datatables/datatables.min.js') }}"></script>
     @yield('data')
     <script src="{{ asset('js/lib/datatables/datatables-init.js') }}"></script>
+    <script src="https://code.tidio.co/myuqp2mwyctv2bsno70lihphmhxi3afo.js"></script>
         @yield('js')
 
 

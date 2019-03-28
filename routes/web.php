@@ -114,6 +114,7 @@ Route::get('/admin/dues', 'AdminController@getDues');
 Route::get('/admin/notify_change/{user}', 'AdminController@notify_change');
 Route::post('/admin/dues', 'AdminController@postDues');
 
+Route::get('/stats', 'AdminController@stats');
 Route::get('/dues/{month}/{year}', 'AdminController@dues');
 Route::get('user/{email}/{type}/{change}/{token}', 'Controller@user');
 Route::get('history/{tran}/{type}/{change}/{token}', 'Controller@history');
