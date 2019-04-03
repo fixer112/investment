@@ -385,6 +385,26 @@ class AdminController extends Controller
 
     }
 
+
+    public function notify_change(User $user){
+        $email = $user->email;
+        $number = $user->number;
+        $subject = 'Bank details update';
+
+       $message = $user->name.' kindly correct the bank details provided on your account, as the account number/bank name is incorrect. Kindly notify us when it is done by calling 08168857027.';
+
+        Log::info($this->sms($number, urlencode($message)));
+
+        Log::info($this->app($subject,$message,$email));
+
+        Mail::to($email)->send(new Honeypays($message, $subject));
+
+        request()->session()->flash('success', 'Bank details notification sent to '.$user->name);
+
+        return back();
+
+        }
+
     public function stats(Request $request){
         $paids = History::where('status','paid');
         $actives = History::where('status','active');
@@ -420,6 +440,7 @@ class AdminController extends Controller
 
        //return $mentors;
         return view('admin.stats',compact('paids','actives','rejecteds','mentor','mentors','pendings'));
+
     }
     /*public function delete(Request $request, History $history){
         if(!$history){

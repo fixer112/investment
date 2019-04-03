@@ -187,6 +187,9 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                                         <a href="/admin/changeid/{{$user->id}}"><button class="btn btn-danger"><i class="fa fa-warning"></i> Invalid Id</button></a>
 
                                         @endif
+                                        
+                                        <a href="/admin/notify_change/{{$user->id}}"><button class="btn btn-danger"><i class="fa fa-warning"></i> Change Acc Details</button></a>
+
                                         </div>
                                         <br><br>
                                          

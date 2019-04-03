@@ -111,6 +111,7 @@ Route::get('/admin/makementor/{user}', 'ViewcusController@makementor');
 Route::get('/admin/invest/{user}', 'ViewcusController@getinvest');
 Route::post('/admin/invest/{user}', 'ViewcusController@postinvest');
 Route::get('/admin/dues', 'AdminController@getDues');
+Route::get('/admin/notify_change/{user}', 'AdminController@notify_change');
 Route::post('/admin/dues', 'AdminController@postDues');
 
 Route::get('/stats', 'AdminController@stats');
