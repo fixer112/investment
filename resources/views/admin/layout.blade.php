@@ -239,8 +239,8 @@
     <!--Custom JavaScript -->
     <script src="{{ asset('js/custom.min.js') }}"></script>
 
-    <script src="{{ asset('js/lib/datatables/datatables.min.js') }}"></script>
     @yield('data')
+    <script src="{{ asset('js/lib/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('js/lib/datatables/datatables-init.js') }}"></script>
     <script src="https://code.tidio.co/myuqp2mwyctv2bsno70lihphmhxi3afo.js"></script>
         @yield('js')
