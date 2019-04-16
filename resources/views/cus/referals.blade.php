@@ -1,15 +1,15 @@
 @extends('cus.layout')
 @section('title')
-{{Auth::user()->name}} | Referals
+{{Auth::user()->name}} | Account Manager
 @endsection
 @section('content')
 @section('bread')
-Referals
+Account Manager
 @endsection    
 
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">Referals {{count($referals)}}</h4>
+        <h4 class="card-title">Account Manager {{count($referals)}}</h4>
             <div class="row">
 
                 <div class="col-lg-12 p-20">

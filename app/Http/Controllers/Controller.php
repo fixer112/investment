@@ -29,6 +29,9 @@ class Controller extends BaseController
     public function sms($to, $message){
     	$username = env('SMS_USERNAME');
     	$password = env('SMS_PASSWORD');
+        if (env('APP_ENV') != 'production') {
+            return false;
+        }
     	$sender = 'HONEYPAYS';
     	$data = 'username='.$username.'&password='.$password.'&sender='.$sender.'&to='.$to.'&message='.$message;
         try {
@@ -59,6 +62,9 @@ class Controller extends BaseController
 	}
 
     public function app($title, $message, $topic='global') {
+        if (env('APP_ENV') != 'production') {
+            return false;
+        }
     $mail = $topic;
     $email = str_replace("@", "%", $topic);
     $topic = $topic =='global'? 'global' : "empower_".$email;

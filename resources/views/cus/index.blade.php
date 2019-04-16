@@ -130,7 +130,7 @@ $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->get();
                                                 <br>
                                                 <p class="text-muted">{{Auth::user()->bank_name}}</p>
                                             </div>
-                                            <div class="col-md-12"> <strong>Refered by</strong>
+                                            <div class="col-md-12"> <strong>Account Manager</strong>
                                                 <br>
                                                 <p class="text-muted">{{Auth::user()->referal}}</p>
                                             </div>

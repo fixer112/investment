@@ -103,7 +103,7 @@
                             </ul>
                         </li>
                         @if(!empty(Auth::user()->mentor))
-                        <li> <a href="/cus/referals" aria-expanded="false"><i class="fa fa-eye"></i><span class="hide-menu">Referals</span></a>
+                        <li> <a href="/cus/referals" aria-expanded="false"><i class="fa fa-eye"></i><span class="hide-menu">Account Manager</span></a>
                         </li>
                         @endif
                         <li> <a href="/cus/contact" aria-expanded="false"><i class="fa fa-envelope"></i><span class="hide-menu">Contact Admin</span></a></li>
