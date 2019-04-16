@@ -81,7 +81,7 @@ class RegisterController extends Controller
         $destination = public_path('/images');
         $identity = $request->file('identity');
         $identityname = $data['email']."-"."identity".".".$identity->getClientOriginalExtension();
-        $identity->move($destination, $passportname);
+        $identity->move($destination, $identityname);
             
         }
 
