@@ -1,10 +1,10 @@
 @extends('admin.layout')
 @section('title')
-{{Auth::user()->name}} | Mentors
+{{Auth::user()->name}} | Account Managers
 @endsection
 @section('content')
 @section('bread')
-Mentors {{count($mentors)}}
+Account Managers {{count($mentors)}}
 @endsection    
 
 <div class="card">

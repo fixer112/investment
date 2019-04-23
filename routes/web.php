@@ -33,6 +33,10 @@ Route::get('/home', function () {
     
 });
 
+Route::get('cus/roll', function () {
+	$actives = Auth::user()->history()->where('status', '=', 'active')->latest()->get();
+	return view('cus.roll',compact('actives'));   
+}); 
 Route::get('/pdf', function () {
 	
    return view('pdf.invoice');
@@ -72,6 +76,8 @@ Route::post('/cus/invest', 'CustomerController@investpost');
 Route::get('/cus/history', 'CustomerController@transactions');
 Route::get('/cus/contact', 'CustomerController@getcontact');
 Route::get('/cus/refund', 'CustomerController@getrefund');
+Route::post('/cus/roll', 'CustomerController@roll');
+
 Route::post('/cus/contact', 'CustomerController@postcontact');
 Route::get('/cus/referals', 'CustomerController@referals')->middleware('mentor');
 Route::get('/cus/mentorcus/{user}', 'CustomerController@mentorcus')->middleware('mentor');

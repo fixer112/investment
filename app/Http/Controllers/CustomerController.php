@@ -194,7 +194,7 @@ class CustomerController extends Controller
             'proof' => 'required|image|mimes:jpeg,jpg,png|max:1024'
         ]);
 
-  		$rate = $request->input('rate');
+  		  $rate = $request->input('rate');
         $amount = $request->input('amount');
 
         $now = Carbon::now();
@@ -334,5 +334,10 @@ class CustomerController extends Controller
             }
         abort(404);
     }
+  }
+
+  public function roll(){
+
+    return back();
   }
 }

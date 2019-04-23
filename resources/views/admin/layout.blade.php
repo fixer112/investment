@@ -122,9 +122,9 @@
 
                             </ul>
                         </li>
-                        <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-search"></i><span class="hide-menu">Mentor</span></a>
+                        <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-search"></i><span class="hide-menu">Account Manager</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="/admin/mentors">All Mentors</a></li>
+                                <li><a href="/admin/mentors">All Account managers</a></li>
 
                             </ul>
                         </li>

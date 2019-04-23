@@ -130,12 +130,12 @@ $rejecteds = $referals->where('status', '=', 'reject')/*->get()*/;
                                                 <br>
                                                 <p class="text-muted">{{$user->bank_name}}</p>
                                             </div>
-                                            <div class="col-md-12"> <strong>Refered by</strong>
+                                            <div class="col-md-12"> <strong>My Account Manager</strong>
                                                 <br>
                                                 <p class="text-muted">{{$user->referal}}</p>
                                             </div>
                                             @if(!empty($user->mentor))
-                                            <div class="col-md-12"> <strong>Mentor Number</strong>
+                                            <div class="col-md-12"> <strong>Account manager</strong>
                                                 <br>
                                                 <p class="text-muted">{{$user->mentor}}</p>
                                             </div>
