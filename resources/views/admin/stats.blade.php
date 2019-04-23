@@ -20,7 +20,18 @@ Statistics
 @php
 
 @endphp
-
+<script type="text/javascript">
+  function go(arr){
+    event.preventDefault();
+    document.getElementById('details').value = JSON.stringify(arr);
+    document.getElementById('submit').submit();
+  }
+</script>
+  <form id="submit" action="/stats/records" method="POST" style="display: none;">
+    <input type="text" name="details" value="" id="details">
+      @csrf
+  </form>
+  {{-- {{json_encode($actives->get(), JSON_FORCE_OBJECT)}} --}}
 <div class="card col-12 mx-auto">
     <div class="card-body">
             <div class="row">
@@ -87,8 +98,10 @@ Statistics
                         <div class="card stat col-4 bg-primary p-30">
                         <div class="card-content">
                         <div class="card-body">
+                        <a href="" onclick="go({{ json_encode($actives->get())}})">
                         <p>Number Of Transactions</p>
                         <p>{{$actives->count()}}</p>
+                        </a>
                         </div>
                         </div>
                         </div>
@@ -120,8 +133,10 @@ Statistics
                         <div class="card stat col-4 bg-primary p-30">
                         <div class="card-content">
                         <div class="card-body">
+                        <a href="" onclick="go({{ json_encode($paids->get())}})">
                         <p>Number Of Transactions</p>
                         <p>{{$paids->count()}}</p>
+                        </a>
                         </div>
                         </div>
                         </div>
@@ -152,8 +167,10 @@ Statistics
                         <div class="card stat col-4 bg-primary p-30">
                         <div class="card-content">
                         <div class="card-body">
+                        <a href="" onclick="go({{ json_encode($pendings->get())}})">
                         <p>Number Of Transactions</p>
                         <p>{{$pendings->count()}}</p>
+                        </a>
                         </div>
                         </div>
                         </div>
@@ -185,8 +202,10 @@ Statistics
                         <div class="card stat col-4 bg-primary p-30">
                         <div class="card-content">
                         <div class="card-body">
+                        <a href="" onclick="go({{ json_encode($rejecteds->get())}})">
                         <p>Number Of Transactions</p>
                         <p>{{$rejecteds->count()}}</p>
+                        </a>
                         </div>
                         </div>
                         </div>

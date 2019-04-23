@@ -449,4 +449,12 @@ class AdminController extends Controller
         }
         $history->delete();
     }*/
+    public function details(){
+        $this->validate(request(), [
+            'details' =>'required',
+        ]);
+        $details = json_decode(request()->details);
+        $users = User::all();
+        return view('admin.records',compact('details','users'));
+    }
 }
