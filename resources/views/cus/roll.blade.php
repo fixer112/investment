@@ -49,7 +49,7 @@ Roll Over
                                         $status = '';
                                     }
                                     @endphp
-                                    <option value="{{$active->id}}" {{$disable ? 'disabled':''}}>@money($active->invest_amount) - @money($active->return_amount) {{$status}}</option>
+                                    <option value="{{$active->id}}" {{$disable ? 'disabled':''}}>@money($active->invest_amount) - @money($active->return_amount) {{$status}} {{$active->tran_id}}</option>
                                     @endforeach
                                     </select>
                                 </div>
