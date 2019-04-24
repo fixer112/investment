@@ -67,10 +67,10 @@ Roll Over
                                 <div class="form-group">
                                     <label>Tenure</label>
                                     <select name="tenure" class="form-control" v-model="tenure" required>
-                                    <option value="5" :disabled="!select">5 months</option>
-                                    <option value="9" :disabled="!select">9 months</option>
-                                    <option value="18" :disabled="select">18 months</option>
-                                    <option value="36" :disabled="select">36 months</option>
+                                    <option value="5" :disabled="type =='0'">5 months</option>
+                                    <option value="9" :disabled="type =='0'">9 months</option>
+                                    <option value="18" >18 months</option>
+                                    <option value="36" >36 months</option>
                                     </select>
                                 </div>
                                  
@@ -99,10 +99,11 @@ const tran = new Vue({
 
         },
         watch:{
-            type(n){
-                this.select = n == '1' ? true : false;
+            /*type(n){
+
+                this.select = n == '1' ? false : false;
                 this.tenure = "";
-            }
+            }*/
         },
         created(){
            
