@@ -196,7 +196,7 @@
                         @endif
 
                         @if(empty($user->mentor))
-                        <li> <a href="/admin/makementor/{{$user->id}}" aria-expanded="false"><i class="fa fa-cog"></i><span class="hide-menu">Make Mentor</span></a></li>
+                        <li> <a href="/admin/makementor/{{$user->id}}" aria-expanded="false"><i class="fa fa-cog"></i><span class="hide-menu">Make Account Manager</span></a></li>
                         @endif
 
                         <li> <a href="#delete" aria-expanded="false"  data-toggle="modal"><i class="fa fa-trash"></i><span class="hide-menu">Delete</span></a></li>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\History;
+use App\Rollover;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,7 @@ class AdminController extends Controller
 		$all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
 		$pendings = $historys->where('status', '=', 'pending')->get();
 		$rejecteds = $historys->where('status', '=', 'reject')->get();
+        $rolls = Rollover::where('status', 0)->get();
 		$now = Carbon::now();
 		//$dues = 
 
@@ -38,7 +40,7 @@ class AdminController extends Controller
 		$cus = $users->where('role','=','cus')->get();
 		$mentor = $users->where('mentor', '!=', '')->get();
 
-    	return view('admin.index', compact('users', 'historys', 'paids', 'actives', 'all', 'pendings', 'rejecteds', 'admin', 'cus', 'mentor', 'now'));
+    	return view('admin.index', compact('users', 'historys', 'paids', 'actives', 'all', 'pendings', 'rejecteds', 'admin', 'cus', 'mentor', 'now','rolls'));
     }
 
     public function notify(){
@@ -190,34 +192,8 @@ class AdminController extends Controller
         $date = Carbon::now();
         //$date = Carbon::parse('09/03/18');
 
-        $now = Carbon::now();
-        $month = Carbon::now()->addMonths($history->tenure);
-        $days = $month->diff($now)->days;
-        $rate = $days;
+        $MyDateCarbon = $this->return_date($date,$history->tenure);
 
-        //$rate = $history->tenure;
-        $amount = $history->invest_amount;
-
-        $holidays = [$year."-01-01", $year."-10-01", $year."-12-25", $year."-12-26"];
-         /*[$year."-01-01", $year."-01-15", $year."-02-12", $year."-02-14", $year."-02-16", $year."-02-19", $year."-03-11", $year."-03-17", $year."-03-20", $year."-03-31", $year."-04-01", $year."-04-25", $year."-05-13", $year."-05-16", $year."-05-20", $year."-05-28", $year."-06-14", $year."-06-17", $year."-06-21", $year."-07-04", $year."-09-03", $year."-09-10", $year."-09-23", $year."-10-08", $year."-10-31", $year."-11-04", $year."-11-11", $year."-11-22", $year."-12-02", $year."-12-21", $year."-12-25", $year."-12-26", $year."-12-31"];*/
-
-	        while (!$date->isMonday()) {
-	        	
-	        	$date->addDays(1);
-	        }
-
-	        $MyDateCarbon = $date;
-
-	        $MyDateCarbon->addDays($rate);
-
-	        for ($i = 1; $i <= $rate+1; $i++) {
-
-	    	if (in_array(Carbon::now()->addDays($i)->toDateString(), $holidays)/* || in_array(Carbon::now()->toDateString(), $holidays)*/) {
-
-	        $MyDateCarbon->addDays(1);
-
-			    }
-			}
            //return $MyDateCarbon;
         $history->update([
 			'approved_date' => Carbon::now(),
@@ -456,5 +432,90 @@ class AdminController extends Controller
         $details = json_decode(request()->details);
         $users = User::all();
         return view('admin.records',compact('details','users'));
+    }
+
+    public function rollApprove(Rollover $roll){
+        $history = $roll->history;
+        if ($history->status == 'paid' || carbon::now() > $history->return_date) {
+            request()->session()->flash('failed', 'Rollover paid, investment paid or pass return date');
+            return back();
+        }
+
+        $randomstring = $this->randomstring(2).date("Hismy");
+        $total_amount = $this->return_amount($roll->tenure, $history->return_amount);
+        if ($roll->type == '1') {
+            $MyDateCarbon = $this->return_date($history->return_date,$roll->tenure);
+
+           History::create([
+            'tran_id' => $randomstring,
+            'invest_date' => $history->return_date,
+            'invest_amount' => $history->return_amount,
+            'tenure' => $roll->tenure,
+            'return_amount' => $total_amount,
+            'proof' => $history->proof,
+            'approved_date' => Carbon::now(),
+            'return_date' => $MyDateCarbon,
+            'status' => 'active',
+            'user_id' => $history->user->id,
+            ]);
+           $roll->update(['status'=>1]);
+           $history->update(['paid_date'=> Carbon::now(), 'status'=>'paid']);
+
+           request()->session()->flash('success', 'Rollover approved');
+            return back();
+        }
+
+        if ($roll->type == '0') {
+           $first = (5/100) * $total_amount;
+           $second = $total_amount - ($first * 5);
+           $MyDateCarbon = $history->return_date;
+
+           for ($i=0; $i < 5 ; $i++) { 
+                $randomstring = $this->randomstring(2).date("Hismy");
+                $MyDateCarbon = $this->return_date($MyDateCarbon, 1);
+
+                History::create([
+                'tran_id' => $randomstring,
+                'invest_date' => $history->return_date,
+                'invest_amount' => $history->return_amount,
+                'tenure' => $roll->tenure,
+                'return_amount' => $first,
+                'proof' => $history->proof,
+                'approved_date' => Carbon::now(),
+                'return_date' => $MyDateCarbon,
+                'status' => 'active',
+                'user_id' => $history->user->id,
+                ]);
+            } 
+
+            $randomstring = $this->randomstring(2).date("Hismy");
+            $MyDateCarbon = $this->return_date($MyDateCarbon, ($roll->tenure - 5));
+            History::create([
+            'tran_id' => $randomstring,
+            'invest_date' => $history->return_date,
+            'invest_amount' => $history->return_amount,
+            'tenure' => $roll->tenure,
+            'return_amount' => $second,
+            'proof' => $history->proof,
+            'approved_date' => Carbon::now(),
+            'return_date' => $MyDateCarbon,
+            'status' => 'active',
+            'user_id' => $history->user->id,
+            ]);
+
+            $roll->update(['status'=>1]);
+            $history->update(['paid_date'=> Carbon::now(), 'status'=>'paid']);
+
+            request()->session()->flash('success', 'Rollover approved');
+            return back();
+        }
+        return back();
+    }
+
+    function rollDelete(Rollover $roll){
+        $roll->delete();
+
+        request()->session()->flash('success', 'Rollover deleted');
+        return back();
     }
 }

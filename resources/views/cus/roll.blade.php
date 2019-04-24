@@ -39,7 +39,17 @@ Roll Over
                                     <label>Active Transactions</label>
                                     <select name="trans" class="form-control" required>
                                     @foreach($actives as $active)
-                                    <option value="{{$active->id}}">@money($active->invest_amount) - @money($active->return_amount)</option>
+                                    @php
+                                    $roll = $active->roll;
+                                    if ($roll) {
+                                        $disable = 1;
+                                        $status = $roll->status ? 'Active' : 'Pending';
+                                    }else{
+                                        $disable = 0;
+                                        $status = '';
+                                    }
+                                    @endphp
+                                    <option value="{{$active->id}}" {{$disable ? 'disabled':''}}>@money($active->invest_amount) - @money($active->return_amount) {{$status}}</option>
                                     @endforeach
                                     </select>
                                 </div>

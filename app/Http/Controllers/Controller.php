@@ -227,4 +227,65 @@ public function history($tran, $type, $change, $token){
 
 }
 
+function return_date($date, $tenure){
+    $now = Carbon::now();
+    $month = Carbon::now()->addMonths($tenure);
+    $days = $month->diff($now)->days;
+    $rate = $days;
+    $year = date('Y');
+
+            //$rate = $history->tenure;
+    //$amount = $history->invest_amount;
+
+    $holidays = [$year."-01-01", $year."-10-01", $year."-12-25", $year."-12-26"];
+    /*[$year."-01-01", $year."-01-15", $year."-02-12", $year."-02-14", $year."-02-16", $year."-02-19", $year."-03-11", $year."-03-17", $year."-03-20", $year."-03-31", $year."-04-01", $year."-04-25", $year."-05-13", $year."-05-16", $year."-05-20", $year."-05-28", $year."-06-14", $year."-06-17", $year."-06-21", $year."-07-04", $year."-09-03", $year."-09-10", $year."-09-23", $year."-10-08", $year."-10-31", $year."-11-04", $year."-11-11", $year."-11-22", $year."-12-02", $year."-12-21", $year."-12-25", $year."-12-26", $year."-12-31"];*/
+
+    while (!$date->isMonday()) {
+
+        $date->addDays(1);
+    }
+
+    $MyDateCarbon = $date;
+
+    $MyDateCarbon->addDays($rate);
+
+    for ($i = 1; $i <= $rate+1; $i++) {
+
+        if (in_array(Carbon::now()->addDays($i)->toDateString(), $holidays)/* || in_array(Carbon::now()->toDateString(), $holidays)*/) {
+
+            $MyDateCarbon->addDays(1);
+
+        }
+    }
+    return $MyDateCarbon;
+}
+
+function return_amount($rate, $amount){
+        $now = Carbon::now();
+        $month = Carbon::now()->addMonths($rate);
+        $days = $month->diff($now)->days;
+        $Mrate = $days;
+         
+        if ($rate == "5") {
+
+            /*$accured_interest = (1.40/100)*$amount*$Mrate;
+            $irm = 20;*/
+            $total_earning = $amount * 1.40;
+            
+        }elseif ($rate == "9") {
+            /*$accured_interest = (1.96/100)*$amount*$Mrate;
+             $irm = 30;*/
+             $total_earning = $amount * 1.96;
+        }elseif ($rate == "18") {
+            /*$accured_interest = (3.84/100)*$amount*$Mrate;
+             $irm = 40;*/
+             $total_earning = $amount * 3.84;
+        }elseif ($rate == "36") {
+            /*$accured_interest = (7.7/100)*$amount*$Mrate;
+             $irm = 50;*/
+             $total_earning = $amount * 7.7;
+        }
+        return $total_earning;
+}
+
 }

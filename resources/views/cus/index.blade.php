@@ -9,6 +9,7 @@ Dashbord
 @php
 $paids = Auth::user()->history()->where('status', '=', 'paid')->get();
 $actives = Auth::user()->history()->where('status', '=', 'active')->get();
+$rolls = Auth::user()->roll()->where('status', 0)->get();
 $all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
 $pendings = Auth::user()->history()->where('status', '=', 'pending')->get();
 $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->get();
@@ -197,6 +198,7 @@ $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->get();
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#paid" role="tab"><span style="color: green">{{$paids->count()}} Paid</span></a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#pending" role="tab"><span style="color: yellow">{{$pendings->count()}} Pending</span></a> </li>
 									<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#reject" role="tab"><span style="color: red">{{$rejecteds->count()}} Rejected</span></a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#roll" role="tab"><span style="color: blue">{{$rolls->count()}} Rollovers</span></a> </li>
                                 </ul>
                                 <!-- Tab panes -->
                                 <div class="tab-content">
@@ -381,6 +383,49 @@ $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->get();
 
                                         
 									</div>
+
+                                <div class="tab-pane" id="roll" role="tabpanel">
+           
+                <div class="table-responsive m-t-40">
+        <table id="reject" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Apply Date</th>
+                    <th>Investment Id</th>
+                    <th>Customer Email</th>
+                    <th>Invest Amount</th>
+                    <th>Tenure</th>
+                    <th>Type</th>
+                    
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+                @if (count($rolls)>0)
+                @foreach($rolls as $roll)
+                @php
+               
+                @endphp
+                <tr>
+                    <td>{{$roll->created_at->format('d/m/Y H:i')}}</td>
+                    <td>{{$roll->history->tran_id}}</td>
+                    <td>{{$roll->user->email}}</td>
+                    <td>@money($roll->history->return_amount)</td>
+                    <td>{{$roll->tenure}}</td>
+                    <td>{{$roll->type ? 'one time' : 'six times'}}</td>
+                    
+                    
+                </tr>
+                @endforeach
+                @endif
+            </tbody>
+        </table>
+       
+                </div>
+
+            
+        </div>
                                 </div>
                             </div>
                         </div>

@@ -31,7 +31,7 @@ Statistics
     <input type="text" name="details" value="" id="details">
       @csrf
   </form>
-  {{-- {{json_encode($actives->get(), JSON_FORCE_OBJECT)}} --}}
+  {{-- {{dd($actives->get())}} --}}
 <div class="card col-12 mx-auto">
     <div class="card-body">
             <div class="row">

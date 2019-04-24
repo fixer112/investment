@@ -35,4 +35,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\History');
     }
+
+    public function roll()
+    {
+        return $this->hasMany('App\Rollover');
+    }
 }

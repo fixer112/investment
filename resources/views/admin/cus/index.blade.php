@@ -4,10 +4,11 @@ Dashboard | {{$user->name}}
 @endsection
 @section('content')
 @section('bread')
-Dashbord
+Dashboard
 @endsection
 @php
 $paids = $user->history()->where('status', '=', 'paid')->get();
+$rolls = $user->roll()->where('status', 0)->get();
 $actives = $user->history()->where('status', '=', 'active')->get();
 $all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
 $pendings = $user->history()->where('status', '=', 'pending')->get();
@@ -145,7 +146,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                                                 <br>
                                                 <p class="text-muted">{{$user->bank_name}}</p>
                                             </div>
-                                            <div class="col-md-12"> <strong>Refered by</strong>
+                                            <div class="col-md-12"> <strong>My Account Manager</strong>
                                                 <br>
                                                 <p class="text-muted">{{$user->referal}}</p>
                                             </div>
@@ -213,6 +214,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#paid" role="tab"><span style="color: green">{{$paids->count()}} Paid</span></a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#pending" role="tab"><span style="color: yellow">{{$pendings->count()}} Pending</span></a> </li>
 									<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#reject" role="tab"><span style="color: red">{{$rejecteds->count()}} Rejected</span></a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#roll" role="tab"><span style="color: blue">{{$rolls->count()}} Rollovers</span></a> </li>
                                 </ul>
                                 <!-- Tab panes -->
                                 <div class="tab-content">
@@ -400,6 +402,55 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
 
                                         
 									</div>
+                                    <div class="tab-pane" id="roll" role="tabpanel">
+           
+                <div class="table-responsive m-t-40">
+        <table id="reject" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Apply Date</th>
+                    <th>Investment Id</th>
+                    <th>Customer Email</th>
+                    <th>Invest Amount</th>
+                    <th>Tenure</th>
+                    <th>Type</th>
+                    <th>Actioins</th>
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+                @if (count($rolls)>0)
+                @foreach($rolls as $roll)
+                @php
+               
+                @endphp
+                <tr>
+                    <td>{{$roll->created_at->format('d/m/Y H:i')}}</td>
+                    <td>{{$roll->history->tran_id}}</td>
+                    <td>{{$roll->user->email}}</td>
+                    <td>@money($roll->history->return_amount)</td>
+                    <td>{{$roll->tenure}}</td>
+                    <td>{{$roll->type ? 'one time' : 'six times'}}</td>
+                    <td>
+                    <a href="/roll/approve/{{$roll->id}}"><button class="btn btn-success">Approve</button></a>
+
+                    <a href="/admin/cus/{{$roll->user->id}}"><button class="btn btn-primary">View Customer</button></a>
+
+                    <a href="/roll/delete/{{$roll->id}}"><button class="btn btn-danger">Delete</button></a>
+
+                    </td>
+                    
+                </tr>
+                @endforeach
+                @endif
+            </tbody>
+        </table>
+       
+                </div>
+
+            
+        </div>
                                 </div>
                             </div>
                         </div>

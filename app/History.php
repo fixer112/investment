@@ -14,4 +14,8 @@ class History extends Model
     {
     	return $this->belongsTo('App\User');
     }
+
+    function roll(){
+     	return $this->hasOne('App\Rollover');
+     }
 }

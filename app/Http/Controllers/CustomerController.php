@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\History;
 use App\User;
+use App\Rollover;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -197,30 +198,7 @@ class CustomerController extends Controller
   		  $rate = $request->input('rate');
         $amount = $request->input('amount');
 
-        $now = Carbon::now();
-        $month = Carbon::now()->addMonths($request->input('rate'));
-        $days = $month->diff($now)->days;
-        $Mrate = $days;
-         
-        if ($rate == "5") {
-
-			/*$accured_interest = (1.40/100)*$amount*$Mrate;
-            $irm = 20;*/
-            $total_earning = $amount * 1.40;
-			
-		}elseif ($rate == "9") {
-			/*$accured_interest = (1.96/100)*$amount*$Mrate;
-             $irm = 30;*/
-             $total_earning = $amount * 1.96;
-		}elseif ($rate == "18") {
-			/*$accured_interest = (3.84/100)*$amount*$Mrate;
-             $irm = 40;*/
-             $total_earning = $amount * 3.84;
-		}elseif ($rate == "36") {
-			/*$accured_interest = (7.7/100)*$amount*$Mrate;
-             $irm = 50;*/
-             $total_earning = $amount * 7.7;
-		}
+        $total_earning = $this->return_amount($rate, $amount);
         
 
 		/*if ($rate == "30") {
@@ -336,8 +314,28 @@ class CustomerController extends Controller
     }
   }
 
+  function showRoll(){
+    $actives = Auth::user()->history()->where('status', '=', 'active')->latest()->get();
+    return view('cus.roll',compact('actives'));
+  }
   public function roll(){
 
+    $history = History::find(request()->trans);
+    if (!$history) {
+      //request()->session()->flash('failed', '');
+      return back();
+    }
+
+    $roll = Rollover::create([
+      'history_id' => $history->id,
+      'tenure' => request()->tenure,
+      'type' => request()->type,
+      'user_id' => $history->user->id,
+    ]);
+
+    $history->update(['rollover_id' => $roll->id]);
+
+    request()->session()->flash('success', 'Rollover pending, await admin approval');
     return back();
   }
 }
