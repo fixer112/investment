@@ -436,8 +436,8 @@ class AdminController extends Controller
 
     public function rollApprove(Rollover $roll){
         $history = $roll->history;
-        if ($history->status == 'paid' || carbon::now() > $history->return_date) {
-            request()->session()->flash('failed', 'Rollover paid, investment paid or pass return date');
+        if ($history->status == 'paid'/* || carbon::now() > $history->return_date*/) {
+            request()->session()->flash('failed', 'Rollover failed, investment paid');
             return back();
         }
 
