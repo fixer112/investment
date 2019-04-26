@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\History;
 use App\Rollover;
+use App\Refund;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,8 @@ class AdminController extends Controller
 		$pendings = $historys->where('status', '=', 'pending')->get();
 		$rejecteds = $historys->where('status', '=', 'reject')->get();
         $rolls = Rollover::where('status', 0)->get();
+        $p_refunds = Refund::where('status', 0)->get();
+        $a_refunds = Refund::where('status', 1)->get();
 		$now = Carbon::now();
 		//$dues = 
 
@@ -40,7 +43,7 @@ class AdminController extends Controller
 		$cus = $users->where('role','=','cus')->get();
 		$mentor = $users->where('mentor', '!=', '')->get();
 
-    	return view('admin.index', compact('users', 'historys', 'paids', 'actives', 'all', 'pendings', 'rejecteds', 'admin', 'cus', 'mentor', 'now','rolls'));
+    	return view('admin.index', compact('users', 'historys', 'paids', 'actives', 'all', 'pendings', 'rejecteds', 'admin', 'cus', 'mentor', 'now','rolls','p_refunds','a_refunds'));
     }
 
     public function notify(){
@@ -516,6 +519,28 @@ class AdminController extends Controller
         $roll->delete();
 
         request()->session()->flash('success', 'Rollover deleted');
+        return back();
+    }
+
+    function refundDelete(Refund $refund){
+        $refund->delete();
+
+        request()->session()->flash('success', 'Refund deleted');
+        return back();
+    }
+
+    public function refundApprove(Refund $refund){
+        $history = $refund->history;
+        //return $refund;
+        if ($history->status == 'paid'/* || carbon::now() > $history->return_date*/) {
+            request()->session()->flash('failed', 'Refund failed, investment paid');
+            return back();
+        }
+
+        $refund->update(['status'=>1]);
+        $history->update(['status'=>'refund']);
+
+        request()->session()->flash('success', 'Refund approved');
         return back();
     }
 }

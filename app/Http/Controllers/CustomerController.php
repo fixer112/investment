@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\History;
 use App\User;
 use App\Rollover;
+use App\Refund;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -74,7 +75,9 @@ class CustomerController extends Controller
 
     public function getrefund(Request $request){
 
-        return view('cus.refund');
+        $actives = Auth::user()->history()->where('status', '=', 'active')->latest()->get();
+
+        return view('cus.refund',compact('actives'));
 
     }
 
@@ -336,6 +339,24 @@ class CustomerController extends Controller
     $history->update(['rollover_id' => $roll->id]);
 
     request()->session()->flash('success', 'Rollover pending, await admin approval');
+    return back();
+  }
+
+  function refund(){
+    $history = History::find(request()->trans);
+    if (!$history) {
+      return back();
+    }
+
+    $refund = Refund::create([
+      'history_id' => $history->id,
+      'message' => request()->message,
+      'user_id' => $history->user->id,
+    ]);
+
+    $history->update(['refund_id' => $refund->id]);
+
+    request()->session()->flash('success', 'Refund pending, await admin approval');
     return back();
   }
 }

@@ -40,4 +40,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Rollover');
     }
+
+    public function refund()
+    {
+        return $this->hasMany('App\Refund');
+    }
 }

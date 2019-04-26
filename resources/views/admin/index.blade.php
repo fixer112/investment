@@ -126,6 +126,8 @@ $dues = $actives->where('return_date', '<', $now );
         <li class="nav-item"> <a class="nav-link  active" data-toggle="tab" href="#pending" role="tab"><span style="color: yellow">{{$pendings->count()}} Pending</span></a> </li>
 		<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#reject" role="tab"><span style="color: red">{{$rejecteds->count()}} Rejected</span></a> </li>
         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#roll" role="tab"><span style="color: blue">{{$rolls->count()}} Rollovers</span></a> </li>
+        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#a_refund" role="tab"><span style="color: green">{{$a_refunds->count()}} Approved Refunds</span></a> </li>
+        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#p_refund" role="tab"><span style="color: blue">{{$p_refunds->count()}} Pending Refunds</span></a> </li>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
@@ -444,6 +446,95 @@ $dues = $actives->where('return_date', '<', $now );
                     <a href="/admin/cus/{{$roll->user->id}}"><button class="btn btn-primary">View Customer</button></a>
 
                     <a href="roll/delete/{{$roll->id}}"><button class="btn btn-danger">Delete</button></a>
+
+                    </td>
+                    
+                </tr>
+                @endforeach
+                @endif
+            </tbody>
+        </table>
+       
+                </div>
+
+            
+        </div>
+        <div class="tab-pane" id="a_refund" role="tabpanel">
+           
+                <div class="table-responsive m-t-40">
+        <table id="reject" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Apply Date</th>
+                    <th>Transaction Id</th>
+                    <th>Customer Email</th>
+                    <th>Invest Amount</th>
+                    <th>Tenure</th>
+                   
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+                @if (count($a_refunds)>0)
+                @foreach($a_refunds as $a_refund)
+                @php
+               
+                @endphp
+                <tr>
+                    <td>{{$a_refund->created_at}}</td>
+                    <td>{{$a_refund->history->tran_id}}</td>
+                    <td>{{$a_refund->user->email}}</td>
+                    <td>@money($a_refund->history->invest_amount)</td>
+                    <td>{{$a_refund->history->tenure}}</td>
+                    
+                    
+                </tr>
+                @endforeach
+                @endif
+            </tbody>
+        </table>
+       
+                </div>
+
+            
+        </div>
+        <div class="tab-pane" id="p_refund" role="tabpanel">
+           
+                <div class="table-responsive m-t-40">
+        <table id="reject" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Apply Date</th>
+                    <th>Transaction Id</th>
+                    <th>Customer Email</th>
+                    <th>Invest Amount</th>
+                    <th>Tenure</th>
+                    <th>Message</th>
+                    <th>Actioins</th>
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+                @if (count($p_refunds)>0)
+                @foreach($p_refunds as $p_refund)
+                @php
+               
+                @endphp
+                <tr>
+                    <td>{{$p_refund->created_at}}</td>
+                    <td>{{$p_refund->history->tran_id}}</td>
+                    <td>{{$p_refund->user->email}}</td>
+                    <td>@money($p_refund->history->invest_amount)</td>
+                    <td>{{$p_refund->history->tenure}}</td>
+                    <td>{{$p_refund->message}}</td>
+                    <td>
+                    <a href="/refund/approve/{{$p_refund->id}}"><button class="btn btn-success">Approve</button></a>
+
+                    <a href="/admin/cus/{{$p_refund->user->id}}"><button class="btn btn-primary">View Customer</button></a>
+
+                    <a href="/refund/delete/{{$p_refund->id}}"><button class="btn btn-danger">Delete</button></a>
 
                     </td>
                     

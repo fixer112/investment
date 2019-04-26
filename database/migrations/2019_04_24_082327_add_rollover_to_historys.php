@@ -16,6 +16,7 @@ class AddRolloverToHistorys extends Migration
         //
         Schema::table('historys', function (Blueprint $table) {
         $table->bigInteger('rollover_id')->nullable();
+        $table->bigInteger('refund_id')->nullable();
         });
     }
 

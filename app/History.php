@@ -18,4 +18,8 @@ class History extends Model
     function roll(){
      	return $this->hasOne('App\Rollover');
      }
+
+    function refund(){
+        return $this->hasOne('App\Refund');
+     }
 }

@@ -10,6 +10,8 @@ Dashbord
 $paids = Auth::user()->history()->where('status', '=', 'paid')->get();
 $actives = Auth::user()->history()->where('status', '=', 'active')->get();
 $rolls = Auth::user()->roll()->where('status', 0)->get();
+$p_refunds = Auth::user()->refund()->where('status', 0)->get();
+$a_refunds = Auth::user()->refund()->where('status', 1)->get();
 $all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
 $pendings = Auth::user()->history()->where('status', '=', 'pending')->get();
 $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->get();
@@ -199,6 +201,8 @@ $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->get();
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#pending" role="tab"><span style="color: yellow">{{$pendings->count()}} Pending</span></a> </li>
 									<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#reject" role="tab"><span style="color: red">{{$rejecteds->count()}} Rejected</span></a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#roll" role="tab"><span style="color: blue">{{$rolls->count()}} Rollovers</span></a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#a_refund" role="tab"><span style="color: green">{{$a_refunds->count()}} Approved Refunds</span></a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#p_refund" role="tab"><span style="color: blue">{{$p_refunds->count()}} Pending Refunds</span></a> </li>
                                 </ul>
                                 <!-- Tab panes -->
                                 <div class="tab-content">
@@ -422,6 +426,87 @@ $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->get();
             </tbody>
         </table>
        
+                </div>
+
+            
+        </div>
+
+        <div class="tab-pane" id="a_refund" role="tabpanel">
+           
+                <div class="table-responsive m-t-40">
+        <table id="reject" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Approved Date</th>
+                    <th>Transaction Id</th>
+                    <th>Customer Email</th>
+                    <th>Invest Amount</th>
+                    <th>Tenure</th>
+                   
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+                @if (count($a_refunds)>0)
+                @foreach($a_refunds as $a_refund)
+                @php
+               
+                @endphp
+                <tr>
+                    <td>{{$a_refund->updated_at}}</td>
+                    <td>{{$a_refund->history->tran_id}}</td>
+                    <td>{{$a_refund->user->email}}</td>
+                    <td>@money($a_refund->history->invest_amount)</td>
+                    <td>{{$a_refund->history->tenure}}</td>
+                    
+                    
+                </tr>
+                @endforeach
+                @endif
+            </tbody>
+        </table>
+        
+                </div>
+
+            
+        </div>
+        <div class="tab-pane" id="p_refund" role="tabpanel">
+           
+                <div class="table-responsive m-t-40">
+        <table id="reject" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Apply Date</th>
+                    <th>Transaction Id</th>
+                    <th>Invest Amount</th>
+                    <th>Tenure</th>
+                    <th>Message</th>
+                    {{-- <th>Actioins</th> --}}
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+                @if (count($p_refunds)>0)
+                @foreach($p_refunds as $p_refund)
+                @php
+               
+                @endphp
+                <tr>
+                    <td>{{$p_refund->created_at}}</td>
+                    <td>{{$p_refund->history->tran_id}}</td>
+                    <td>@money($p_refund->history->invest_amount)</td>
+                    <td>{{$p_refund->history->tenure}}</td>
+                    <td>{{$p_refund->message}}</td>
+                    
+                    
+                </tr>
+                @endforeach
+                @endif
+            </tbody>
+        </table>
+        
                 </div>
 
             

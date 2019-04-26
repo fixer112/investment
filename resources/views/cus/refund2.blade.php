@@ -33,25 +33,16 @@ Refund
                     </div>
 
                 <div class="col-md-6 mx-auto">
-                        <form method="POST" action="/cus/refund">
+                        <form method="POST" action="/cus/contact" files="true" enctype="multipart/form-data">
                         @csrf
-                                <div class="form-group">
-                                    <label>Active Transactions</label>
-                                    <select name="trans" class="form-control" required>
-                                    @foreach($actives as $active)
-                                    @php
-                                    $refund = $active->refund;
-                                    if ($refund) {
-                                        $disable = 1;
-                                        $status = $refund->status ? 'Active' : 'Pending';
-                                    }else{
-                                        $disable = 0;
-                                        $status = '';
-                                    }
-                                    @endphp
-                                    <option value="{{$active->id}}" {{$disable ? 'disabled':''}}>@money($active->invest_amount) - @money($active->return_amount) {{$status}} {{$active->tran_id}}</option>
-                                    @endforeach
-                                    </select>
+                                <div class="form-group {{$errors->has('subject') ? 'invalid-feedback' : ''}}">
+                                    <label>Subject</label>
+                                    <input type="text" name="subject" class="form-control" value ="{{ old('subject') }}" required>
+                                    @if ($errors->has('subject'))
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('subject') }}</strong>
+                                </span>
+                            @endif
                                 </div>
 
                                 <div class="form-group {{$errors->has('message') ? 'invalid-feedback' : ''}}">
@@ -61,8 +52,10 @@ Refund
                                 <span class="invalid-feedback">
                                     <strong>{{ $errors->first('message') }}</strong>
                                 </span>
-                                @endif
-                                </div>
+                            @endif
+                                </div>  
+
+                                <input type="email" name="to" value="refund@honeypays.com.ng" hidden="true">  
                                     
                                     <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Submit</button>
                                     

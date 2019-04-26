@@ -79,6 +79,7 @@ Route::post('/cus/invest', 'CustomerController@investpost');
 Route::get('/cus/history', 'CustomerController@transactions');
 Route::get('/cus/contact', 'CustomerController@getcontact');
 Route::get('/cus/refund', 'CustomerController@getrefund');
+Route::post('/cus/refund', 'CustomerController@refund');
 Route::post('/cus/roll', 'CustomerController@roll');
 
 Route::post('/cus/contact', 'CustomerController@postcontact');
@@ -90,6 +91,9 @@ Route::get('/cus/mentorcus/history/{user}', 'CustomerController@mentorcushistory
 //Route::get('/invest', 'AdminController@investapprove');
 Route::get('/roll/approve/{roll}', 'AdminController@rollApprove');
 Route::get('/roll/delete/{roll}', 'AdminController@rollDelete');
+
+Route::get('/refund/approve/{refund}', 'AdminController@refundApprove');
+Route::get('/refund/delete/{refund}', 'AdminController@refundDelete');
 
 Route::get('/admin', 'AdminController@index');
 Route::get('/admin/invest/reject/{history}', 'AdminController@investreject');
