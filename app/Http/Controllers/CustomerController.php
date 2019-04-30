@@ -302,7 +302,7 @@ class CustomerController extends Controller
 
     $historys = $user->history;
 
-    if ($request->ajax() || $request->expectsJson()) {
+    if (request()->ajax() || request()->expectsJson()) {
             
                $data = compact('historys', 'user');
                //Auth::logout();
@@ -312,7 +312,7 @@ class CustomerController extends Controller
     return view('cus.mentorcus.history')->with(['historys' => $historys, 'user' => $user]); 
 
     }else {
-        if ($request->ajax() || $request->expectsJson()) {
+        if (request()->ajax() || request()->expectsJson()) {
             
                $data['errors'] = ['fail' => ['User not a referal']];
                //Auth::logout();
@@ -349,9 +349,11 @@ class CustomerController extends Controller
 
   function refund(){
     $history = History::find(request()->trans);
-    if (!$history) {
+    $refund = $history->refund;
+    if (!$history || $refund) {
       return back();
     }
+
 
     $refund = Refund::create([
       'history_id' => $history->id,
@@ -361,7 +363,7 @@ class CustomerController extends Controller
 
     $history->update(['refund_id' => $refund->id]);
 
-    if ($request->ajax() || $request->expectsJson()) {
+    if (request()->ajax() || request()->expectsJson()) {
            $data['message'] = 'Refund pending, await admin approval';
             return \Response::json($data, 200);
     }
