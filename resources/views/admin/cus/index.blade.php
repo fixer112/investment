@@ -466,6 +466,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                     <th>Customer Email</th>
                     <th>Invest Amount</th>
                     <th>Tenure</th>
+                    <th>Due</th>
                    
                     
                 </tr>
@@ -483,6 +484,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                     <td>{{$a_refund->user->email}}</td>
                     <td>@money($a_refund->history->invest_amount)</td>
                     <td>{{$a_refund->history->tenure}}</td>
+                    <td>{{$a_refund->due}}</td>
                     
                     
                 </tr>

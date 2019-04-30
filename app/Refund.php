@@ -8,7 +8,7 @@ class Refund extends Model
 {
     //
     protected $guarded = [];
-    
+    protected $dates = ['due'];
     function history(){
      	return $this->hasOne('App\History');
      }

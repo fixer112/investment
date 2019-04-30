@@ -76,6 +76,11 @@ class CustomerController extends Controller
     public function getrefund(Request $request){
 
         $actives = Auth::user()->history()->where('status', '=', 'active')->latest()->get();
+        if ($request->ajax() || $request->expectsJson()) {
+            
+               $data = compact('actives');
+                return \Response::json($data, 200);
+            }
 
         return view('cus.refund',compact('actives'));
 
@@ -355,6 +360,11 @@ class CustomerController extends Controller
     ]);
 
     $history->update(['refund_id' => $refund->id]);
+
+    if ($request->ajax() || $request->expectsJson()) {
+           $data['message'] = 'Refund pending, await admin approval';
+            return \Response::json($data, 200);
+    }
 
     request()->session()->flash('success', 'Refund pending, await admin approval');
     return back();

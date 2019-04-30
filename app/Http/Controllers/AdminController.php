@@ -536,8 +536,10 @@ class AdminController extends Controller
             request()->session()->flash('failed', 'Refund failed, investment paid');
             return back();
         }
+        $due = carbon::now()->addWeekdays(30);
 
-        $refund->update(['status'=>1]);
+        $refund->update(['status'=>1, 'due' => $due]);
+        
         $history->update(['status'=>'refund']);
 
         request()->session()->flash('success', 'Refund approved');

@@ -470,6 +470,7 @@ $dues = $actives->where('return_date', '<', $now );
                     <th>Customer Email</th>
                     <th>Invest Amount</th>
                     <th>Tenure</th>
+                    <th>Due</th>
                    
                     
                 </tr>
@@ -487,6 +488,7 @@ $dues = $actives->where('return_date', '<', $now );
                     <td>{{$a_refund->user->email}}</td>
                     <td>@money($a_refund->history->invest_amount)</td>
                     <td>{{$a_refund->history->tenure}}</td>
+                    <td>{{$a_refund->due}}</td>
                     
                     
                 </tr>
