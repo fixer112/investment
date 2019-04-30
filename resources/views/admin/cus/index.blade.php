@@ -11,6 +11,9 @@ $paids = $user->history()->where('status', '=', 'paid')->get();
 $rolls = $user->roll()->where('status', 0)->get();
 $p_refunds = $user->refund()->where('status', 0)->get();
 $a_refunds = $user->refund()->where('status', 1)->get();
+$refund_dues = $a_refunds->filter(function ($value, $key) {
+    return $value->due < carbon::now();
+});
 $actives = $user->history()->where('status', '=', 'active')->get();
 $all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
 $pendings = $user->history()->where('status', '=', 'pending')->get();
@@ -217,6 +220,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#pending" role="tab"><span style="color: yellow">{{$pendings->count()}} Pending</span></a> </li>
 									<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#reject" role="tab"><span style="color: red">{{$rejecteds->count()}} Rejected</span></a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#roll" role="tab"><span style="color: blue">{{$rolls->count()}} Rollovers</span></a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#refund_due" role="tab"><span style="color: green">{{$refund_dues->count()}} Refund Dues</span></a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#a_refund" role="tab"><span style="color: green">{{$a_refunds->count()}} Approved Refunds</span></a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#p_refund" role="tab"><span style="color: blue">{{$p_refunds->count()}} Pending Refunds</span></a> </li>
                                 </ul>
@@ -451,6 +455,48 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
             </tbody>
         </table>
        
+                </div>
+
+            
+        </div>
+        <div class="tab-pane" id="refund_due" role="tabpanel">
+           
+                <div class="table-responsive m-t-40">
+        <table id="reject" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Approved Date</th>
+                    <th>Transaction Id</th>
+                    <th>Customer Email</th>
+                    <th>Invest Amount</th>
+                    <th>Tenure</th>
+                    <th>Due</th>
+                   
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+                @if (count($refund_dues)>0)
+                @foreach($refund_dues as $refund_due)
+                @php
+               
+                @endphp
+                <tr>
+                    <td>{{$refund_due->updated_at}}</td>
+                    <td>{{$refund_due->history->tran_id}}</td>
+                    <td>{{$refund_due->user->email}}</td>
+                    <td>@money($refund_due->history->invest_amount)</td>
+                    <td>{{$refund_due->history->tenure}}</td>
+                    <td>{{$refund_due->due}}</td>
+                    
+                    
+                </tr>
+                @endforeach
+                @endif
+            </tbody>
+        </table>
+        
                 </div>
 
             

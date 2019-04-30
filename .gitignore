@@ -24,3 +24,4 @@ Homestead.json
 .rocketeer/
 *.zip
 *.sql
+test.php

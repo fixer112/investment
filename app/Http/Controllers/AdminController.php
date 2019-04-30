@@ -36,6 +36,10 @@ class AdminController extends Controller
         $rolls = Rollover::where('status', 0)->get();
         $p_refunds = Refund::where('status', 0)->get();
         $a_refunds = Refund::where('status', 1)->get();
+        $refund_dues = $a_refunds->filter(function ($value, $key) {
+            return $value->due < carbon::now();
+        });
+        //return $refund_dues;
 		$now = Carbon::now();
 		//$dues = 
 
@@ -43,7 +47,7 @@ class AdminController extends Controller
 		$cus = $users->where('role','=','cus')->get();
 		$mentor = $users->where('mentor', '!=', '')->get();
 
-    	return view('admin.index', compact('users', 'historys', 'paids', 'actives', 'all', 'pendings', 'rejecteds', 'admin', 'cus', 'mentor', 'now','rolls','p_refunds','a_refunds'));
+    	return view('admin.index', compact('users', 'historys', 'paids', 'actives', 'all', 'pendings', 'rejecteds', 'admin', 'cus', 'mentor', 'now','rolls','p_refunds','a_refunds', 'refund_dues'));
     }
 
     public function notify(){
@@ -539,7 +543,7 @@ class AdminController extends Controller
         $due = carbon::now()->addWeekdays(30);
 
         $refund->update(['status'=>1, 'due' => $due]);
-        
+
         $history->update(['status'=>'refund']);
 
         request()->session()->flash('success', 'Refund approved');
