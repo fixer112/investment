@@ -19,6 +19,7 @@ class CreateRefundsTable extends Migration
             $table->bigInteger('user_id');
             $table->longText('message');
             $table->boolean('status')->default(0);
+            $table->boolean('paid')->default(0);
             $table->dateTime('due')->nullable();
             $table->timestamps();
         });

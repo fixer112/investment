@@ -94,6 +94,7 @@ Route::get('/roll/delete/{roll}', 'AdminController@rollDelete');
 
 Route::get('/refund/approve/{refund}', 'AdminController@refundApprove');
 Route::get('/refund/delete/{refund}', 'AdminController@refundDelete');
+Route::get('/refund/pay/{refund}', 'AdminController@refundPay');
 
 Route::get('/admin', 'AdminController@index');
 Route::get('/admin/invest/reject/{history}', 'AdminController@investreject');

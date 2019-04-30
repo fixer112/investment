@@ -34,11 +34,12 @@ class AdminController extends Controller
 		$pendings = $historys->where('status', '=', 'pending')->get();
 		$rejecteds = $historys->where('status', '=', 'reject')->get();
         $rolls = Rollover::where('status', 0)->get();
-        $p_refunds = Refund::where('status', 0)->get();
-        $a_refunds = Refund::where('status', 1)->get();
+        $p_refunds = Refund::where('status', 0)->where('paid',0)->get();
+        $a_refunds = Refund::where('status', 1)->where('paid',0)->get();
         $refund_dues = $a_refunds->filter(function ($value, $key) {
             return $value->due < carbon::now();
         });
+        $refund_paids = Refund::where('paid',1)->get();
         //return $refund_dues;
 		$now = Carbon::now();
 		//$dues = 
@@ -47,7 +48,7 @@ class AdminController extends Controller
 		$cus = $users->where('role','=','cus')->get();
 		$mentor = $users->where('mentor', '!=', '')->get();
 
-    	return view('admin.index', compact('users', 'historys', 'paids', 'actives', 'all', 'pendings', 'rejecteds', 'admin', 'cus', 'mentor', 'now','rolls','p_refunds','a_refunds', 'refund_dues'));
+    	return view('admin.index', compact('users', 'historys', 'paids', 'actives', 'all', 'pendings', 'rejecteds', 'admin', 'cus', 'mentor', 'now','rolls','p_refunds','a_refunds', 'refund_dues','refund_paids'));
     }
 
     public function notify(){
@@ -547,6 +548,20 @@ class AdminController extends Controller
         $history->update(['status'=>'refund']);
 
         request()->session()->flash('success', 'Refund approved');
+        return back();
+    }
+
+    function refundPay(Refund $refund){
+        $history = $refund->history;
+        if ($history->status == 'refund_paid') {
+            request()->session()->flash('failed', 'Investment already paid');
+            return back();
+        }
+
+        $refund->update(['paid'=> 1]);
+        $history->update(['status'=>'refund_paid']);
+
+        request()->session()->flash('success', 'Refund Paid');
         return back();
     }
 }

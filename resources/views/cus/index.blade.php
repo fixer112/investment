@@ -10,11 +10,12 @@ Dashbord
 $paids = Auth::user()->history()->where('status', '=', 'paid')->get();
 $actives = Auth::user()->history()->where('status', '=', 'active')->get();
 $rolls = Auth::user()->roll()->where('status', 0)->get();
-$p_refunds = Auth::user()->refund()->where('status', 0)->get();
-$a_refunds = Auth::user()->refund()->where('status', 1)->get();
+$p_refunds = Auth::user()->refund()->where('status', 0)->where('paid',0)->get();
+$a_refunds = Auth::user()->refund()->where('status', 1)->where('paid',0)->get();
 $refund_dues = $a_refunds->filter(function ($value, $key) {
     return $value->due < carbon::now();
 });
+$refund_paids = Auth::user()->refund()->where('paid',1)->get();
 $all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
 $pendings = Auth::user()->history()->where('status', '=', 'pending')->get();
 $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->get();
@@ -204,6 +205,7 @@ $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->get();
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#pending" role="tab"><span style="color: yellow">{{$pendings->count()}} Pending</span></a> </li>
 									<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#reject" role="tab"><span style="color: red">{{$rejecteds->count()}} Rejected</span></a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#roll" role="tab"><span style="color: blue">{{$rolls->count()}} Rollovers</span></a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#refund_paid" role="tab"><span style="color: green">{{$refund_paids->count()}} Refunds Paid</span></a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#refund_due" role="tab"><span style="color: green">{{$refund_dues->count()}} Refund Dues</span></a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#a_refund" role="tab"><span style="color: green">{{$a_refunds->count()}} Approved Refunds</span></a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#p_refund" role="tab"><span style="color: blue">{{$p_refunds->count()}} Pending Refunds</span></a> </li>
@@ -434,6 +436,48 @@ $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->get();
 
             
         </div>
+        <div class="tab-pane" id="refund_paid" role="tabpanel">
+           
+                <div class="table-responsive m-t-40">
+        <table id="reject" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Approved Date</th>
+                    <th>Transaction Id</th>
+                    <th>Customer Email</th>
+                    <th>Invest Amount</th>
+                    <th>Tenure</th>
+                    <th>Due</th>
+                   
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+                @if (count($refund_paids)>0)
+                @foreach($refund_paids as $refund_paid)
+                @php
+               
+                @endphp
+                <tr>
+                    <td>{{$refund_paid->updated_at}}</td>
+                    <td>{{$refund_paid->history->tran_id}}</td>
+                    <td>{{$refund_paid->user->email}}</td>
+                    <td>@money($refund_paid->history->invest_amount)</td>
+                    <td>{{$refund_paid->history->tenure}}</td>
+                    <td>{{$refund_paid->due}}</td>
+                    
+                    
+                </tr>
+                @endforeach
+                @endif
+            </tbody>
+        </table>
+        
+                </div>
+
+            
+        </div>
         <div class="tab-pane" id="refund_due" role="tabpanel">
            
                 <div class="table-responsive m-t-40">
@@ -519,7 +563,7 @@ $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->get();
             
         </div>
 
-        
+
         <div class="tab-pane" id="p_refund" role="tabpanel">
            
                 <div class="table-responsive m-t-40">

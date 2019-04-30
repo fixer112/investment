@@ -9,11 +9,12 @@ Dashboard
 @php
 $paids = $user->history()->where('status', '=', 'paid')->get();
 $rolls = $user->roll()->where('status', 0)->get();
-$p_refunds = $user->refund()->where('status', 0)->get();
-$a_refunds = $user->refund()->where('status', 1)->get();
+$p_refunds = $user->refund()->where('status', 0)->where('paid',0)->get();
+$a_refunds = $user->refund()->where('status', 1)->where('paid',0)->get();
 $refund_dues = $a_refunds->filter(function ($value, $key) {
     return $value->due < carbon::now();
 });
+$refund_paids = $user->refund()->where('paid',1)->get();
 $actives = $user->history()->where('status', '=', 'active')->get();
 $all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
 $pendings = $user->history()->where('status', '=', 'pending')->get();
@@ -220,6 +221,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#pending" role="tab"><span style="color: yellow">{{$pendings->count()}} Pending</span></a> </li>
 									<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#reject" role="tab"><span style="color: red">{{$rejecteds->count()}} Rejected</span></a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#roll" role="tab"><span style="color: blue">{{$rolls->count()}} Rollovers</span></a> </li>
+                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#refund_paid" role="tab"><span style="color: green">{{$refund_paids->count()}} Refunds Paid</span></a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#refund_due" role="tab"><span style="color: green">{{$refund_dues->count()}} Refund Dues</span></a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#a_refund" role="tab"><span style="color: green">{{$a_refunds->count()}} Approved Refunds</span></a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#p_refund" role="tab"><span style="color: blue">{{$p_refunds->count()}} Pending Refunds</span></a> </li>
@@ -459,6 +461,49 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
 
             
         </div>
+        <div class="tab-pane" id="refund_paid" role="tabpanel">
+           
+                <div class="table-responsive m-t-40">
+        <table id="reject" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Approved Date</th>
+                    <th>Transaction Id</th>
+                    <th>Customer Email</th>
+                    <th>Invest Amount</th>
+                    <th>Tenure</th>
+                    <th>Due</th>
+                    
+                   
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+                @if (count($refund_paids)>0)
+                @foreach($refund_paids as $refund_paid)
+                @php
+               
+                @endphp
+                <tr>
+                    <td>{{$refund_paid->updated_at}}</td>
+                    <td>{{$refund_paid->history->tran_id}}</td>
+                    <td>{{$refund_paid->user->email}}</td>
+                    <td>@money($refund_paid->history->invest_amount)</td>
+                    <td>{{$refund_paid->history->tenure}}</td>
+                    <td>{{$refund_paid->due}}</td>
+                    
+                    
+                </tr>
+                @endforeach
+                @endif
+            </tbody>
+        </table>
+        
+                </div>
+
+            
+        </div>
         <div class="tab-pane" id="refund_due" role="tabpanel">
            
                 <div class="table-responsive m-t-40">
@@ -471,6 +516,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                     <th>Invest Amount</th>
                     <th>Tenure</th>
                     <th>Due</th>
+                    <th>Action</th>
                    
                     
                 </tr>
@@ -489,6 +535,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                     <td>@money($refund_due->history->invest_amount)</td>
                     <td>{{$refund_due->history->tenure}}</td>
                     <td>{{$refund_due->due}}</td>
+                    <td><a href="/refund/pay/{{$refund_due->id}}"><button class="btn btn-success">Verify Pay</button></a></td>
                     
                     
                 </tr>
@@ -513,6 +560,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                     <th>Invest Amount</th>
                     <th>Tenure</th>
                     <th>Due</th>
+                    <th>Action</th>
                    
                     
                 </tr>
@@ -531,6 +579,7 @@ $rejecteds = $user->history()->where('status', '=', 'reject')->get();
                     <td>@money($a_refund->history->invest_amount)</td>
                     <td>{{$a_refund->history->tenure}}</td>
                     <td>{{$a_refund->due}}</td>
+                    <td><a href="/refund/pay/{{$a_refund->id}}"><button class="btn btn-success">Verify Pay</button></a></td>
                     
                     
                 </tr>
