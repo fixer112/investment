@@ -351,6 +351,10 @@ class CustomerController extends Controller
     $history = History::find(request()->trans);
     $refund = $history->refund;
     if (!$history || $refund) {
+        if (request()->wantsJson()) {
+            return ['errors' => ['fail' => ['Transaction not found']]];
+            //return ['error' => $error];
+        }
       return back();
     }
 
@@ -363,9 +367,9 @@ class CustomerController extends Controller
 
     $history->update(['refund_id' => $refund->id]);
 
-    if (request()->ajax() || request()->expectsJson()) {
-           $data['message'] = 'Refund pending, await admin approval';
-            return \Response::json($data, 200);
+    if (equest()->wantsJson()) {
+           return ['message' =>'Refund pending, await admin approval'];
+            //return \Response::json($data, 200);
     }
 
     request()->session()->flash('success', 'Refund pending, await admin approval');
