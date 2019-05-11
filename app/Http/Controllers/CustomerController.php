@@ -329,8 +329,14 @@ class CustomerController extends Controller
   public function roll(){
 
     $history = History::find(request()->trans);
-    if (!$history) {
-      //request()->session()->flash('failed', '');
+    $roll = $history->roll;
+    if (!$history|| $roll) {
+        $error = 'Transaction not found or rollover pending';
+        if (request()->wantsJson()) {
+            return ['errors' => ['fail' => [$error]]];
+            //return ['error' => $error];
+        }
+      request()->session()->flash('failed', $error);
       return back();
     }
 
@@ -351,10 +357,12 @@ class CustomerController extends Controller
     $history = History::find(request()->trans);
     $refund = $history->refund;
     if (!$history || $refund) {
+        $error = 'Transaction not found or refund pending';
         if (request()->wantsJson()) {
-            return ['errors' => ['fail' => ['Transaction not found']]];
+            return ['errors' => ['fail' => [$error]]];
             //return ['error' => $error];
         }
+        request()->session()->flash('failed', $error);
       return back();
     }
 
