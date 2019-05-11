@@ -375,4 +375,8 @@ class CustomerController extends Controller
     request()->session()->flash('success', 'Refund pending, await admin approval');
     return back();
   }
+  function historys(){
+    $actives = Auth::user()->history()->where('status', '=', 'active')->latest()->get();
+    return $actives;
+  }
 }

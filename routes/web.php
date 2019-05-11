@@ -71,6 +71,7 @@ Route::get('/mail', 'HomeController@mail');
 
 
 //Customer Routes
+Route::get('/cus/historys', 'CustomerController@historys');
 Route::get('/cus', 'CustomerController@index');
 Route::get('/cus/edit', 'CustomerController@editget');
 Route::post('/cus/edit', 'CustomerController@editpost');
