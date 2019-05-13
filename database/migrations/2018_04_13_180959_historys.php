@@ -18,11 +18,11 @@ class Historys extends Migration
         $table->increments('id');
         $table->bigInteger('tran_id')->unique();
         $table->dateTime('invest_date');
-        $table->bigInteger('invest_amount');
+        $table->decimal('invest_amount',10,2);
         $table->Integer('tenure');
         $table->dateTime('return_date')->nullable();
         $table->dateTime('paid_date')->nullable();
-        $table->bigInteger('return_amount');
+        $table->decimal('return_amount',10,2);
         //$table->string('paid')->default('0');
         $table->string('proof')->nullable();
         $table->string('approved_date')->nullable();

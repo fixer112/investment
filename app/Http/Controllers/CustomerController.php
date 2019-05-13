@@ -198,7 +198,7 @@ class CustomerController extends Controller
   public function investpost(Request $request){
 
   	$this->validate($request, [
-            'amount' => 'required|numeric|min:5000|max:5000000',
+            'amount' => 'required|numeric|min:100',
             'rate' => 'required',
             'proof' => 'required|image|mimes:jpeg,jpg,png|max:1024'
         ]);

@@ -46,7 +46,7 @@ class ViewcusController extends Controller
 
       $this->validate($request, [
 
-                'invest_amount' => 'required|numeric|min:5000|max:5000000',
+                'invest_amount' => 'required|numeric|min:100',
                 'return_amount' => 'required|numeric',
                 'tenure' => 'required|numeric',
                 'invest_date' => 'required|date_format:d/m/y',

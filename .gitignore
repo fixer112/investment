@@ -2,7 +2,6 @@ vendor/
 .phpintel/
 node_modules/
 npm-debug.log
-/config/mail.php
 /public/images/
 
 # Laravel 4 specific
