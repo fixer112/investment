@@ -16,6 +16,7 @@ New Investment
                     <br>
                     SKYE BANK 4091107137
                     <br>
+                    <b>Amount should be in dollar</b>
                 </div>
 
                 <div class="col-lg-12 p-20">
