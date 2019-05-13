@@ -183,7 +183,7 @@
 
                     <div class="wrap-input100 validate-input" data-validate = "mentor">
                         <input class="input100" type="text" name="mentor" value="{{ old('mentor') }}" placeholder="e.g National id card" required>
-                        <span class="focus-input100" data-placeholder="*Mentor Number"></span>
+                        <span class="focus-input100" data-placeholder="*Account Manager Number"></span>
                         @if ($errors->has('mentor'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('mentor') }}</strong>

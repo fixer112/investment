@@ -295,6 +295,7 @@ class Controller extends BaseController
             $irm = 50;*/
             $total_earning = $amount * 7.7;
         }
+        $total_earning = $total_earning * (350/360);
         $vat = (5/100) * $total_earning;
         return $total_earning - $vat;
 
