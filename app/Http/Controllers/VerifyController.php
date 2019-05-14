@@ -10,7 +10,7 @@ use Log;
 
 class VerifyController extends Controller
 {
-   public function verify(Request $request, $email, $token){
+   public function verifyUser(Request $request, $email, $token){
 
    	$user = User::where('email', '=', $email)->where('verify', '=', $token)->where('active', '=', 0)->first();
 

@@ -48,7 +48,7 @@ Route::get('/pdf', function () {
 Route::get('reciept/{history}', 'Controller@reciept');
 Route::get('notify', 'AdminController@notify');
 Route::post('notify', 'AdminController@notifypost');
-Route::get('/verify/{email}/{token}', 'VerifyController@verify');
+Route::get('/verify/{email}/{token}', 'VerifyController@verifyUser');
 
 //Auth::routes();
 // Authentication Routes...
