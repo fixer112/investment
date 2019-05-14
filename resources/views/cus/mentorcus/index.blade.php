@@ -38,7 +38,7 @@ $rejecteds = $referals->where('status', '=', 'reject')/*->get()*/;
                                     <span><i class="fa fa-money f-s-40 color-primary"></i></span>
                                 </div>
                                 <div class="media-body media-text-right">
-                                    <h2>{{$all}}</h2>
+                                    <h2>@money($all)</h2>
                                     <p class="m-b-0">Total Invested</p>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@ $rejecteds = $referals->where('status', '=', 'reject')/*->get()*/;
                                     <span><i class="fa fa-money f-s-40 color-success"></i></span>
                                 </div>
                                 <div class="media-body media-text-right">
-                                    <h2>{{$paids->sum('return_amount')}}</h2>
+                                    <h2>@money($paids->sum('return_amount'))</h2>
                                     <p class="m-b-0">Total Paid Return</p>
                                 </div>
                             </div>
@@ -64,7 +64,7 @@ $rejecteds = $referals->where('status', '=', 'reject')/*->get()*/;
                                     <span><i class="fa fa-money f-s-40 color-warning"></i></span>
                                 </div>
                                 <div class="media-body media-text-right">
-                                    <h2>{{$actives->sum('return_amount')}}</h2>
+                                    <h2>@money($actives->sum('return_amount'))</h2>
                                     <p class="m-b-0">Total Expected Return</p>
                                 </div>
                             </div>
@@ -227,10 +227,10 @@ $rejecteds = $referals->where('status', '=', 'reject')/*->get()*/;
                                                 <td>{{$active->approved_date->format('d/m/Y H:i')}}</td>
                                                 <td>{{$active->invest_date->format('d/m/Y H:i')}}</td>
                                                 <td>{{$active->tran_id}}</td>
-                                                <td>₦{{$active->invest_amount}}</td>
+                                                <td>@money($active->invest_amount)</td>
                                                 <td>{{$active->tenure}}</td>
                                                 <td>{{$active->return_date->format('d/m/Y H:i')}}</td>
-                                                <td>₦{{$active->return_amount}}</td>
+                                                <td>@money($active->return_amount)</td>
                                                 <td>
                                                 <span class="badge {{$active->return_date < $now ? 'badge-success' : 'badge-danger'}}">{{$active->return_date < $now ? 'Yes' : 'No'}}</span>
                                                 </td>
@@ -274,10 +274,10 @@ $rejecteds = $referals->where('status', '=', 'reject')/*->get()*/;
                                                 <td>{{$paid->approved_date->format('d/m/Y H:i')}}</td>
                                                 <td>{{$paid->invest_date->format('d/m/Y H:i')}}</td>
                                                 <td>{{$paid->tran_id}}</td>
-                                                <td>₦{{$paid->invest_amount}}</td>
+                                                <td>@money($paid->invest_amount)</td>
                                                 <td>{{$paid->tenure}}</td>
                                                 <td>{{$paid->return_date->format('d/m/Y H:i')}}</td>
-                                                <td>₦{{$paid->return_amount}}</td>
+                                                <td>@money($paid->return_amount)</td>
                                                 <td><a href="{{asset($paid->proof)}}"><button class="btn btn-primary">View Proof</button></a></td>
                                                 
                                             </tr>
@@ -310,9 +310,9 @@ $rejecteds = $referals->where('status', '=', 'reject')/*->get()*/;
                                             <tr>
                                                 <td>{{$pending->invest_date->format('d/m/Y H:i')}}</td>
                                                 <td>{{$pending->tran_id}}</td>
-                                                <td>₦{{$pending->invest_amount}}</td>
+                                                <td>@money($pending->invest_amount)</td>
                                                 <td>{{$pending->tenure}}</td>
-                                                <td>₦{{$pending->return_amount}}</td>
+                                                <td>@money($pending->return_amount)</td>
                                                 <td><a href="{{asset($pending->proof)}}"><button class="btn btn-primary">View Proof</button></a></td>
                                                 
                                             </tr>
@@ -349,9 +349,9 @@ $rejecteds = $referals->where('status', '=', 'reject')/*->get()*/;
                                                 <td>{{$rejected->approved_date->format('d/m/Y H:i')}}</td>
                                                 <td>{{$rejected->invest_date->format('d/m/Y H:i')}}</td>
                                                 <td>{{$rejected->tran_id}}</td>
-                                                <td>₦{{$rejected->invest_amount}}</td>
+                                                <td>@money($rejected->invest_amount)</td>
                                                 <td>{{$rejected->tenure}}</td>
-                                                <td>₦{{$rejected->return_amount}}</td>
+                                                <td>@money($rejected->return_amount)</td>
                                                 <td><a href="{{asset($rejected->proof)}}"><button class="btn btn-primary">View Proof</button></a></td>
                                                 
                                             </tr>
