@@ -247,10 +247,10 @@ class CustomerController extends Controller
 
 			]);
 
-		$request->session()->flash('success', 'Awaiting approval For N'.$amount);
+		$request->session()->flash('success', 'Awaiting approval For '.$this->naira($amount));
         if ($request->ajax() || $request->expectsJson()) {
             
-               $data['message'] = 'Awaiting approval For N'.$amount;
+               $data['message'] = 'Awaiting approval For '.$this->naira($amount);
                 return \Response::json($data, 200);
             }
     	return redirect('/cus/invest');
