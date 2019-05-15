@@ -90,7 +90,7 @@
                 <span class="info">AMOUNT</span>
               </td>
               <td id="right">
-                {{$invest_amount}} (NGN)
+                {{$invest_amount}}
               </td>
             </tr>
 
@@ -135,7 +135,7 @@
                 <span class="info">INTEREST</span>
               </td>
               <td id="right">
-                {{$interest}} (NGN)
+                {{$interest}}
               </td>
             </tr>
 
@@ -144,7 +144,7 @@
                 <span class="info">VALUE AT MATURITY</span>
               </td>
               <td id="right">
-                {{$return_amount}} (NGN)
+                {{$return_amount}}
               </td>
             </tr>
           </tbody>
