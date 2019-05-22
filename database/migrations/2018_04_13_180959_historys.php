@@ -28,6 +28,7 @@ class Historys extends Migration
         $table->string('approved_date')->nullable();
         $table->string('status')->default('pending');
         $table->bigInteger('user_id');
+        $table->string('ref')->nullable();
         $table->timestamps();
         });
     }

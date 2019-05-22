@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
+    {{-- Tell the browser to be responsive to screen width --}}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -13,7 +13,7 @@
     <title>@yield('title')</title>
 
     {{-- <link href="{{ asset('css/lib/chartist/chartist.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('css/lib/owl.carousel.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/lib/owl.carousel.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/lib/owl.theme.default.min.css') }}" rel="stylesheet" /> --}}
 
     <!-- Bootstrap Core CSS -->
@@ -22,8 +22,9 @@
     <link href="{{ asset('css/helper.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     @yield('js')
+    <script src="//voguepay.com/js/voguepay.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
+    <!-- WARNING: Respond.js doesnt work if you view the page via file:** -->
     <!--[if lt IE 9]>
     <script src="https:**oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https:**oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -34,7 +35,7 @@
     <!-- Preloader - style you can find in spinners.css -->
     <div class="preloader">
         <svg class="circular" viewBox="25 25 50 50">
-			<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
     </div>
     <!-- Main wrapper  -->
     <div id="main-wrapper">
@@ -56,17 +57,21 @@
                     <!-- toggle and nav items -->
                     <ul class="navbar-nav mr-auto mt-md-0">
                         <!-- This is  -->
-                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted  " href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
-                        <li class="nav-item m-l-10"> <a class="nav-link sidebartoggler hidden-sm-down text-muted  " href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted  "
+                                href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
+                        <li class="nav-item m-l-10"> <a class="nav-link sidebartoggler hidden-sm-down text-muted  "
+                                href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
                         <!-- Messages -->
-                    
+
                         <!-- End Messages -->
                     </ul>
                     <!-- User profile and search -->
                     <ul class="navbar-nav my-lg-0">
                         <!-- Profile -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset(Auth::user()->identity)}}" alt="user" class="profile-pic" /></a>
+                            <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"><img src="{{ asset(Auth::user()->identity)}}"
+                                    alt="user" class="profile-pic" /></a>
                             <div class="dropdown-menu dropdown-menu-right animated zoomIn">
                                 <ul class="dropdown-user">
                                     <li><a href="/cus/edit"><i class="ti-user"></i> Profile</a></li>
@@ -88,30 +93,39 @@
                     <ul id="sidebarnav">
                         <li class="nav-devider"></li>
                         <li class="nav-label">Home</li>
-                        <li> <a href="/" aria-expanded="false"><i class="fa fa-tachometer"></i><span class="hide-menu">Dashboard</span></a>
+                        <li> <a href="/" aria-expanded="false"><i class="fa fa-tachometer"></i><span
+                                    class="hide-menu">Dashboard</span></a>
                         </li>
                         <li class="nav-label">Options</li>
-                        <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="ti-user"></i><span class="hide-menu">Profile</span></a>
+                        <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="ti-user"></i><span
+                                    class="hide-menu">Profile</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="/cus/edit">Edit Profile</a></li>
-                                
+
                             </ul>
                         </li>
-                        <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-money"></i><span class="hide-menu">Investment</span></a>
+                        <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-money"></i><span
+                                    class="hide-menu">Investment</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="/cus/invest">New Investment</a></li>
+                                <li><a href="/cus/invest">Investment With proof</a></li>
+                                <!-- <li><a href="/cus/invest_card">Investment With card</a></li> -->
                             </ul>
                         </li>
                         @if(!empty(Auth::user()->mentor))
-                        <li> <a href="/cus/referals" aria-expanded="false"><i class="fa fa-eye"></i><span class="hide-menu">Account Manager</span></a>
+                        <li> <a href="/cus/referals" aria-expanded="false"><i class="fa fa-eye"></i><span
+                                    class="hide-menu">Account Manager</span></a>
                         </li>
                         @endif
-                        <li> <a href="/cus/contact" aria-expanded="false"><i class="fa fa-envelope"></i><span class="hide-menu">Contact Admin</span></a></li>
-                        <li> <a href="/cus/refund" aria-expanded="false"><i class="fa fa-undo"></i><span class="hide-menu">Apply Refund</span></a></li>
-                        <li> <a href="/cus/roll" aria-expanded="false"><i class="fa fa-undo"></i><span class="hide-menu">Apply Roll Over</span></a></li>
+                        <li> <a href="/cus/contact" aria-expanded="false"><i class="fa fa-envelope"></i><span
+                                    class="hide-menu">Contact Admin</span></a></li>
+                        <li> <a href="/cus/refund" aria-expanded="false"><i class="fa fa-undo"></i><span
+                                    class="hide-menu">Apply Refund</span></a></li>
+                        <li> <a href="/cus/roll" aria-expanded="false"><i class="fa fa-undo"></i><span
+                                    class="hide-menu">Apply Roll Over</span></a></li>
                         <li class="nav-label">Search</li>
-                        <li> <a href="/cus/history" aria-expanded="false"><i class="fa fa-search"></i><span class="hide-menu">All History</span></a>
-                        </ul>
+                        <li> <a href="/cus/history" aria-expanded="false"><i class="fa fa-search"></i><span
+                                    class="hide-menu">All History</span></a>
+                    </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>
@@ -123,7 +137,8 @@
             <!-- Bread crumb -->
             <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
-                    <h3 class="text-primary">@yield('bread')</h3> </div>
+                    <h3 class="text-primary">@yield('bread')</h3>
+                </div>
                 {{-- <div class="col-md-7 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -135,14 +150,15 @@
             <!-- Container fluid  -->
             <div class="container-fluid">
                 <!-- Start Page Content -->
-               
-               @yield('content')
+
+                @yield('content')
 
                 <!-- End PAge Content -->
             </div>
             <!-- End Container fluid  -->
             <!-- footer -->
-            <footer class="footer"> © {{date('Y')}} All rights reserved. <a href="https://honeypays.com.ng">Honeypays Micro Credit Investment Ltd</a></footer>
+            <footer class="footer"> © {{date('Y')}} All rights reserved. <a href="https://honeypays.com.ng">Honeypays
+                    Micro Credit Investment Ltd</a></footer>
             <!-- End footer -->
         </div>
         <!-- End Page wrapper  -->
@@ -150,52 +166,52 @@
     <!-- End Wrapper -->
     <!-- The Modal Contact -->
     <div class="modal" id="suspend">
-      <div class="modal-dialog modal-confirm">
-        <div class="modal-content">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
 
-          <!-- Modal Header -->
-          <div class="modal-header">{{-- 
+                <!-- Modal Header -->
+                <div class="modal-header">{{--
                 <div class="icon-box">
                         <i class="material-icons fa fa-ban"></i>
                     </div> --}}
-            <h4 class="modal-title">CONTACT</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
-
-          
-    <!-- All Jquery -->
-    <script src="{{ asset('js/lib/jquery/jquery-3.2.1.min.js') }}"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="{{ asset('js/lib/bootstrap/js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/lib/bootstrap/js/bootstrap.min.js') }}"></script>
-    <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="{{ asset('js/jquery.slimscroll.js') }}"></script>
-    <!--Menu sidebar -->
-    <script src="{{ asset('js/sidebarmenu.js') }}"></script>
-    <!--stickey kit -->
-    <script src="{{ asset('js/lib/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
+                    <h4 class="modal-title">CONTACT</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
 
 
-   {{--  <script src="{{ asset('js/lib/datamap/d3.min.js') }}"></script>
-    <script src="{{ asset('js/lib/datamap/topojson.js') }}"></script>
-    <script src="{{ asset('js/lib/datamap/datamaps.world.min.js') }}"></script>
-    <script src="{{ asset('js/lib/datamap/datamap-init.js') }}"></script>
+                <!-- All Jquery -->
+                <script src="{{ asset('js/lib/jquery/jquery-3.2.1.min.js') }}"></script>
+                <!-- Bootstrap tether Core JavaScript -->
+                <script src="{{ asset('js/lib/bootstrap/js/popper.min.js') }}"></script>
+                <script src="{{ asset('js/lib/bootstrap/js/bootstrap.min.js') }}"></script>
+                <!-- slimscrollbar scrollbar JavaScript -->
+                <script src="{{ asset('js/jquery.slimscroll.js') }}"></script>
+                <!--Menu sidebar -->
+                <script src="{{ asset('js/sidebarmenu.js') }}"></script>
+                <!--stickey kit -->
+                <script src="{{ asset('js/lib/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
 
-    <script src="{{ asset('js/lib/weather/jquery.simpleWeather.min.js') }}"></script>
-    <script src="{{ asset('js/lib/weather/weather-init.js') }}"></script>
-    <script src="{{ asset('js/lib/owl-carousel/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('js/lib/owl-carousel/owl.carousel-init.js') }}"></script> 
+
+                {{--  <script src="{{ asset('js/lib/datamap/d3.min.js') }}"></script>
+                <script src="{{ asset('js/lib/datamap/topojson.js') }}"></script>
+                <script src="{{ asset('js/lib/datamap/datamaps.world.min.js') }}"></script>
+                <script src="{{ asset('js/lib/datamap/datamap-init.js') }}"></script>
+
+                <script src="{{ asset('js/lib/weather/jquery.simpleWeather.min.js') }}"></script>
+                <script src="{{ asset('js/lib/weather/weather-init.js') }}"></script>
+                <script src="{{ asset('js/lib/owl-carousel/owl.carousel.min.js') }}"></script>
+                <script src="{{ asset('js/lib/owl-carousel/owl.carousel-init.js') }}"></script>
 
 
-    <script src="{{ asset('js/lib/chartist/chartist.min.js') }}"></script>
-    <script src="{{ asset('js/lib/chartist/chartist-plugin-tooltip.min.js') }}"></script>
-    <script src="{{ asset('js/lib/chartist/chartist-init.js') }}"></script>--}}
-    <!--Custom JavaScript -->
-    <script src="{{ asset('js/custom.min.js') }}"></script>
+                <script src="{{ asset('js/lib/chartist/chartist.min.js') }}"></script>
+                <script src="{{ asset('js/lib/chartist/chartist-plugin-tooltip.min.js') }}"></script>
+                <script src="{{ asset('js/lib/chartist/chartist-init.js') }}"></script>--}}
+                <!--Custom JavaScript -->
+                <script src="{{ asset('js/custom.min.js') }}"></script>
 
-    <script src="{{ asset('js/lib/datatables/datatables.min.js') }}"></script>
-    <script src="{{ asset('js/lib/datatables/datatables-init.js') }}"></script>
-    <script src="https://code.tidio.co/myuqp2mwyctv2bsno70lihphmhxi3afo.js"></script>
+                <script src="{{ asset('js/lib/datatables/datatables.min.js') }}"></script>
+                <script src="{{ asset('js/lib/datatables/datatables-init.js') }}"></script>
+                <script src="https://code.tidio.co/myuqp2mwyctv2bsno70lihphmhxi3afo.js"></script>
 
 
 

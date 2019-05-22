@@ -303,26 +303,29 @@ class Controller extends BaseController
 
     public function paystack()
     {
-        return new Paystack(env('PAYSTACK_KEY'));
+        return new Paystack($this->getPaystackKey());
     }
 
-    public function start($amount, $email)
+    public function start($amount, $tenure, $email)
     {
         $amount = (int) $amount;
         $amount = (String) str_replace('.', '', $amount).'00';
+        $meta = ['tenure' => $tenure];
         //return $amount;
         try {
             $tranx = $this->paystack()->transaction->initialize([
                 'amount' => $amount, // in kobo
                 'email' => $email, // unique to transactions
                 'callback_url' => action('Controller@verify'),
+                'metadata' => json_encode($meta),
+                //'currency' => 'USD',
             ]);
         } catch (\Yabacon\Paystack\Exception\ApiException $e) {
             //print_r($e->getResponseObject());
             //die($e->getMessage());
             //return $e->getMessage();
             request()->session()->flash('failed', $e->getMessage());
-            return redirect('/');
+            return back();
         }
         //return $tranx->data->authorization_url;
         return redirect($tranx->data->authorization_url);
@@ -330,6 +333,8 @@ class Controller extends BaseController
 
     public function verify()
     {
+        //return $this->check(request()->transaction_id);
+        return request()->all();
         $reference = request()->reference ? request()->reference : '';
         if (!$reference) {
             return 'No reference supplied';
@@ -345,17 +350,106 @@ class Controller extends BaseController
             //print_r($e->getResponseObject());
             //return $e->getMessage();
             request()->session()->flash('failed', $e->getMessage());
-            return redirect('/');
+            return redirect('/cus');
         }
 
         if ('success' === $tranx->data->status) {
             //return json_encode($tranx->data);
-           //return number_format($tranx->data->amount,2);
-           $amount = substr_replace($tranx->data->amount,'.', -2, 0 );
-           //return $amount;
-           $amount = (double) $amount;
-           return $amount;
+            $history = History::where('ref',$reference)->first();
+            if($history){
+            request()->session()->flash('failed', 'payment made already for tran id '.$history->tran_id);
+            return redirect('/cus');
+            }
+            $now = Carbon::now();
+            $tenure = $tranx->data->metadata->tenure;
+            $MyDateCarbon = $this->return_date($now,$tenure);
+            $amount = substr_replace($tranx->data->amount,'.', -2, 0 );
+            $amount = (double) $amount/360;
+            $r_amount = $this->return_amount($tenure,$amount);
+            $randomstring = $this->randomstring(2).date("Hismy");
+            $history = History::create([
+                'ref' => $reference,
+                'tran_id' => $randomstring,
+                'invest_date' => $now,
+                'invest_amount' => $amount,
+                'tenure' => $tenure,
+                'return_amount' => $r_amount,
+                'proof' => '/card.png',
+                'approved_date' => Carbon::now(),
+                'return_date' => $MyDateCarbon,
+                'status' => 'active',
+                'user_id' => Auth::user()->id,
+            ]);
+            request()->session()->flash('success', 'Investment of '.$this->naira($amount).' successfull');
+            return redirect('/cus');
         }
     }
 
+    function getPaystackKey(){
+        return env('PAYSTACK_LIVE') == true ? env('PAYSTACK_KEY_LIVE'): env('PAYSTACK_KEY_TEST');
+    }
+
+    public function checkID($id){
+        $url = 'https://voguepay.com/?v_transaction_id='.$id.'&type=json&demo=true';
+        //return $url;
+        //$url = str_replace(" ", '%20', $url);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,$url);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $request = curl_exec ($ch);
+
+        curl_close ($ch);
+
+
+        return $request;
+    }
+    public function notify(){
+        $ref = request()->transaction_id;
+        
+        if(!$ref){
+            request()->session()->flash('failed', 'Invalid Payment');
+            return redirect('/cus');
+        }
+        $result = $this->checkID($ref);
+        $result = (json_decode($result));
+        //return $result;
+        
+        $tenure = (int) $result->merchant_ref;
+        if ($tenure > 36) {
+            request()->session()->flash('failed', 'Invalid Payment');
+            return redirect('/cus');
+        }
+        
+        $history = History::where('ref',$ref)->first();
+            if($history){
+            request()->session()->flash('failed', 'payment made already for tran id '.$history->tran_id);
+            return redirect('/cus');
+            }
+            $now = Carbon::now();
+            $MyDateCarbon = $this->return_date($now,$tenure);
+            $amount = (double) $result->total_amount;
+            //$amount = (double) $amount/360;
+            $r_amount = $this->return_amount($tenure,$amount);
+            $randomstring = $this->randomstring(2).date("Hismy");
+            $history = History::create([
+                'ref' => $ref,
+                'tran_id' => $randomstring,
+                'invest_date' => $now,
+                'invest_amount' => $amount,
+                'tenure' => $tenure,
+                'return_amount' => $r_amount,
+                'proof' => '/card.png',
+                'approved_date' => Carbon::now(),
+                'return_date' => $MyDateCarbon,
+                'status' => 'active',
+                'user_id' => Auth::user()->id,
+            ]);
+            request()->session()->flash('success', 'Investment of '.$this->naira($amount).' successfull');
+            return redirect('/cus');
+        
+
+
+    }
 }

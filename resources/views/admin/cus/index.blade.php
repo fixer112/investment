@@ -12,7 +12,7 @@ $rolls = $user->roll()->where('status', 0)->get();
 $p_refunds = $user->refund()->where('status', 0)->where('paid',0)->get();
 $a_refunds = $user->refund()->where('status', 1)->where('paid',0)->get();
 $refund_dues = $a_refunds->filter(function ($value, $key) {
-    return $value->due < carbon::now();
+    return $value->due < Carbon\carbon::now();
 });
 $refund_paids = $user->refund()->where('paid',1)->get();
 $actives = $user->history()->where('status', '=', 'active')->get();

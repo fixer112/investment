@@ -18,5 +18,7 @@ class VerifyCsrfToken extends Middleware
         'register',
         'cus/*',
         'password/email',
+        'verify',
+        'notify',
     ];
 }

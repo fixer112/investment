@@ -13,7 +13,7 @@ $rolls = Auth::user()->roll()->where('status', 0)->get();
 $p_refunds = Auth::user()->refund()->where('status', 0)->where('paid',0)->get();
 $a_refunds = Auth::user()->refund()->where('status', 1)->where('paid',0)->get();
 $refund_dues = $a_refunds->filter(function ($value, $key) {
-    return $value->due < carbon::now();
+    return $value->due < carbon\carbon::now();
 });
 $refund_paids = Auth::user()->refund()->where('paid',1)->get();
 $all = $paids->sum('invest_amount') + $actives->sum('invest_amount');
@@ -22,6 +22,7 @@ $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->get();
 @endphp
 
 <div class="row">
+        
 
                     @if(Auth::user()->id_change == '1')
                 <div class="alert alert-danger alert-dismissible fade show col-lg-12 p-30">
@@ -38,6 +39,21 @@ $rejecteds = Auth::user()->history()->where('status', '=', 'reject')->get();
                 </div>
 
 <div class="row">
+        <div class="col-lg-12 p-20">
+
+                @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if (session('failed'))
+                        <div class="alert alert-danger">
+                            {{ session('failed') }}
+                        </div>
+                    @endif
+                    </div>
+                    
                     <div class="col-md-4">
                         <div class="card p-30">
                             <div class="media">
