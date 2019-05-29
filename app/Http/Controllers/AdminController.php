@@ -200,6 +200,9 @@ class AdminController extends Controller
 
     public function investapprove(Request $request, History $history)
     {
+        if (env('error')) {
+            return $this->showError(request());
+        }
 
         if ($history->status == 'pending') {
 
@@ -459,6 +462,10 @@ class AdminController extends Controller
 
     public function rollApprove(Rollover $roll)
     {
+        if (env('error')) {
+            return $this->showError(request());
+        }
+
         $history = $roll->history;
         if ($history->status == 'paid' /* || carbon::now() > $history->return_date*/) {
             request()->session()->flash('failed', 'Rollover failed, investment paid');
@@ -567,6 +574,10 @@ class AdminController extends Controller
 
     public function refundApprove(Refund $refund)
     {
+        if (env('error')) {
+            return $this->showError(request());
+        }
+
         $history = $refund->history;
         //return $refund;
         if ($history->status == 'paid' /* || carbon::now() > $history->return_date*/) {

@@ -199,7 +199,10 @@ class CustomerController extends Controller
 
     public function investpost(Request $request)
     {
-
+        if (env('error')) {
+            return $this->showError(request());
+        }
+        //return 'true';
         $this->validate($request, [
             'amount' => 'required|numeric|min:10',
             'rate' => 'required',

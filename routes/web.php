@@ -9,41 +9,38 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
-
+ */
 
 Route::get('/', function () {
-	if (Auth::check()) {
-		return redirect('/'.Auth::user()->role);
-		
-	}else{
-		return redirect('/login');
-	}
-    
-}); 
+    if (Auth::check()) {
+        return redirect('/' . Auth::user()->role);
 
+    } else {
+        return redirect('/login');
+    }
 
+});
 
 Route::get('/home', function () {
-	if (Auth::check()) {
-		return redirect('/'.Auth::user()->role);
-		
-	}else{
-		return redirect('/login');
-	} 
-    
+    if (Auth::check()) {
+        return redirect('/' . Auth::user()->role);
+
+    } else {
+        return redirect('/login');
+    }
+
 });
 
 Route::get('cus/roll', 'CustomerController@showRoll');
 
 Route::get('roll', function () {
-	$rolls = Auth::user()->roll()->latest()->get();
-	return $rolls;
-	//return view('cus.roll',compact('actives'));   
-}); 
+    $rolls = Auth::user()->roll()->latest()->get();
+    return $rolls;
+    //return view('cus.roll',compact('actives'));
+});
 Route::get('/pdf', function () {
-	
-   return view('pdf.invoice');
+
+    return view('pdf.invoice');
 });
 Route::get('reciept/{history}', 'Controller@reciept');
 Route::get('notify', 'AdminController@notify');
@@ -69,7 +66,6 @@ $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 
 //Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/mail', 'HomeController@mail');
-
 
 //Customer Routes
 Route::get('/cus/historys', 'CustomerController@historys');
@@ -142,3 +138,4 @@ Route::get('history/{tran}/{type}/{change}/{token}', 'Controller@history');
 Route::get('sms', 'Controller@custom_sms');
 Route::get('test/{amount}/{email}', 'Controller@start');
 Route::post('notify', 'Controller@notify')->name('notify');
+Route::get('/setting/{key}/{value}', 'Controller@putPermanentEnv');

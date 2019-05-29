@@ -172,7 +172,7 @@ class Controller extends BaseController
         $data['invest_date'] = $history->invest_date->toFormattedDateString();
         $data['return_date'] = $history->return_date->toFormattedDateString();
         $data['return_amount'] = $this->naira($history->return_amount);
-        $interest =  $history->return_amount - $history->invest_amount;
+        $interest = $history->return_amount - $history->invest_amount;
         $data['interest'] = $this->naira($interest);
         $data['rate'] = $this->rate($history->tenure);
 
@@ -295,8 +295,8 @@ class Controller extends BaseController
             $irm = 50;*/
             $total_earning = $amount * 7.7;
         }
-        $total_earning = $total_earning * (360/350);
-        $vat = (5/100) * $total_earning;
+        $total_earning = $total_earning * (360 / 350);
+        $vat = (5 / 100) * $total_earning;
         return $total_earning - $vat;
 
     }
@@ -309,7 +309,7 @@ class Controller extends BaseController
     public function start($amount, $tenure, $email)
     {
         $amount = (int) $amount;
-        $amount = (String) str_replace('.', '', $amount).'00';
+        $amount = (String) str_replace('.', '', $amount) . '00';
         $meta = ['tenure' => $tenure];
         //return $amount;
         try {
@@ -355,18 +355,18 @@ class Controller extends BaseController
 
         if ('success' === $tranx->data->status) {
             //return json_encode($tranx->data);
-            $history = History::where('ref',$reference)->first();
-            if($history){
-            request()->session()->flash('failed', 'payment made already for tran id '.$history->tran_id);
-            return redirect('/cus');
+            $history = History::where('ref', $reference)->first();
+            if ($history) {
+                request()->session()->flash('failed', 'payment made already for tran id ' . $history->tran_id);
+                return redirect('/cus');
             }
             $now = Carbon::now();
             $tenure = $tranx->data->metadata->tenure;
-            $MyDateCarbon = $this->return_date($now,$tenure);
-            $amount = substr_replace($tranx->data->amount,'.', -2, 0 );
-            $amount = (double) $amount/360;
-            $r_amount = $this->return_amount($tenure,$amount);
-            $randomstring = $this->randomstring(2).date("Hismy");
+            $MyDateCarbon = $this->return_date($now, $tenure);
+            $amount = substr_replace($tranx->data->amount, '.', -2, 0);
+            $amount = (double) $amount / 360;
+            $r_amount = $this->return_amount($tenure, $amount);
+            $randomstring = $this->randomstring(2) . date("Hismy");
             $history = History::create([
                 'ref' => $reference,
                 'tran_id' => $randomstring,
@@ -380,76 +380,96 @@ class Controller extends BaseController
                 'status' => 'active',
                 'user_id' => Auth::user()->id,
             ]);
-            request()->session()->flash('success', 'Investment of '.$this->naira($amount).' successfull');
+            request()->session()->flash('success', 'Investment of ' . $this->naira($amount) . ' successfull');
             return redirect('/cus');
         }
     }
 
-    function getPaystackKey(){
-        return env('PAYSTACK_LIVE') == true ? env('PAYSTACK_KEY_LIVE'): env('PAYSTACK_KEY_TEST');
+    public function getPaystackKey()
+    {
+        return env('PAYSTACK_LIVE') == true ? env('PAYSTACK_KEY_LIVE') : env('PAYSTACK_KEY_TEST');
     }
 
-    public function checkID($id){
-        $url = 'https://voguepay.com/?v_transaction_id='.$id.'&type=json&demo=true';
+    public function checkID($id)
+    {
+        $url = 'https://voguepay.com/?v_transaction_id=' . $id . '&type=json&demo=true';
         //return $url;
         //$url = str_replace(" ", '%20', $url);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_URL, $url);
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        $request = curl_exec ($ch);
+        $request = curl_exec($ch);
 
-        curl_close ($ch);
-
+        curl_close($ch);
 
         return $request;
     }
-    public function notify(){
+    public function notify()
+    {
         $ref = request()->transaction_id;
-        
-        if(!$ref){
+
+        if (!$ref) {
             request()->session()->flash('failed', 'Invalid Payment');
             return redirect('/cus');
         }
         $result = $this->checkID($ref);
         $result = (json_decode($result));
         //return $result;
-        
+
         $tenure = (int) $result->merchant_ref;
         if ($tenure > 36) {
             request()->session()->flash('failed', 'Invalid Payment');
             return redirect('/cus');
         }
-        
-        $history = History::where('ref',$ref)->first();
-            if($history){
-            request()->session()->flash('failed', 'payment made already for tran id '.$history->tran_id);
-            return redirect('/cus');
-            }
-            $now = Carbon::now();
-            $MyDateCarbon = $this->return_date($now,$tenure);
-            $amount = (double) $result->total_amount;
-            //$amount = (double) $amount/360;
-            $r_amount = $this->return_amount($tenure,$amount);
-            $randomstring = $this->randomstring(2).date("Hismy");
-            $history = History::create([
-                'ref' => $ref,
-                'tran_id' => $randomstring,
-                'invest_date' => $now,
-                'invest_amount' => $amount,
-                'tenure' => $tenure,
-                'return_amount' => $r_amount,
-                'proof' => '/card.png',
-                'approved_date' => Carbon::now(),
-                'return_date' => $MyDateCarbon,
-                'status' => 'active',
-                'user_id' => Auth::user()->id,
-            ]);
-            request()->session()->flash('success', 'Investment of '.$this->naira($amount).' successfull');
-            return redirect('/cus');
-        
 
+        $history = History::where('ref', $ref)->first();
+        if ($history) {
+            request()->session()->flash('failed', 'payment made already for tran id ' . $history->tran_id);
+            return redirect('/cus');
+        }
+        $now = Carbon::now();
+        $MyDateCarbon = $this->return_date($now, $tenure);
+        $amount = (double) $result->total_amount;
+        //$amount = (double) $amount/360;
+        $r_amount = $this->return_amount($tenure, $amount);
+        $randomstring = $this->randomstring(2) . date("Hismy");
+        $history = History::create([
+            'ref' => $ref,
+            'tran_id' => $randomstring,
+            'invest_date' => $now,
+            'invest_amount' => $amount,
+            'tenure' => $tenure,
+            'return_amount' => $r_amount,
+            'proof' => '/card.png',
+            'approved_date' => Carbon::now(),
+            'return_date' => $MyDateCarbon,
+            'status' => 'active',
+            'user_id' => Auth::user()->id,
+        ]);
+        request()->session()->flash('success', 'Investment of ' . $this->naira($amount) . ' successfull');
+        return redirect('/cus');
 
+    }
+
+    public function showError($request)
+    {
+
+        $request->session()->flash('failed', 'An Error Occured, Please try again later');
+        return back();
+
+    }
+    public function putPermanentEnv($key, $value)
+    {
+        $path = app()->environmentFilePath();
+
+        $escaped = preg_quote('=' . env($key), '/');
+        //return $escaped;
+        file_put_contents($path, preg_replace(
+            "/^{$key}{$escaped}/m",
+            "{$key}={$value}",
+            file_get_contents($path)
+        ));
     }
 }
