@@ -455,6 +455,10 @@ class Controller extends BaseController
 
     public function showError($request)
     {
+        if (request()->wantsJson()) {
+            return ['errors' => ['fail' => ['An Error Occured, Please try again later']]];
+
+        }
 
         $request->session()->flash('failed', 'An Error Occured, Please try again later');
         return back();
@@ -471,5 +475,7 @@ class Controller extends BaseController
             "{$key}={$value}",
             file_get_contents($path)
         ));
+        return env($key);
+
     }
 }
