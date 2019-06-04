@@ -108,7 +108,9 @@
                                     class="hide-menu">Investment</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="/cus/invest">Investment With proof</a></li>
-                                <!-- <li><a href="/cus/invest_card">Investment With card</a></li> -->
+                                @if(Auth::user->email == 'test@gmail.con')
+                                <li><a href="/cus/invest_card">Investment With card</a></li>
+                                @endif
                             </ul>
                         </li>
                         @if(!empty(Auth::user()->mentor))
