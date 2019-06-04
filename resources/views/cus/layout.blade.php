@@ -108,7 +108,7 @@
                                     class="hide-menu">Investment</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="/cus/invest">Investment With proof</a></li>
-                                @if(Auth::user()->email == 'test@gmail.con')
+                                @if(Auth::user()->email == 'test@gmail.com')
                                 <li><a href="/cus/invest_card">Investment With card</a></li>
                                 @endif
                             </ul>
