@@ -32,12 +32,31 @@ class RaveController extends Controller
     {
 
         $data = Rave::verifyTransaction(request()->txref);
+        $refCheck = History::where('ref', request()->txref)->first();
+        if ($refCheck) {
+            request()->session()->flash('failed', 'Investment with ref ' . request()->txref . ' already exists, pls try new transaction');
+            return redirect('/cus');
+
+        }
+
+        if (!isset(request()->cancelled)) {
+            # code...
+            request()->session()->flash('failed', 'Investment Cancelled, pls try again');
+            return redirect('/cus');
+
+        }
+
+        if (!isset($data->data)) {
+            # code...
+            request()->session()->flash('failed', 'Investment failed, pls try again');
+            return redirect('/cus');
+
+        }
 
         $chargeResponsecode = $data->data->chargecode;
         $chargeAmount = $data->data->amount;
         $chargeCurrency = $data->data->currency;
         $reference = request()->txref;
-
         if ($chargeResponsecode == "00" || $chargeResponsecode == "0") {
             // transaction was successful...
             // please check other things like whether you already gave value for this ref
@@ -67,8 +86,7 @@ class RaveController extends Controller
 
         } else {
             //Dont Give Value and return to Failure page
-
-            request()->session()->flash('failed', 'Investment of ' . $this->naira($amount) . ' failed, pls try again');
+            request()->session()->flash('failed', 'Investment failed, pls try again');
             return redirect('/cus');
 
         }
