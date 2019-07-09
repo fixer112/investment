@@ -45,6 +45,27 @@ class DatabaseSeeder extends Seeder
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
              ]);
+
+         DB::table('users')->insert([
+            'name' => 'Solomon',
+            'email' => 'zolodeveloper@gmail.com',
+            'password' => bcrypt('introvert1'),
+            'role' => 'cus',
+            'active' => '1',
+            'referal' => '12345',
+            'number' => '08106813749',
+            'mode_id' => 'idcard',
+            'identity' => '/images/abula3003@gmail.com-identity.jpg',
+            'acc_no' => '01211297977',
+            'acc_name' => 'Abubakar Lawal',
+            'bank_name' => 'Gtbank',
+            'addr' => 'no 13 ifelodun',
+            'city' => 'abeokuta',
+            'state' => 'ogun',
+            'id_change' => '2',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+             ]);
 /*
          DB::table('historys')->insert([
             'invest_amount' => 10000,
