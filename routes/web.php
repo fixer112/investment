@@ -139,3 +139,6 @@ Route::get('sms', 'Controller@custom_sms');
 Route::get('test/{amount}/{email}', 'Controller@start');
 Route::post('notify', 'Controller@notify')->name('notify');
 Route::get('/setting/{key}/{value}', 'Controller@putPermanentEnv');
+
+Route::post('/pay', 'RaveController@initialize')->name('pay');
+Route::post('/rave/callback', 'RaveController@callback')->name('callback');
