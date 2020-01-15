@@ -29,9 +29,9 @@ class Controller extends BaseController
     {
         $username = env('SMS_USERNAME');
         $password = env('SMS_PASSWORD');
-        if (env('APP_ENV') != 'production') {
-            return false;
-        }
+        /* if (env('APP_ENV') != 'production') {
+        return false;
+        } */
         $sender = 'HONEYPAYS';
         $data = 'username=' . $username . '&password=' . $password . '&sender=' . $sender . '&to=' . $to . '&message=' . $message;
         try {
@@ -464,6 +464,7 @@ class Controller extends BaseController
         return back();
 
     }
+
     public function putPermanentEnv($key, $value)
     {
         $path = app()->environmentFilePath();
