@@ -46,7 +46,7 @@
                     <div class="navbar-header">
                         <a class="navbar-brand" href="/">
                             <!-- Logo icon -->
-                            <b><img src="/images/logo.jpg" alt="homepage" class="dark-logo" /></b>
+                            <b><img src="/images/logo.jpeg" alt="homepage" class="dark-logo" /></b>
                             <!--End Logo icon -->
                             <!-- Logo text -->
                             {{-- <span><strong class="dark-logo"> Honeypays </strong></span> --}}
