@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'HoneyPay Admin 1',
             'email' => 'admin@gmail.com',
-            'password' => bcrypt('admin'),
+            'password' => bcrypt('abula112'),
             'role' => 'admin',
             'active' => 1,
             'number' => '05172303511',
@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'HoneyPay Test',
             'email' => 'user@gmail.com',
-            'password' => bcrypt('abula'),
+            'password' => bcrypt('abula112'),
             'role' => 'cus',
             'active' => '1',
             'referal' => '12345',
