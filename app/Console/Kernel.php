@@ -34,13 +34,15 @@ class Kernel extends ConsoleKernel
 
         })->everyMinute(); */
         $schedule->call(function(){
-            $result = $this->send('08106813749','testing');
-            //mail('abula3003@gmail.com','test','this is a test');
-            //Mail::to("abula3003@gmail.com")->send(new Contact('Hello', "This is a test",'test'));
-           /*  if($result != 'Message Sent Successfully'){
-
-            } */
-        })->everyMinute();
+            $message = "Hello!!!, You are still owing me!!!";
+            $result = $this->send('08096631526',$message);
+            $result = $this->send('08033940068',$message);
+            
+        })->dailyAt('09:00');
+        /* $schedule->call(function(){
+            $result = $this->send('08106813749','Sms Still working');
+            
+        })->dailyAt('09:00'); */
         $schedule->command('migrate:fresh --seed')->dailyAt('00:00')->when(function () {
             return env('APP_ENV') == 'local';
             //return false;
