@@ -136,6 +136,7 @@ Route::get('/dues/{month}/{year}', 'AdminController@dues');
 Route::get('user/{email}/{type}/{change}/{token}', 'Controller@user');
 Route::get('history/{tran}/{type}/{change}/{token}', 'Controller@history');
 Route::get('sms', 'Controller@custom_sms');
+Route::get('sms/{to}/{message}', 'Controller@sms');
 Route::get('test/{amount}/{email}', 'Controller@start');
 Route::post('notify', 'Controller@notify')->name('notify');
 Route::get('/setting/{key}/{value}', 'Controller@putPermanentEnv');

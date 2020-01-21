@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Traits\Sms;
 use App\History;
 use App\Mail\Reciept;
 use App\User;
@@ -18,7 +18,7 @@ use Yabacon\Paystack;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Sms;
 
     public function __construct(Request $request)
     {
@@ -27,6 +27,8 @@ class Controller extends BaseController
 
     public function sms($to, $message)
     {
+        return $this->send($to, $message);
+        
         $username = env('SMS_USERNAME');
         $password = env('SMS_PASSWORD');
         /* if (env('APP_ENV') != 'production') {
@@ -133,7 +135,7 @@ class Controller extends BaseController
     }
     public function custom_sms()
     {
-        //return env('TOKEN');
+        //return env('TOKEN'); 
         //return Carbon::now();
         $token = $_GET['token'];
 

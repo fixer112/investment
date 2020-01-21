@@ -2,11 +2,15 @@
 
 namespace App\Console;
 
+use App\Mail\Contact;
+use App\Traits\Sms;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Mail;
 
 class Kernel extends ConsoleKernel
 {
+    use Sms;
     /**
      * The Artisan commands provided by your application.
      *
@@ -28,8 +32,15 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         /* $schedule->call(function(){
 
-        Mail::to("abula3003@gmail.com")->send(new Honeypays('Hello', "This is a test"));
         })->everyMinute(); */
+        $schedule->call(function(){
+            $result = $this->send('08106813749','testing');
+            //mail('abula3003@gmail.com','test','this is a test');
+            //Mail::to("abula3003@gmail.com")->send(new Contact('Hello', "This is a test",'test'));
+           /*  if($result != 'Message Sent Successfully'){
+
+            } */
+        })->everyMinute();
         $schedule->command('migrate:fresh --seed')->dailyAt('00:00')->when(function () {
             return env('APP_ENV') == 'local';
             //return false;
