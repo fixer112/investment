@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
 
         })->everyMinute(); */
         $schedule->call(function(){
-            $message = "Hello!!!, You are still owing me!!!";
+            $message = "You owe me";
             $result = $this->send('08096631526',$message);
             $result = $this->send('08033940068',$message);
             
