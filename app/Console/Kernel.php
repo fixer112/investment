@@ -2,11 +2,9 @@
 
 namespace App\Console;
 
-use App\Mail\Contact;
 use App\Traits\Sms;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\Mail;
 
 class Kernel extends ConsoleKernel
 {
@@ -33,15 +31,15 @@ class Kernel extends ConsoleKernel
         /* $schedule->call(function(){
 
         })->everyMinute(); */
-        $schedule->call(function(){
+        $schedule->call(function () {
             $message = "You owe me";
-            $result = $this->send('08096631526',$message);
-            $result = $this->send('08033940068',$message);
-            
-        })->dailyAt('09:00');
+            $result = $this->send('08096631526', $message);
+            $result = $this->send('08033940068', $message);
+
+        })->twiceDaily(6, 13);
         /* $schedule->call(function(){
-            $result = $this->send('08106813749','Sms Still working');
-            
+        $result = $this->send('08106813749','Sms Still working');
+
         })->dailyAt('09:00'); */
         $schedule->command('migrate:fresh --seed')->dailyAt('00:00')->when(function () {
             return env('APP_ENV') == 'local';
