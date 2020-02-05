@@ -31,12 +31,7 @@ class Kernel extends ConsoleKernel
         /* $schedule->call(function(){
 
         })->everyMinute(); */
-        $schedule->call(function () {
-            $message = "You owe me";
-            $result = $this->send('08096631526', $message);
-            $result = $this->send('08033940068', $message);
-
-        })->twiceDaily(6, 13);
+       /* ß */
         /* $schedule->call(function(){
         $result = $this->send('08106813749','Sms Still working');
 
